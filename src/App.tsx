@@ -72,7 +72,7 @@ export class App extends Component{
       <div className="App">
         <Tester/>
         <DatSettings data={{...this.state}} handleUpdate={this.handleUpdate}/>
-        <NameNotes
+        {/* <NameNotes
           showGrid={this.state.showGrid} 
           lightIntensity={this.state.lightIntensity} 
           lightColor={this.state.lightColor}
@@ -80,7 +80,7 @@ export class App extends Component{
           cameraPos={this.state.cameraPos}
           notePos={this.state.notePos}
           guitarRotation={this.state.guitarRotation}
-        />
+        /> */}
       </div>
     );
   }

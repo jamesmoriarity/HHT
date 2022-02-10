@@ -1,0 +1,3 @@
+let angle = Math.atan2(1, 3) * 180 / Math.PI
+// provides the angle as zero being on the right x axis
+// lay out the needle so it lays pointing to the right side so angles don't need conversion
