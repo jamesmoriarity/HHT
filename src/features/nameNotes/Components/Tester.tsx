@@ -13,7 +13,6 @@ export function Tester(){
     document.addEventListener('mousemove', (e:MouseEvent) => {
         let xDiff:number = Math.abs(lastX - e.x)
         let yDiff:number = Math.abs(lastY - e.y)
-/*         if(xDiff < 2 || yDiff < 2){return} */
         let needles:HTMLCollectionOf<Element> | null = document.getElementsByClassName('needle')
         for(let i = 0; i < needles.length; i++){
             let needle:Element | null = needles.item(i)
@@ -26,18 +25,9 @@ export function Tester(){
                 const deltaX:number = e.x - rect.x
                 const deltaY:number = e.y - rect.y
                 let angle = Math.floor(Math.atan2(deltaY, deltaX) * (180 / Math.PI));
-                if(Math.abs(angle - lastAngle) > 180){
-                    if(angle < lastAngle){
-                        angle += 360
-                    }
-                    if(angle > lastAngle){
-                        angle -= 360
-                    }
-                }
-                lastAngle = angle
-                gsap.to(needle, {transformOrigin:"center", rotation:angle, duration:0});
+                gsap.set(needle, {transformOrigin:"center", rotation:angle});
                 if(i === 0){
-                    console.log('angle', angle)
+                    //console.log('angle', angle)
                 }
             }
         }
@@ -71,13 +61,13 @@ export function Tester(){
     }
     const makeNeedles = function(){
         let needles:JSX.Element[] = []
-        for(let i = 0; i < 9; i++){
-            for(let j = 0; j < 9; j++){
-                const x:number = i * 10;
-                const y:number = j * 10;
-                const translate:string = 'translate(' + x + ' ' + y + ')'
+        for(let i = 0; i < 10; i++){
+            for(let j = 0; j < 10; j++){
+                const x:number = i * 14;
+                const y:number = j * 14;
+                const translate:string = 'translate(' + x + ' ' + y + ') rotate(-30)'
                 const key:string = i + '-' + j
-                let elm:JSX.Element = <g key={key} transform={translate}><rect className="needle" width="8px" height="1px" /></g>
+                let elm:JSX.Element = <g key={key} transform={translate}><rect className="needle" width="10px" height="1px" /></g>
                 needles.push(elm)
             }
         }
@@ -86,10 +76,10 @@ export function Tester(){
     return <div className="sky">
                 <div><span onClick={goLeft}>left</span> | <span onClick={getRight}>right</span></div>
                 <svg xmlns="http://www.w3.org/2000/svg"
-                    width="400px"
-                    height="240px"
-                    viewBox="0 0 200 120"
-                    className="landscape">
+                    width="500px"
+                    height="400px"
+                    viewBox="0 0 250 200"
+                    className="needle-field">
                     <g className="needles">
                         {makeNeedles()}
                     </g>    
