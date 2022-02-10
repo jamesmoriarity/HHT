@@ -9,6 +9,7 @@ export function Tester(){
     let animationTimeline:gsap.core.Timeline
     let lastX = 0
     let lastY = 0
+    let lastAngle = 0
     document.addEventListener('mousemove', (e:MouseEvent) => {
         let xDiff:number = Math.abs(lastX - e.x)
         let yDiff:number = Math.abs(lastY - e.y)
@@ -24,9 +25,20 @@ export function Tester(){
                 }
                 const deltaX:number = e.x - rect.x
                 const deltaY:number = e.y - rect.y
-                let angle = (Math.atan2(deltaY, deltaX) * 180 / Math.PI) % 360;
-                // needle.setAttribute("transform", "rotate(" + angle + ")");
-                gsap.to(needle, {transformOrigin:"center", rotation:angle, duration:0.2});
+                let angle = Math.floor(Math.atan2(deltaY, deltaX) * (180 / Math.PI));
+                if(Math.abs(angle - lastAngle) > 180){
+                    if(angle < lastAngle){
+                        angle += 360
+                    }
+                    if(angle > lastAngle){
+                        angle -= 360
+                    }
+                }
+                lastAngle = angle
+                gsap.to(needle, {transformOrigin:"center", rotation:angle, duration:0});
+                if(i === 0){
+                    console.log('angle', angle)
+                }
             }
         }
       });
@@ -59,13 +71,13 @@ export function Tester(){
     }
     const makeNeedles = function(){
         let needles:JSX.Element[] = []
-        for(let i = 0; i < 19; i++){
+        for(let i = 0; i < 9; i++){
             for(let j = 0; j < 9; j++){
                 const x:number = i * 10;
                 const y:number = j * 10;
                 const translate:string = 'translate(' + x + ' ' + y + ')'
                 const key:string = i + '-' + j
-                let elm:JSX.Element = <g key={key} transform={translate}><rect className="needle" width="6px" height="1px" /></g>
+                let elm:JSX.Element = <g key={key} transform={translate}><rect className="needle" width="8px" height="1px" /></g>
                 needles.push(elm)
             }
         }
@@ -73,6 +85,15 @@ export function Tester(){
     }
     return <div className="sky">
                 <div><span onClick={goLeft}>left</span> | <span onClick={getRight}>right</span></div>
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    width="400px"
+                    height="240px"
+                    viewBox="0 0 200 120"
+                    className="landscape">
+                    <g className="needles">
+                        {makeNeedles()}
+                    </g>    
+                </svg>
                 <svg xmlns="http://www.w3.org/2000/svg"
                     width="400px"
                     height="240px"
@@ -99,10 +120,7 @@ export function Tester(){
                             d="M 2.3848448,59.953921 C 24.629368,41.499041 69.877146,29.519381 69.877146,29.519381 c 30.03285,3.13006 0.8341,17.12424 32.518124,15.6543 63.01034,-2.92328 75.61344,14.72287 75.61344,14.72287 l -175.6238652,0.0573"
                             id="path2115-0-7"
                         />
-                    </g>
-                    <g className="needles">
-                        {makeNeedles()}
-                    </g>    
+                    </g>   
                 </svg>
             </div>
 }
