@@ -1,37 +1,13 @@
 import { useEffect } from "react";
 import { Scene } from "three";
 import {gsap} from "gsap"
+import NeedleField from "./NeedleField";
 export function Tester(){
     // let x = new Scene()
     let backX = 0
     let middleX = 0
     let frontX = 0
     let animationTimeline:gsap.core.Timeline
-    let lastX = 0
-    let lastY = 0
-    let lastAngle = 0
-    document.addEventListener('mousemove', (e:MouseEvent) => {
-        let xDiff:number = Math.abs(lastX - e.x)
-        let yDiff:number = Math.abs(lastY - e.y)
-        let needles:HTMLCollectionOf<Element> | null = document.getElementsByClassName('needle')
-        for(let i = 0; i < needles.length; i++){
-            let needle:Element | null = needles.item(i)
-            if(needle){
-                let rect:DOMRect | undefined = needle?.getBoundingClientRect()
-                if(rect === undefined || needle === null){
-                    console.log('reject')
-                    return
-                }
-                const deltaX:number = e.x - rect.x
-                const deltaY:number = e.y - rect.y
-                let angle = Math.floor(Math.atan2(deltaY, deltaX) * (180 / Math.PI));
-                gsap.set(needle, {transformOrigin:"center", rotation:angle});
-                if(i === 0){
-                    //console.log('angle', angle)
-                }
-            }
-        }
-      });
     const moveTo = function(direction:number){
         if(animationTimeline){
             animationTimeline.kill()
@@ -59,31 +35,16 @@ export function Tester(){
     const getRight = function(evt:any){
         moveTo(-5)
     }
-    const makeNeedles = function(){
-        let needles:JSX.Element[] = []
-        for(let i = 0; i < 10; i++){
-            for(let j = 0; j < 10; j++){
-                const x:number = i * 14;
-                const y:number = j * 14;
-                const translate:string = 'translate(' + x + ' ' + y + ') rotate(-30)'
-                const key:string = i + '-' + j
-                let elm:JSX.Element = <g key={key} transform={translate}><rect className="needle" width="10px" height="1px" /></g>
-                needles.push(elm)
-            }
-        }
-        return needles
-    }
     return <div className="sky">
                 <div><span onClick={goLeft}>left</span> | <span onClick={getRight}>right</span></div>
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    width="500px"
-                    height="400px"
+                <NeedleField 
+                    className="joe"
+                    svgWidth={500} 
+                    svgHeight={400} 
                     viewBox="0 0 250 200"
-                    className="needle-field">
-                    <g className="needles">
-                        {makeNeedles()}
-                    </g>    
-                </svg>
+                    rows={6} columns={8} vspace={18} hspace={18} length={8} width={.25}
+                    magneticRange={1800}/>
+
                 <svg xmlns="http://www.w3.org/2000/svg"
                     width="400px"
                     height="240px"
