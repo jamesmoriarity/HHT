@@ -3,6 +3,7 @@ import { Component, useState} from 'react';
 import ComponentLibrary from '../ComponentLibrary/ComponentLibrary';
 import { DevController } from '../DevController/DevController';
 import Site from '../Site/Site';
+import { StyleGuide } from '../StyleGuide/StyleGuide';
 import './App.css';
 
 export class AppConstants{
@@ -22,8 +23,11 @@ function ChildComponent(props:ChildComponentProps){
     case AppConstants.VIEW_MODE_COMPONENT_LIBRARY:
       break;
     case AppConstants.VIEW_MODE_SITE:
-        comp = <Site/>
-        break;
+      comp = <Site/>
+      break;
+    case AppConstants.VIEW_MODE_STYLE_GUIDE:
+      comp = <StyleGuide/>
+      break;
   }
   return comp 
 }
@@ -32,40 +36,43 @@ export interface AppProps{
   devMode:boolean
 }
 const DevModeListener = function(props:any){
-  console.log('adding listener')
   const handleKeyDown = function(event:KeyboardEvent){
-    console.log('handleKeyDown')
-    event.stopImmediatePropagation();
-    var name = event.key;
-    var ctrlKey = event.ctrlKey;
-    if(event.key === 'd' && event.ctrlKey){
-      console.log('should toggle devmode', props.toggleHandler)
-      props.toggleHandler()
-    }
+    event.stopImmediatePropagation()
+    if(event.key === 'd' && event.ctrlKey){ props.toggleHandler() }
   }
   document.addEventListener('keyup', (event) => {handleKeyDown(event)}, false);
-  return <div/>
+  return null
 }
-export function App(){
-  console.log('App')
-/*   const getInitMode = function(){
-    return (true) ? 
+export class App extends React.Component{
+  state:any
+  constructor(props:any){
+    super(props)
+    let devMode:boolean = true
+    let viewMode:string = this.getInitViewMode(devMode)
+    this.state = {devMode:devMode, viewMode:viewMode}
+  }
+  getInitViewMode = (devMode:boolean) =>{
+    return (!devMode) ? 
     AppConstants.VIEW_MODE_COMPONENT_LIBRARY : 
     AppConstants.VIEW_MODE_SITE
-  } */
-  const [devMode, setDevMode] = useState(true)
-  const [viewMode, setViewMode] = useState(AppConstants.VIEW_MODE_SITE)
-  const toggleDevMode = function(){
-    console.log('toggleDevMode', devMode)
-    setDevMode(!devMode)
   }
-  return <div className="App">
-            <DevModeListener toggleHandler={toggleDevMode}/>
-            <div>{'viewMode:' + viewMode}</div>
-            <div>{'devmode:' + devMode}</div>
-{/*             <DevController modeSetter={setViewMode}/>
-            <ChildComponent devMode={devMode} viewMode={viewMode}/> */}
-        </div>    
-
+  toggleDevMode = () => {
+    this.setState({devMode:!this.state.devMode})
+  }
+  getViewMode = () => {
+    return (!this.state.devMode) ? AppConstants.VIEW_MODE_SITE : this.state.viewMode
+  }
+  setViewMode = (mode:string) => {
+    this.setState({viewMode:mode})
+  }
+  render(){
+    return (
+      <div className="App">
+          <DevModeListener toggleHandler={this.toggleDevMode}/>
+          <DevController modeSetter={this.setViewMode}/>
+          <ChildComponent devMode={this.state.devMode} viewMode={this.getViewMode()}/>
+      </div> 
+    )   
+  }
 }
 export default App
