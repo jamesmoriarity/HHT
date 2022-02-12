@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Scene } from "three";
 import {gsap} from "gsap"
-import NeedleField from "./NeedleField";
+import NeedleField from "./NeedleField/NeedleField";
 export function Tester(){
     // let x = new Scene()
     let backX = 0

@@ -1,5 +1,6 @@
 import { Component, useEffect } from "react"
 import { gsap } from "gsap"
+import "./NeedleField.css"
 export interface NeedleFieldProps{
     className:string
     svgWidth:number,
