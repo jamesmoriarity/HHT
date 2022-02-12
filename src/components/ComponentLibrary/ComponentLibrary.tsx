@@ -1,6 +1,8 @@
-import { useState} from 'react';
+import { NeedleFieldContainer } from '../NeedleField/NeedleFieldContainer';
 import './ComponentLibrary.css'
+
+
 export function ComponentLibrary(){
-  return <div>Component Library</div>
+  return <NeedleFieldContainer/>
 }
 export default ComponentLibrary

@@ -52,7 +52,7 @@ export class App extends React.Component{
     this.state = {devMode:devMode, viewMode:viewMode}
   }
   getInitViewMode = (devMode:boolean) =>{
-    return (!devMode) ? 
+    return (devMode) ? 
     AppConstants.VIEW_MODE_COMPONENT_LIBRARY : 
     AppConstants.VIEW_MODE_SITE
   }
@@ -65,11 +65,17 @@ export class App extends React.Component{
   setViewMode = (mode:string) => {
     this.setState({viewMode:mode})
   }
+  getDevController = () => {
+    if(this.state.devMode){
+      return <DevController modeSetter={this.setViewMode}/>
+    }
+    return null
+  }
   render(){
     return (
       <div className="App">
           <DevModeListener toggleHandler={this.toggleDevMode}/>
-          <DevController modeSetter={this.setViewMode}/>
+          {this.getDevController()}
           <ChildComponent devMode={this.state.devMode} viewMode={this.getViewMode()}/>
       </div> 
     )   

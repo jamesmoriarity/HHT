@@ -1,10 +1,10 @@
 .needle-field{
     position:relative;
-    top:300px;
-  }
-  .needles{
-    transform:translate(40px, 20px);
   }
   .needles rect{
     fill:hsl(0, 0%, 0%);
   }
+  .needleField-input{
+    width:30px;
+  }
+  
