@@ -1,6 +1,7 @@
-import { Component, useEffect } from "react"
+import { Component, useEffect, useState } from "react"
 import { gsap } from "gsap"
 import "../NeedleField/NeedleField.css"
+import { Needle } from "./Needle"
 export interface NeedleFieldProps{
     className:string,
     rows:number, 
@@ -11,59 +12,18 @@ export interface NeedleFieldProps{
     width:number,
     magneticRange:number
 }
-export function NeedleField(props:NeedleFieldProps ){
-    let lastAngle:number = 0
-    let animationTimeline:gsap.core.Timeline
-    let inRange:boolean = false
-    const w:number = (props.columns * props.hspace) + props.length
-    const h:number = (props.rows * props.vspace) + props.length
-    const makeNewTimeline = function(){
-        if(animationTimeline){
-          animationTimeline.kill()
-        }
-        animationTimeline = gsap.timeline({
-          autoRemoveChildren:true, 
-          paused:true,  
-          smoothChildTiming:true
-        })
+export function NeedleField( props:NeedleFieldProps ){
+    const [magneticRange, setMagneticRange] = useState(props.magneticRange)
+    const [length, setLength] = useState(props.length)
+    const [width, setWidth] = useState(props.width)
+    let w:number = (props.columns * props.hspace) + props.length
+    let h:number = (props.rows * props.vspace) + props.length
+    const restart = function(){
+        setMagneticRange(props.magneticRange)
+        setLength(props.length)
+        setWidth(props.width)
     }
-
-    const isInRange = function(e:MouseEvent){
-        let needlesGroup:HTMLElement | null = document.getElementById('needles-group')
-        if(!needlesGroup){ return false }
-        let groupRect = needlesGroup.getBoundingClientRect()
-        let refX = groupRect.x + w/2
-        let refY = groupRect.y - h/2
-        const deltaX:number = e.x - refX
-        const deltaY:number = e.y - refY
-        let fieldDistanceToMouse:number = Math.sqrt( (deltaX * deltaX) + (deltaY * deltaY) )
-        return (fieldDistanceToMouse < props.magneticRange)
-    }
-
-    const moveNeedles = function(mouseX:number, mouseY:number){
-        makeNewTimeline()
-        let needles:HTMLCollectionOf<Element> | null = document.getElementsByClassName('needle')
-        for(let i = 0; i < needles.length; i++){
-            let needle:Element | null = needles.item(i)
-            if(needle){
-                let localRect:DOMRect = needle.getBoundingClientRect()
-                const localDeltaX:number = mouseX - localRect.x
-                const localDeltaY:number = mouseY - localRect.y
-                let localDistanceToMouse:number = Math.sqrt( (localDeltaX * localDeltaX) + (localDeltaY * localDeltaY) )
-                let angle = Math.floor(Math.atan2(localDeltaY, localDeltaX) * (180 / Math.PI));
-                if( Math.abs(lastAngle - angle) > 5  && Math.abs(lastAngle - angle) < 135 && localDistanceToMouse > w){
-                    let t:gsap.core.Tween = gsap.to(needle, {transformOrigin:"center", rotation:angle, duration:0.4});
-                    animationTimeline.add(t, 0)
-                }
-                else{
-                    let t:gsap.core.Tween = gsap.set(needle, {transformOrigin:"center", rotation:angle});
-                    animationTimeline.add(t, 0)
-                }
-            }
-        }
-        animationTimeline.restart()
-    }
-    const makeNeedles = function(){
+    const Needles = function(){
         let needles:JSX.Element[] = []
         for(let i = 0; i < props.rows; i++){
             for(let j = 0; j < props.columns; j++){
@@ -71,35 +31,21 @@ export function NeedleField(props:NeedleFieldProps ){
                 const y:number = (i * props.vspace) + props.length/2;
                 const translate:string = 'translate(' + x + ' ' + y + ')'
                 const key:string = i + '-' + j
-                let elm:JSX.Element = <g key={key} transform={translate}>
-                                        <rect className="needle" width={props.length} height={props.width} />
-                                    </g>
+                let elm:JSX.Element = <Needle   magneticRange={magneticRange} 
+                                                initAngle={-30} 
+                                                length={length} 
+                                                width={width} 
+                                                translate={translate} 
+                                                key={key} />
                 needles.push(elm)
             }
         }
-        return needles
+        return <g id="needles-group" className="needles">{needles}</g>
     }
-    const handleMouseMove = function(e:MouseEvent){
-        if(isInRange(e)){
-            moveNeedles(e.x, e.y)
-        }
-    }
-    useEffect(
-        ()=>{ 
-            moveNeedles(300,500);
-            return document.removeEventListener('mousemove', handleMouseMove)
-        }
-    )
-    document.addEventListener('mousemove', handleMouseMove);
-    return  <svg xmlns="http://www.w3.org/2000/svg"
-                width={w}
-                height={h}
-                viewBox={'0 0 ' + w + ' ' + h}
-                className={"needle-field " + props.className}>
-                <g id="needles-group" className="needles">
-                    {makeNeedles()}
-                </g>    
+    const viewBox:string = '0 0 ' + w + ' ' + h
+    const className:string = "needle-field " + props.className
+    return  <svg width={w} height={h} viewBox={viewBox} className={className} xmlns="http://www.w3.org/2000/svg">
+                <Needles/>    
             </svg>
 }
-
 export default NeedleField

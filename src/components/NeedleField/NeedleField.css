@@ -3,8 +3,8 @@
   }
   .needles rect{
     fill:hsl(0, 0%, 0%);
+    opacity:0;
   }
   .needleField-input{
-    width:30px;
+    width:50px;
   }
-  

@@ -1,4 +1,4 @@
-import { NeedleFieldContainer } from '../NeedleField/NeedleFieldContainer';
+import { NeedleFieldContainer } from './containers/NeedleFieldContainer';
 import './ComponentLibrary.css'
 
 
