@@ -1,0 +1,77 @@
+npm install --save react-router-dom
+
+
+
+
+https://reactcommunity.org/react-transition-group/transition
+
+import { useHistory } from 'react-router-dom';
+
+export const withRouter = (Component) => {
+  const Wrapper = (props) => {
+    const history = useHistory();
+    
+    return (
+      <Component
+        history={history}
+        {...props}
+        />
+    );
+  };
+  
+  return Wrapper;
+};
+
+ReactDOM.render(
+  <BrowserRouter>
+    <App/>
+  </BrowserRouter>,
+  document.getElementById(‘root’));
+
+  private router
+
+  protected router
+
+  top nav stays same (except home)
+  background landscape reacts to routes
+  routes:
+    home -  intro animation sequence (logo roll and move up, transition through intro text)
+    about - text re: overall service / brand proposition
+    contact - text re: addresses phone email social
+    wa - text re: general wa operations
+        land acquisition - text re: for builders and sellers
+        buyer - text re: buyers agent
+        seller -  text re: listing agent
+        neighborhoods
+          Redmond
+          Sammamish
+          Bellevue
+          Kirkland
+          Bothel
+          (Newport-Kennydale?)
+          North Bend
+    hi - text re: general hi operations
+        'mainland to maui' - re: mainland investors and relocation
+        buyer - text re: buyers agent
+        seller -  text re: listing agent
+        neighborhoods
+            each maui 
+              West
+                Lahaina
+                Kaanapali
+                Napili/Kahana/Honokowai
+              South
+                Kihei
+                Wailea
+              Central
+                Kahului
+                Wailuku
+                Waiehu
+              Upcountry
+                Haiku
+                Makawao
+                Kula
+                Ulupalakua
+              East
+                Hana
+                Keanae
