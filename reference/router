@@ -7,30 +7,9 @@ https://reactcommunity.org/react-transition-group/transition
 
 import { useHistory } from 'react-router-dom';
 
-export const withRouter = (Component) => {
-  const Wrapper = (props) => {
-    const history = useHistory();
-    
-    return (
-      <Component
-        history={history}
-        {...props}
-        />
-    );
-  };
-  
-  return Wrapper;
-};
 
-ReactDOM.render(
-  <BrowserRouter>
-    <App/>
-  </BrowserRouter>,
-  document.getElementById(‘root’));
 
-  private router
 
-  protected router
 
   top nav stays same (except home)
   background landscape reacts to routes
