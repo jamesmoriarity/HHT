@@ -4,21 +4,22 @@
 }
 #top-nav{
   position:relative;
-  background-color: hsl(287deg 26% 17%);
   padding:5px;
   height:150px;
-  border-bottom: 1px solid hsl(325, 96%, 67%);
+  border-bottom:1px solid white;
+  overflow:hidden;
 }
 #top-nav-inner{
   position:absolute;
-  bottom:10px;
+  bottom:-40px;
   width:100%;
   text-align:center;
 }
 #top-nav a{
-  color: hsl(325, 96%, 67%);
+  color:grey;
   text-decoration: none;
+  margin-right:15px;
 }
 body{
-  background-color: hsl(287deg 26% 17%);
+  background-color: #fff;
 }

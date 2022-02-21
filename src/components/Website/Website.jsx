@@ -4,16 +4,23 @@ import Hawaii from '../Hawaii/Hawaii';
 import Home from '../Home/Home';
 import Washington from '../Washington/Washington';
 import Landscape from '../Landscape/Landscape';
+import { gsap } from 'gsap'
 import './Website.css'
 
 
 class Website extends React.Component {
+  showNav = () =>{
+    gsap.to("#top-nav-inner", {bottom:20, duration:1, ease:'easeInOut'})
+  }
+  componentDidMount(){
+    this.showNav()
+  }
   render() {
     return (<>
              <BrowserRouter>
                     <div id="top-nav">
                       <div id="top-nav-inner">
-                        <Link to="/washington">Washington</Link> - <Link to="/">Home</Link> -  <Link to="/hawaii">Hawaii</Link>
+                        <Link to="/washington">Washington</Link>  <Link to="/">Home</Link>   <Link to="/hawaii">Hawaii</Link>
                       </div>
                     </div>
                     <Routes>
