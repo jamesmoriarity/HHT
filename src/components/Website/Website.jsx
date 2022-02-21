@@ -4,13 +4,18 @@ import Hawaii from '../Hawaii/Hawaii';
 import Home from '../Home/Home';
 import Washington from '../Washington/Washington';
 import Landscape from '../Landscape/Landscape';
+import './Website.css'
 
 
 class Website extends React.Component {
   render() {
     return (<>
              <BrowserRouter>
-                    <Link to="/">Home</Link> -  <Link to="/hawaii">Hawaii</Link> - <Link to="/washington">Washington</Link> - 
+                    <div id="top-nav">
+                      <div id="top-nav-inner">
+                        <Link to="/washington">Washington</Link> - <Link to="/">Home</Link> -  <Link to="/hawaii">Hawaii</Link>
+                      </div>
+                    </div>
                     <Routes>
                       <Route path="*" element={<Landscape />} />
                     </Routes>

@@ -11,7 +11,7 @@ export default function Page({ children, id }: PageProps){
         console.log('onDone')
     }
     const animateIn = function(){
-        gsap.to('#' + id, {opacity:1, duration:1, ease:'circ', onComplete:onDone, delay:1})
+        // gsap.to('#' + id, {opacity:1, duration:1, ease:'circ', onComplete:onDone, delay:1})
     }
     const animateOut = function(){
         console.log('animateOut')

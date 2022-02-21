@@ -1,3 +1,35 @@
 #landscape{
-    margin:25px;
+    position:relative;
+    margin:0px;
+    height:600px;
+    border-bottom: 1px solid hsl(325, 96%, 67%);
+    overflow: hidden;
+}
+.background-panel{
+    position:relative;
+    left:0;
+    top:0;
+    width:2400px;
+    height:600px;
+    background-image: url("./jpg/sky.jpg");
+    background-position: bottom;
+    background-size: cover;
+}
+#LandscapeSVG{
+    position:absolute;
+    bottom: -25px;
+    opacity:0;
+}
+#LandscapeSVG g{
+/*     stroke-width:0.25px;
+    stroke:rgb(255, 132, 60); */
+}
+#back{
+    fill: hsl(287deg 25% 23%);
+}
+#middle{
+    fill: hsl(287deg 25% 13%);
+}
+#front{
+    fill: hsl(287deg 25% 3%);
 }
