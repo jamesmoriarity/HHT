@@ -22,11 +22,11 @@ export class CardHelper{
     }
     static buildLighting = (scene:THREE.Scene) => {
         const lightIntensity:number = 0.2
-        let lightBlue = new THREE.DirectionalLight(0x334444, lightIntensity);
+        let lightBlue = new THREE.DirectionalLight(0x444444, lightIntensity);
         lightBlue.castShadow = true;
         lightBlue.position.set(0, 0.25, 2);
         scene.add(lightBlue);
-        let lowBlue = new THREE.DirectionalLight(0x334444, lightIntensity);
+        let lowBlue = new THREE.DirectionalLight(0x444444, lightIntensity);
         lowBlue.castShadow = true;
         lowBlue.position.set(-0.2, -0.3, 2);
         scene.add(lowBlue);

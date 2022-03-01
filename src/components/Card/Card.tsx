@@ -42,7 +42,7 @@ export function Card(props:any){
         onComplete: onOpenComplete
     })
     animationTimeline.add(angleTween, 0)
-    animationTimeline.add(scaleTween, 0.7)
+    animationTimeline.add(scaleTween, 0.65)
 
     const openCard = function(){
         animationTimeline?.kill()
