@@ -4,6 +4,7 @@ import Hawaii from '../Hawaii/Hawaii';
 import Home from '../Home/Home';
 import Washington from '../Washington/Washington';
 import Landscape from '../Landscape/Landscape';
+import { Card } from '../Card/Card';
 import { gsap } from 'gsap'
 import './Website.css'
 
@@ -17,6 +18,7 @@ class Website extends React.Component {
     this.showNav()
   }
   render() {
+    return <Card/>
     return (<>
              <BrowserRouter>
                     <div id="top-nav">
