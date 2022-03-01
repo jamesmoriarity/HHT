@@ -54,7 +54,7 @@ export default function Landscape(props:any){
     }
     const moveTo = function(locationName:string){
         const x:number = getX(locationName)
-        const duration:number = (hasMoved) ? 2.5 : 0
+        const duration:number = (hasMoved) ? 1.5 : 0
         const scale:number = getScale(locationName)
         const bottom:number = (locationName === 'home') ? -25 : (locationName === 'washington') ? 10 : 80;
         if(!hasMoved){
@@ -64,12 +64,12 @@ export default function Landscape(props:any){
         gsap.to("#front", {x:x * 1.1, duration:duration, ease:'easeInOut'})
         gsap.to("#middle", {x:x * .7, duration:duration, ease:'easeInOut'})
         gsap.to("#back", {x:x * .6, duration:duration, ease:'easeInOut'})
-        gsap.to(".background-panel", {x:x  * .95, duration:duration, ease:'easeInOut'})
-
-        const opacityOne:number = (bgToggle) ? 1 : 0;
-        const opacityTwo:number = (bgToggle) ? 0 : 1
-        gsap.to(".background-panel.one", {opacity:opacityOne, duration:duration, ease:'easeInOut'})
-        gsap.to(".background-panel.two", {opacity:opacityTwo, duration:duration, ease:'easeInOut'})
+        gsap.to(".background-panel", {x:x  * 1, duration:duration, ease:'easeInOut'})
+ 
+        const opacityBlue:number = (locationName === 'home') ? .5 : (locationName === 'hawaii') ? .25 : .75;
+        gsap.to(".background-panel.blue", {opacity:opacityBlue, delay: 0.75, duration:duration * 2, ease:'easeInOut'})
+        const opacityPink:number = (locationName === 'home') ? .45 : (locationName === 'hawaii') ? .7 : 0.35;
+        gsap.to(".background-panel.pink", {opacity:opacityPink, delay: 0.75, duration:duration * 2, ease:'easeInOut'})
 
         gsap.to("#LandscapeSVG", {scale:scale, bottom:bottom, duration:duration, ease:'easeInOut'})
         setHasMoved(true)
@@ -78,8 +78,8 @@ export default function Landscape(props:any){
     useEffect(handleLocationChange, [location]);
     return(
         <div id="landscape" ref={ref}>
-            <div className="background-panel one"></div>
-            <div className="background-panel two"></div>
+            <div className="background-panel pink"></div>
+            <div className="background-panel blue"></div>
             <LandscapeSVG/>
         </div>
     )

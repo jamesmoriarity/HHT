@@ -4,6 +4,8 @@
     height:600px;
     overflow: hidden;
     background-color: #fff;
+    border-bottom:2px solid black;
+    border-top:2px solid black;
 }
 .background-panel{
     position:relative;
@@ -13,12 +15,15 @@
     height:600px;
     background-position: bottom;
     background-size: cover;
-    opacity:1;
+    opacity:0;
 }
-.background-panel.one{
+.background-panel.blue{
     background-image: url("./jpg/sky.jpg");
+    opacity:.5;
 }
-.background-panel.two{
+.background-panel.pink{
+    position:absolute;
+    opacity:.5;
     background-image: url("./jpg/sky-2.jpg");
 }
 #LandscapeSVG{

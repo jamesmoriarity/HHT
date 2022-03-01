@@ -10,7 +10,8 @@ import './Website.css'
 
 class Website extends React.Component {
   showNav = () =>{
-    gsap.to("#top-nav-inner", {bottom:20, duration:1, ease:'easeInOut'})
+    gsap.to("#top-nav-inner", {bottom:20, duration:1, delay:3, ease:'easeIn'})
+    gsap.to("#footer-inner", {top:50, duration:1, delay:3, ease:'easeIn'})
   }
   componentDidMount(){
     this.showNav()
@@ -32,6 +33,21 @@ class Website extends React.Component {
                         <Route path="/washington" element={<Washington />} />
                         <Route path="*" element={<Home />} />
                     </Routes>
+
+                    <div id="footer">
+                      <div id="footer-inner">
+                        <p>
+                          <Link to="/washington">footer</Link>
+                          <Link to="/">ipsum</Link>
+                          <Link to="/hawaii">dolor</Link>
+                          <Link to="/hawaii">consequet</Link>
+                          <Link to="/washington">lorem</Link>
+                          <Link to="/">ipsum</Link>
+                          <Link to="/hawaii">dolor</Link>
+                          <Link to="/hawaii">footer</Link>
+                        </p>
+                      </div>
+                    </div>
                 </BrowserRouter>
             </>
     );

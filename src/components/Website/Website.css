@@ -5,7 +5,7 @@
 #top-nav{
   position:relative;
   padding:5px;
-  height:150px;
+  height:125px;
   border-bottom:1px solid white;
   overflow:hidden;
 }
@@ -20,6 +20,27 @@
   text-decoration: none;
   margin-right:15px;
 }
+
+#footer{
+  position:relative;
+  padding:5px;
+  height:150px;
+  border-bottom:1px solid white;
+  overflow:hidden;
+}
+#footer-inner{
+  position:absolute;
+  top:-50px;
+  width:100%;
+  text-align:center;
+}
+#footer a{
+  color:grey;
+  text-decoration: none;
+  margin-right:15px;
+}
+
+
 body{
   background-color: #fff;
 }
