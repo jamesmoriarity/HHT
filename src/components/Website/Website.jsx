@@ -18,7 +18,6 @@ class Website extends React.Component {
     this.showNav()
   }
   render() {
-    return <Card/>
     return (<>
              <BrowserRouter>
                     <div id="top-nav">
@@ -35,7 +34,7 @@ class Website extends React.Component {
                         <Route path="/washington" element={<Washington />} />
                         <Route path="*" element={<Home />} />
                     </Routes>
-
+                    <Card/>
                     <div id="footer">
                       <div id="footer-inner">
                         <p>

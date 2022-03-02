@@ -8,6 +8,8 @@
   height:125px;
   border-bottom:1px solid white;
   overflow:hidden;
+  z-index:5;
+  background-color:rgb(252, 252, 252);
 }
 #top-nav-inner{
   position:absolute;
@@ -22,11 +24,12 @@
 }
 
 #footer{
-  position:relative;
-  padding:5px;
-  height:150px;
-  border-bottom:1px solid white;
-  overflow:hidden;
+  position: relative;
+  padding: 5px;
+  height: 180px;
+  border-bottom: 1px solid white;
+  overflow: hidden;
+  background-color: #fff;
 }
 #footer-inner{
   position:absolute;

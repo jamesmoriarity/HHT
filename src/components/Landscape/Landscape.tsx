@@ -44,7 +44,7 @@ export default function Landscape(props:any){
     const getScale = function(locationName:string){
         let locations:Map<string, number> = new Map()
         locations.set('home', 1)
-        locations.set('hawaii', 2.4)
+        locations.set('hawaii', 2.5)
         locations.set('washington', 1.8)
         let scale:number | undefined = locations.get(locationName)
         if(scale === undefined){
@@ -56,7 +56,7 @@ export default function Landscape(props:any){
         const x:number = getX(locationName)
         const duration:number = (hasMoved) ? 1.5 : 0
         const scale:number = getScale(locationName)
-        const bottom:number = (locationName === 'home') ? -25 : (locationName === 'washington') ? 10 : 80;
+        const bottom:number = (locationName === 'home') ? -25 : (locationName === 'washington') ? 10 : -20;
         if(!hasMoved){
             console.log('has not moved, animate in')
             gsap.to("#LandscapeSVG", {opacity:1, duration:3})

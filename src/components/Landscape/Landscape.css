@@ -4,8 +4,6 @@
     height:600px;
     overflow: hidden;
     background-color: #fff;
-    border-bottom:2px solid black;
-    border-top:2px solid black;
 }
 .background-panel{
     position:relative;
@@ -30,17 +28,16 @@
     position:absolute;
     bottom: -25px;
     opacity:0;
+    transform:scale(0.25);
 }
-#LandscapeSVG g{
-/*     stroke-width:0.25px;
-    stroke:rgb(255, 132, 60); */
+#LandscapeSVG path{
 }
-#back{
+#back>path{
     fill: hsl(0 0% 23%);
 }
-#middle{
+#middle>path{
     fill: hsl(0 0% 13%);
 }
-#front{
+#front>path{
     fill: hsl(0 0% 3%);
 }

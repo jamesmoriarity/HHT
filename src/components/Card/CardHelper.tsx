@@ -3,7 +3,7 @@ import { MeshStandardMaterial, TextureLoader, Vector2, Vector3 } from "three";
 
 export class CardHelper{
     constructor(){}
-    static scale:number = 1.6
+    static scale:number = 1.3
     static bgImage:string = 'jpg/sky.jpg'
     static buildRenderer = () => {
         let renderer = new THREE.WebGLRenderer();
@@ -21,14 +21,14 @@ export class CardHelper{
         return camera
     }
     static buildLighting = (scene:THREE.Scene) => {
-        const lightIntensity:number = 0.2
+        const lightIntensity:number = 0.1
         let lightBlue = new THREE.DirectionalLight(0x444444, lightIntensity);
         lightBlue.castShadow = true;
         lightBlue.position.set(0, 0.25, 2);
         scene.add(lightBlue);
         let lowBlue = new THREE.DirectionalLight(0x444444, lightIntensity);
         lowBlue.castShadow = true;
-        lowBlue.position.set(-0.2, -0.3, 2);
+        lowBlue.position.set(-0.2, -0.2, 2);
         scene.add(lowBlue);
         const lightH = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1 );
         scene.add( lightH );
@@ -75,8 +75,8 @@ export class CardHelper{
         const cardHeight:number = CardHelper.scale
         var geometry = new THREE.PlaneGeometry( cardWidth/2, cardWidth, 500, 500 );
         let materialOutside = new THREE.MeshPhongMaterial({
-            color: 0xcccccc,
-            specular: 0x333333,
+            color: 0xffffff,
+            specular: 0xffffff,
             shininess: 0,
             flatShading:false,
             side:THREE.BackSide
@@ -101,7 +101,7 @@ export class CardHelper{
         return parent
     }
     static buildCenter = (scene:THREE.Scene) => {
-        const cardWidth:number = CardHelper.scale + 0.0021
+        const cardWidth:number = CardHelper.scale + 0.00122
         const cardHeight:number = CardHelper.scale
         var geometry = new THREE.PlaneGeometry( cardWidth, cardHeight, 100, 100 );
         const loader = new THREE.TextureLoader()
@@ -138,7 +138,7 @@ export class CardHelper{
         const cardHeight:number = CardHelper.scale * 5
         var geometry = new THREE.PlaneGeometry( cardWidth, cardHeight, 100, 100 );
         var material = new THREE.MeshPhongMaterial({
-            color: 0xaaaaaa,
+            color: 0xdddddd,
             specular: 0xffffff,
             shininess: 8,
             flatShading:true

@@ -29,11 +29,11 @@ export function Card(props:any){
         duration: 1.6
     }
     let angleTween = gsap.to(originalVals, targetVals)
-    let scaleTween = gsap.to(camera.position, {z:11.5, duration:0.8, ease:"sine.inOut", onUpdate:()=>{
+    let scaleTween = gsap.to(camera.position, {z:5, duration:1, ease:"sine.inOut", onUpdate:()=>{
         renderScene()
     }},)
     const onOpenComplete = function(){
-        console.log('open is complete')
+        fadeOut()
     }
     let animationTimeline = gsap.timeline({
         autoRemoveChildren:false, 
@@ -41,6 +41,7 @@ export function Card(props:any){
         smoothChildTiming:true, 
         onComplete: onOpenComplete
     })
+
     animationTimeline.add(angleTween, 0)
     animationTimeline.add(scaleTween, 0.65)
 
@@ -76,17 +77,25 @@ export function Card(props:any){
     }
     const fadeIn = function(){
         console.log('fade in')
-        if(!containerRef || !containerRef.current){
-            return
-        }
-        let target = containerRef.current
+        let target = "#cardContainerInner"
         console.log('target', target)
         let fadeTween = gsap.to(target, 
-            {opacity:1, duration:5, delay:1.2, ease:"power2.out", onUpdate:()=>{
+            {opacity:1, duration:8, delay:1, ease:"power2.out", onUpdate:()=>{
                 
             }}
         )
         console.log(fadeTween)
+    }
+
+    const fadeOut = function(){
+        console.log('fade out')
+        let target = "#cardContainer"
+        console.log('target', target)
+        let fadeTween = gsap.to(target, 
+            {opacity:0, duration:3, delay:0, ease:"power2.out", onUpdate:()=>{
+                
+            }}
+        )     
     }
     useEffect(()=>{
         buildScene()
@@ -106,7 +115,7 @@ export function Card(props:any){
     }
     return (
         <div ref={containerRef} id="cardContainer" onClick={(e)=>{onClickHandler()}}>
-            <div ref={ref => (mount = ref)} />
+            <div id="cardContainerInner" ref={ref => (mount = ref)} />
         </div>
     )
 }
