@@ -14,13 +14,11 @@ export default function Page({ children, id }: PageProps){
         // gsap.to('#' + id, {opacity:1, duration:1, ease:'circ', onComplete:onDone, delay:1})
     }
     const animateOut = function(){
-        console.log('animateOut')
         gsap.to('#' + id, {opacity:0, duration:1, ease:'circ', onComplete:onDone})
     }
     useEffect(
         ()=>{
             animateIn();
-            console.log('useEffect')
             return animateOut
         },[] 
     )

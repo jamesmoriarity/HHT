@@ -58,7 +58,6 @@ export default function Landscape(props:any){
         const scale:number = getScale(locationName)
         const bottom:number = (locationName === 'home') ? -25 : (locationName === 'washington') ? 10 : -20;
         if(!hasMoved){
-            console.log('has not moved, animate in')
             gsap.to("#LandscapeSVG", {opacity:1, duration:3})
         }
         gsap.to("#front", {x:x * 1.1, duration:duration, ease:'easeInOut'})
