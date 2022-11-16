@@ -56,12 +56,12 @@ export class CardHelper{
         var axes = new THREE.AxesHelper(6);
         scene.add(axes);
     }
-    static buildPanels = (scene:THREE.Scene) => {
+    static buildPanels = (scene:THREE.Scene, onLoadedCallback:Function) => {
         console.log('buildPanels')
         const panelWidth:number = (CardHelper.scale/2)
         const panelHeight:number = CardHelper.scale
-        const geometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.002)
-        const matsRight = CardHelper.getPanelMats('right')
+        const geometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
+        const matsRight = CardHelper.getPanelMats('right', onLoadedCallback)
         let meshRight = new THREE.Mesh( geometry, matsRight);
         meshRight.castShadow = true;
         meshRight.receiveShadow = true;
@@ -72,7 +72,7 @@ export class CardHelper{
         rightPanel.rotation.set(0, 0, 0) // right goes from 0 to 3.14 to open
         rightPanel.position.set(0.5, 0, 0)
 
-        const matsLeft = CardHelper.getPanelMats('left')
+        const matsLeft = CardHelper.getPanelMats('left', onLoadedCallback)
         let meshLeft = new THREE.Mesh( geometry, matsLeft);
         meshLeft.castShadow = true;
         meshLeft.receiveShadow = true;
@@ -85,7 +85,7 @@ export class CardHelper{
         return [ leftPanel, rightPanel ]
         // return [leftPanel, rightPanel]
     }
-    static getPanelMats = (side:string) => {
+    static getPanelMats = (side:string, callback:Function) => {
         console.log('getPanelMats')
         const loader = new THREE.TextureLoader();
         const material = new THREE.MeshPhongMaterial({
@@ -99,7 +99,7 @@ export class CardHelper{
         
         const coverurl = (side === 'left') ? 'jpg/cover-left.jpg' : 'jpg/cover-right.jpg'
         const onCoverLoaded = function(){
-            console.log('cover is loaded')
+            callback()
         }
         const materialWhite = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa,

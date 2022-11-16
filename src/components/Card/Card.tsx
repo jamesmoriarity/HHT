@@ -6,16 +6,25 @@ import { gsap } from "gsap"
 import { flattenDiagnosticMessageText } from "typescript";
 
 export function Card(props:any){
-    
     const onOpenComplete = function(){
         fadeOut()
     }
     const openCard = function(){
+        console.log('openCard')
         renderScene()
         animationTimeline?.restart()
     }
     const closeCard = function(){
         animationTimeline.reverse()
+    }
+    let panelsLoaded:number = 0
+    const onMaterialsLoaded = function(){
+        panelsLoaded++
+        console.log('onMaterialsLoaded')
+        if(panelsLoaded === 2){
+            renderScene()
+            setTimeout(()=>{fadeIn()}, 2000)
+        }
     }
     const buildScene = function(){
         scene = new THREE.Scene();
@@ -24,7 +33,7 @@ export function Card(props:any){
         CardHelper.buildLighting(scene)
         CardHelper.buildBackground(scene)
         CardHelper.buildCenter(scene)
-        const [lPanel, rPanel] = CardHelper.buildPanels(scene)
+        const [lPanel, rPanel] = CardHelper.buildPanels(scene, onMaterialsLoaded)
         leftPanel = lPanel
         rightPanel = rPanel
     }
@@ -40,12 +49,14 @@ export function Card(props:any){
         renderScene()
     }
     const onFadeComplete = function(){
+        console.log('onFadeComplete')
         renderScene()
+        setTimeout(openCard, 2000)
     }
     const fadeIn = function(){
         let target = "#cardContainerInner"
         let fade = gsap.to(target, 
-            {opacity:1, duration:1, delay:1, ease:"power2.out"}
+            {opacity:1, duration:1, delay:0, ease:"power2.out"}
         )
         let fadeTimeline = gsap.timeline({
             autoRemoveChildren:false, 
@@ -64,21 +75,23 @@ export function Card(props:any){
             }}
         )     
     }
-    useEffect(()=>{
+    const onUseEffect = function(){
         buildScene()
-        fadeIn()
         renderScene()
-        setTimeout(()=>{openCard()}, 3000)
-    },[])
+        // setTimeout(()=>{openCard()}, 3000)
+    }
+    useEffect(onUseEffect)
     let cardOpen = false
+    
     const onClickHandler = function(){
+        return
         if(cardOpen){
             cardOpen = false
             closeCard()
             return
         }
         cardOpen = true
-        openCard();
+        //openCard();
     }
     let scene:THREE.Scene = new THREE.Scene();
     let gltf:any;

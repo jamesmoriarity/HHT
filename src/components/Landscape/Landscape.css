@@ -4,6 +4,7 @@
     height:600px;
     overflow: hidden;
     background-color: #fff;
+    width:100%;
 }
 .background-panel{
     position:relative;

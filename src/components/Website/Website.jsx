@@ -38,14 +38,14 @@ class Website extends React.Component {
                     <div id="footer">
                       <div id="footer-inner">
                         <p>
-                          <Link to="/washington">footer</Link>
-                          <Link to="/">ipsum</Link>
+                          <Link to="/">footer</Link>
+                          <Link to="/washington">ipsum</Link>
                           <Link to="/hawaii">dolor</Link>
-                          <Link to="/hawaii">consequet</Link>
+                          <Link to="/">consequet</Link>
                           <Link to="/washington">lorem</Link>
-                          <Link to="/">ipsum</Link>
-                          <Link to="/hawaii">dolor</Link>
-                          <Link to="/hawaii">footer</Link>
+                          <Link to="/hawaii">ipsum</Link>
+                          <Link to="/">dolor</Link>
+                          <Link to="/washington">footer</Link>
                         </p>
                       </div>
                     </div>
