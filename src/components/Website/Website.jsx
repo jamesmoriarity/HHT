@@ -7,12 +7,13 @@ import Landscape from '../Landscape/Landscape';
 import { Card } from '../Card/Card';
 import { gsap } from 'gsap'
 import './Website.css'
+import About from '../About/About';
 
 
 class Website extends React.Component {
   showNav = () =>{
-    gsap.to("#top-nav-inner", {bottom:20, duration:1, delay:3, ease:'easeIn'})
-    gsap.to("#footer-inner", {top:50, duration:1, delay:3, ease:'easeIn'})
+    gsap.to("#top-nav-inner", {bottom:20, duration:1, delay:7, ease:'easeIn'})
+    gsap.to("#footer-inner", {top:10, duration:1, delay:7, ease:'easeIn'})
   }
   componentDidMount(){
     this.showNav()
@@ -22,16 +23,15 @@ class Website extends React.Component {
              <BrowserRouter>
                     <div id="top-nav">
                       <div id="top-nav-inner">
-                        <Link to="/washington">Washington</Link>  <Link to="/">Home</Link>   <Link to="/hawaii">Hawaii</Link>
+                        <Link to="/">Home</Link>   <Link to="/hawaii">Hawaii</Link>  <Link to="/washington">Washington</Link>  <Link to="/about">About Dori</Link>  
                       </div>
                     </div>
-                    <Routes>
-                      <Route path="*" element={<Landscape />} />
-                    </Routes>
+                    <Landscape />
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/hawaii" element={<Hawaii />} />
                         <Route path="/washington" element={<Washington />} />
+                        <Route path="/about" element={<About />} />
                         <Route path="*" element={<Home />} />
                     </Routes>
                     <Card/>

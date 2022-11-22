@@ -4,7 +4,7 @@ import "./Home.css"
 import { useEffect } from "react";
 export default function Home(){
     return  <Page id="home-page">
-                <div>
+                <div className="home">
                     <h1 id="home">Home</h1>
                     <div className="page-content">
                         <p>

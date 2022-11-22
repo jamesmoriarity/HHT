@@ -2,7 +2,7 @@ import Page from "../Page/Page";
 
 export default function Washington(){
     return <Page id="home-page">
-                    <div>
+                    <div className="washington">
                         <h1>Washington</h1>
                         <div className="page-content">
                                 <p>

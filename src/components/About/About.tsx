@@ -1,9 +1,9 @@
 import Page from "../Page/Page";
 
-export default function Hawaii(){
+export default function About(){
     return <Page id="home-page">
-            <div className="hawaii">
-                <h1>Hawaii</h1>
+            <div className="about">
+                <h1>About Dori</h1>
                 <div className="page-content">
                         <p>
                             Veniam officia culpa nulla exercitation duis minim nisi qui. Laborum elit officia commodo elit. Ut qui veniam commodo anim reprehenderit consequat minim nostrud. Exercitation fugiat nulla est quis ad. Culpa irure laboris commodo anim irure esse magna cupidatat amet ut enim adipisicing proident laboris.
