@@ -1,8 +1,6 @@
 import * as THREE from "three";
 import { MeshStandardMaterial, TextureLoader, Vector2, Vector3 } from "three";
 export class CardHelper{
-    // scale 1 = 325px
-    // scale 2 = 650px
     constructor(){}
     
     static scale:number = 1
