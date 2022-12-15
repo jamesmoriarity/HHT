@@ -1,9 +1,17 @@
 import * as THREE from "three";
 import { MeshStandardMaterial, TextureLoader, Vector2, Vector3 } from "three";
-
 export class CardHelper{
+    // scale 1 = 325px
+    // scale 2 = 650px
     constructor(){}
+    
     static scale:number = 1
+    static windowScale:number = 0.8
+    static pixelsPerUnit:number = 325
+    static targetHeight:number = window.innerHeight * CardHelper.windowScale
+    static targetHeightUnits:number = (CardHelper.targetHeight)/CardHelper.pixelsPerUnit
+    static targetWidth:number = window.innerWidth * CardHelper.windowScale
+    static targetWidthUnits:number = CardHelper.targetWidth/CardHelper.pixelsPerUnit
     static bgImage:string = 'jpg/sky.jpg'
     static buildRenderer = () => {
         let renderer = new THREE.WebGLRenderer({antialias:true});
@@ -15,7 +23,7 @@ export class CardHelper{
     }
     static buildCamera = () => {
         let camera = new THREE.PerspectiveCamera(14, window.innerWidth/window.innerHeight, 1, 1000 );
-        camera.position.set(0, 0, 12)
+        camera.position.set(0, 0, 10)
         camera.lookAt(0,0,0)
         camera.updateProjectionMatrix()
         return camera
@@ -68,9 +76,9 @@ export class CardHelper{
         let rightPanel = new THREE.Group();
         rightPanel.add(meshRight)
         scene.add(rightPanel)
-        meshRight.position.set(-.25, 0, 0)
+        meshRight.position.set(-.25 * CardHelper.scale, 0, 0)
         rightPanel.rotation.set(0, 0, 0) // right goes from 0 to 3.14 to open
-        rightPanel.position.set(0.5, 0, 0)
+        rightPanel.position.set(0.5 * CardHelper.scale, 0, 0)
 
         const matsLeft = CardHelper.getPanelMats('left', onLoadedCallback)
         let meshLeft = new THREE.Mesh( geometry, matsLeft);
@@ -79,9 +87,9 @@ export class CardHelper{
         let leftPanel = new THREE.Group();
         leftPanel.add(meshLeft)
         scene.add(leftPanel)
-        meshLeft.position.set(.25, 0, 0)
+        meshLeft.position.set(.25 * CardHelper.scale, 0, 0)
         leftPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
-        leftPanel.position.set(-0.5, 0, 0)
+        leftPanel.position.set(-0.5 * CardHelper.scale, 0, 0)
         return [ leftPanel, rightPanel ]
         // return [leftPanel, rightPanel]
     }

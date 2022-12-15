@@ -7,7 +7,7 @@ import { flattenDiagnosticMessageText } from "typescript";
 
 export function Card(props:any){
     const onOpenComplete = function(){
-        fadeOut()
+        // setTimeout(fadeOut, 1000)
     }
     const openCard = function(){
         console.log('openCard')
@@ -123,7 +123,7 @@ export function Card(props:any){
         duration: 1.6
     }
     let angleTween = gsap.to(originalVals, targetVals)
-    let zoomTween = gsap.to(camera.position, {z:5, duration:1, ease:"sine.inOut", onUpdate:()=>{
+    let zoomTween = gsap.to(camera.position, {z:8, duration:1.5, ease:"sine.inOut", onUpdate:()=>{
         renderScene()
     }},)
     const xOffset = 0.0025
@@ -144,7 +144,7 @@ export function Card(props:any){
     let panelSqueeze = gsap.to(beginPanelX, targetPanelX)
     animationTimeline.add(angleTween, 0)
     animationTimeline.add(panelSqueeze, 1.3)
-    animationTimeline.add(zoomTween, 0.65)
+    animationTimeline.add(zoomTween, 2)
 
     return (
         <div ref={containerRef} id="cardContainer" onClick={(e)=>{onClickHandler()}}>
