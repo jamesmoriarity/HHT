@@ -8,7 +8,7 @@ import { flattenDiagnosticMessageText } from "typescript";
 export function Card(props:any){
     let cardHelper:CardHelper = new CardHelper()
     const onOpenComplete = function(){
-        // setTimeout(fadeOut, 1000)
+        //setTimeout(fadeOut, 1000)
     }
     const openCard = function(){
         console.log('openCard')

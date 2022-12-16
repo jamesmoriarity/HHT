@@ -4,8 +4,8 @@ export class CardHelper{
     static horizontal:string = 'h'
     static vertical:string = 'v'
     static scale:number = 1
-    static windowScale:number = 0.8
-    static pixelsPerUnit:number = 273
+    static windowScale:number = 0.7
+    static pixelsPerUnit:number = 312
     static bgImage:string = 'jpg/sky.jpg'
     targetHeight:number;
     targetHeightUnits:number;
@@ -14,12 +14,14 @@ export class CardHelper{
     isHorizontal:boolean;
     constructor(){ 
         this.isHorizontal = (window.innerWidth >= window.innerHeight)
-        this.targetHeight= window.innerHeight * CardHelper.windowScale
+        this.targetHeight= (window.innerHeight * CardHelper.windowScale)
         this.targetHeightUnits = (this.targetHeight)/CardHelper.pixelsPerUnit
-        this.targetWidth = window.innerWidth * CardHelper.windowScale
+        this.targetWidth = (window.innerWidth * CardHelper.windowScale)
         this.targetWidthUnits = this.targetWidth/CardHelper.pixelsPerUnit
-        console.log("width", this.targetWidth)
-        console.log('height', this.targetHeight)
+        console.log("window.innerWidth", window.innerWidth)
+        console.log('window.innerHeight', window.innerHeight)
+        console.log("targetWidth", this.targetWidth)
+        console.log('targetHeight', this.targetHeight)
     }
     // is it horizontal or vertical
 
@@ -32,7 +34,8 @@ export class CardHelper{
         return renderer
     }
     buildCamera = () => {
-        let camera = new THREE.PerspectiveCamera(14, window.innerWidth/window.innerHeight, 1, 1000 );
+        let camera = new THREE.PerspectiveCamera(14, this.targetWidth/this.targetHeight, 1, 1000 );
+        //new THREE.OrthographicCamera
         camera.position.set(0, 0, 10)
         camera.lookAt(0,0,0)
         camera.updateProjectionMatrix()

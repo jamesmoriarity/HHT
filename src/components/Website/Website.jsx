@@ -23,14 +23,13 @@ class Website extends React.Component {
     return (<>
              <BrowserRouter>
                     <div id="top-nav">
-                      <NeedleField />
                       <div id="top-nav-inner">
                         <Link to="/">Home</Link>   <Link to="/hawaii">Hawaii</Link>  <Link to="/washington">Washington</Link>  <Link to="/about">About Dori</Link>  
                       </div>
                     </div>
                     <Landscape />
                     
-                    <Routes>
+                   <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/hawaii" element={<Hawaii />} />
                         <Route path="/washington" element={<Washington />} />
