@@ -6,6 +6,7 @@ import { gsap } from "gsap"
 import { flattenDiagnosticMessageText } from "typescript";
 
 export function Card(props:any){
+    let cardHelper:CardHelper = new CardHelper()
     const onOpenComplete = function(){
         // setTimeout(fadeOut, 1000)
     }
@@ -30,10 +31,10 @@ export function Card(props:any){
         scene = new THREE.Scene();
         scene.background = new THREE.Color( 0xcccccc );
         scene.add(camera)
-        CardHelper.buildLighting(scene)
-        CardHelper.buildBackground(scene)
-        CardHelper.buildCenter(scene)
-        const [lPanel, rPanel] = CardHelper.buildPanels(scene, onMaterialsLoaded)
+        cardHelper.buildLighting(scene)
+        cardHelper.buildBackground(scene)
+        cardHelper.buildCenter(scene)
+        const [lPanel, rPanel] = cardHelper.buildPanels(scene, onMaterialsLoaded)
         leftPanel = lPanel
         rightPanel = rPanel
     }
@@ -97,8 +98,8 @@ export function Card(props:any){
     let gltf:any;
     let mount:any;
     let containerRef = useRef(null)
-    let renderer:THREE.WebGLRenderer = CardHelper.buildRenderer()
-    let camera:THREE.PerspectiveCamera = CardHelper.buildCamera()
+    let renderer:THREE.WebGLRenderer = cardHelper.buildRenderer()
+    let camera:THREE.PerspectiveCamera = cardHelper.buildCamera()
     let leftPanel:THREE.Group = new THREE.Group()
     let rightPanel:THREE.Group = new THREE.Group()
 
@@ -123,9 +124,9 @@ export function Card(props:any){
         duration: 1.6
     }
     let angleTween = gsap.to(originalVals, targetVals)
-    let zoomTween = gsap.to(camera.position, {z:8, duration:1.5, ease:"sine.inOut", onUpdate:()=>{
+/*     let zoomTween = gsap.to(camera.position, {z:10, duration:1.5, ease:"sine.inOut", onUpdate:()=>{
         renderScene()
-    }},)
+    }},) */
     const xOffset = 0.0025
     const xLeftStart = CardHelper.scale/-2
     const xLeftEnd = xLeftStart + xOffset
@@ -144,7 +145,7 @@ export function Card(props:any){
     /* let panelSqueeze = gsap.to(beginPanelX, targetPanelX) */
     animationTimeline.add(angleTween, 0)
     // animationTimeline.add(panelSqueeze, 1.3)
-    animationTimeline.add(zoomTween, 2)
+    //animationTimeline.add(zoomTween, 2)
 
     return (
         <div ref={containerRef} id="cardContainer" onClick={(e)=>{onClickHandler()}}>

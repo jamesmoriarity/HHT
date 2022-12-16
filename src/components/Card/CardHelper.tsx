@@ -1,17 +1,29 @@
 import * as THREE from "three";
 import { MeshStandardMaterial, TextureLoader, Vector2, Vector3 } from "three";
 export class CardHelper{
-    constructor(){}
-    
+    static horizontal:string = 'h'
+    static vertical:string = 'v'
     static scale:number = 1
     static windowScale:number = 0.8
-    static pixelsPerUnit:number = 325
-    static targetHeight:number = window.innerHeight * CardHelper.windowScale
-    static targetHeightUnits:number = (CardHelper.targetHeight)/CardHelper.pixelsPerUnit
-    static targetWidth:number = window.innerWidth * CardHelper.windowScale
-    static targetWidthUnits:number = CardHelper.targetWidth/CardHelper.pixelsPerUnit
+    static pixelsPerUnit:number = 273
     static bgImage:string = 'jpg/sky.jpg'
-    static buildRenderer = () => {
+    targetHeight:number;
+    targetHeightUnits:number;
+    targetWidth:number;
+    targetWidthUnits:number;
+    isHorizontal:boolean;
+    constructor(){ 
+        this.isHorizontal = (window.innerWidth >= window.innerHeight)
+        this.targetHeight= window.innerHeight * CardHelper.windowScale
+        this.targetHeightUnits = (this.targetHeight)/CardHelper.pixelsPerUnit
+        this.targetWidth = window.innerWidth * CardHelper.windowScale
+        this.targetWidthUnits = this.targetWidth/CardHelper.pixelsPerUnit
+        console.log("width", this.targetWidth)
+        console.log('height', this.targetHeight)
+    }
+    // is it horizontal or vertical
+
+    buildRenderer = () => {
         let renderer = new THREE.WebGLRenderer({antialias:true});
         renderer.outputEncoding = THREE.sRGBEncoding;
         renderer.shadowMap.enabled = true;
@@ -19,14 +31,14 @@ export class CardHelper{
         renderer.setSize( window.innerWidth, window.innerHeight );
         return renderer
     }
-    static buildCamera = () => {
+    buildCamera = () => {
         let camera = new THREE.PerspectiveCamera(14, window.innerWidth/window.innerHeight, 1, 1000 );
         camera.position.set(0, 0, 10)
         camera.lookAt(0,0,0)
         camera.updateProjectionMatrix()
         return camera
     }
-    static buildLighting = (scene:THREE.Scene) => {
+    buildLighting = (scene:THREE.Scene) => {
         const lightIntensity:number = 0.15
         let lightBlue = new THREE.DirectionalLight(0x444444, lightIntensity);
         lightBlue.castShadow = true;
@@ -39,7 +51,7 @@ export class CardHelper{
         const lightH = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.95 );
         scene.add( lightH );
     }
-    static addGrid = (scene:THREE.Scene) => {
+    addGrid = (scene:THREE.Scene) => {
         var green = new THREE.Color(0x00ff00)
         var red = new THREE.Color(0x990000)
         var blue = new THREE.Color(0x004466)
@@ -62,36 +74,36 @@ export class CardHelper{
         var axes = new THREE.AxesHelper(6);
         scene.add(axes);
     }
-    static buildPanels = (scene:THREE.Scene, onLoadedCallback:Function) => {
+    buildPanels = (scene:THREE.Scene, onLoadedCallback:Function) => {
         console.log('buildPanels')
-        const panelWidth:number = (CardHelper.targetWidthUnits/4)
-        const panelHeight:number = CardHelper.targetHeightUnits
+        const panelWidth:number = (this.targetWidthUnits/4)
+        const panelHeight:number = this.targetHeightUnits
         const geometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
-        const matsRight = CardHelper.getPanelMats('right', onLoadedCallback)
+        const matsRight = this.getPanelMats('right', onLoadedCallback)
         let meshRight = new THREE.Mesh( geometry, matsRight);
         meshRight.castShadow = true;
         meshRight.receiveShadow = true;
         let rightPanel = new THREE.Group();
         rightPanel.add(meshRight)
         scene.add(rightPanel)
-        meshRight.position.set(-.125 * CardHelper.targetWidthUnits, 0, 0)
+        meshRight.position.set(-.125 * this.targetWidthUnits, 0, 0)
         rightPanel.rotation.set(0, 0, 0) // right goes from 0 to 3.14 to open
-        rightPanel.position.set(0.25 * CardHelper.targetWidthUnits, 0, 0)
+        rightPanel.position.set(0.25 * this.targetWidthUnits, 0, 0)
 
-        const matsLeft = CardHelper.getPanelMats('left', onLoadedCallback)
+        const matsLeft = this.getPanelMats('left', onLoadedCallback)
         let meshLeft = new THREE.Mesh( geometry, matsLeft);
         meshLeft.castShadow = true;
         meshLeft.receiveShadow = true;
         let leftPanel = new THREE.Group();
         leftPanel.add(meshLeft)
         scene.add(leftPanel)
-        meshLeft.position.set(0.125 * CardHelper.targetWidthUnits, 0, 0)
+        meshLeft.position.set(0.125 * this.targetWidthUnits, 0, 0)
         leftPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
-        leftPanel.position.set(-0.25 * CardHelper.targetWidthUnits, 0, 0)
+        leftPanel.position.set(-0.25 * this.targetWidthUnits, 0, 0)
         return [ leftPanel, rightPanel ]
         // return [leftPanel, rightPanel]
     }
-    static getPanelMats = (side:string, callback:Function) => {
+    getPanelMats = (side:string, callback:Function) => {
         console.log('getPanelMats')
         const loader = new THREE.TextureLoader();
         const material = new THREE.MeshPhongMaterial({
@@ -124,10 +136,10 @@ export class CardHelper{
         ];
         return cubeMaterials
     }
-    static buildCenter = (scene:THREE.Scene) => {
-        const cardWidth:number = CardHelper.targetWidthUnits/2
-        const cardHeight:number = CardHelper.targetHeightUnits
-        var geometry = new THREE.PlaneGeometry( cardWidth, cardHeight, 100, 100 );
+    buildCenter = (scene:THREE.Scene) => {
+        const centerWidth:number = this.targetWidthUnits/2
+        const centerHeight:number = this.targetHeightUnits
+        var geometry = new THREE.PlaneGeometry( centerWidth, centerHeight, 100, 100 );
         const loader = new THREE.TextureLoader()
         let texture = loader.load('jpg/sky2.jpg')
         const materialInside = new THREE.MeshBasicMaterial({
@@ -157,9 +169,9 @@ export class CardHelper{
         parent.position.set(0,0,-0.01)
         return parent
     }
-    static buildBackground = (scene:THREE.Scene) => {
-        const cardWidth:number = CardHelper.scale * 5
-        const cardHeight:number = CardHelper.scale * 5
+    buildBackground = (scene:THREE.Scene) => {
+        const cardWidth:number = window.innerWidth
+        const cardHeight:number = window.innerHeight
         var geometry = new THREE.PlaneGeometry( cardWidth, cardHeight, 100, 100 );
         var material = new THREE.MeshPhongMaterial({
             color: 0xdddddd,
