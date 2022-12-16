@@ -64,8 +64,8 @@ export class CardHelper{
     }
     static buildPanels = (scene:THREE.Scene, onLoadedCallback:Function) => {
         console.log('buildPanels')
-        const panelWidth:number = (CardHelper.scale/2)
-        const panelHeight:number = CardHelper.scale
+        const panelWidth:number = (CardHelper.targetWidthUnits/4)
+        const panelHeight:number = CardHelper.targetHeightUnits
         const geometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
         const matsRight = CardHelper.getPanelMats('right', onLoadedCallback)
         let meshRight = new THREE.Mesh( geometry, matsRight);
@@ -74,9 +74,9 @@ export class CardHelper{
         let rightPanel = new THREE.Group();
         rightPanel.add(meshRight)
         scene.add(rightPanel)
-        meshRight.position.set(-.25 * CardHelper.scale, 0, 0)
+        meshRight.position.set(-.125 * CardHelper.targetWidthUnits, 0, 0)
         rightPanel.rotation.set(0, 0, 0) // right goes from 0 to 3.14 to open
-        rightPanel.position.set(0.5 * CardHelper.scale, 0, 0)
+        rightPanel.position.set(0.25 * CardHelper.targetWidthUnits, 0, 0)
 
         const matsLeft = CardHelper.getPanelMats('left', onLoadedCallback)
         let meshLeft = new THREE.Mesh( geometry, matsLeft);
@@ -85,9 +85,9 @@ export class CardHelper{
         let leftPanel = new THREE.Group();
         leftPanel.add(meshLeft)
         scene.add(leftPanel)
-        meshLeft.position.set(.25 * CardHelper.scale, 0, 0)
+        meshLeft.position.set(0.125 * CardHelper.targetWidthUnits, 0, 0)
         leftPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
-        leftPanel.position.set(-0.5 * CardHelper.scale, 0, 0)
+        leftPanel.position.set(-0.25 * CardHelper.targetWidthUnits, 0, 0)
         return [ leftPanel, rightPanel ]
         // return [leftPanel, rightPanel]
     }
@@ -125,8 +125,8 @@ export class CardHelper{
         return cubeMaterials
     }
     static buildCenter = (scene:THREE.Scene) => {
-        const cardWidth:number = CardHelper.scale
-        const cardHeight:number = CardHelper.scale
+        const cardWidth:number = CardHelper.targetWidthUnits/2
+        const cardHeight:number = CardHelper.targetHeightUnits
         var geometry = new THREE.PlaneGeometry( cardWidth, cardHeight, 100, 100 );
         const loader = new THREE.TextureLoader()
         let texture = loader.load('jpg/sky2.jpg')

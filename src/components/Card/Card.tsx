@@ -141,9 +141,9 @@ export function Card(props:any){
             rightPanel.position.setX(beginPanelX.rightX)
             renderScene()
         },}
-    let panelSqueeze = gsap.to(beginPanelX, targetPanelX)
+    /* let panelSqueeze = gsap.to(beginPanelX, targetPanelX) */
     animationTimeline.add(angleTween, 0)
-    animationTimeline.add(panelSqueeze, 1.3)
+    // animationTimeline.add(panelSqueeze, 1.3)
     animationTimeline.add(zoomTween, 2)
 
     return (
