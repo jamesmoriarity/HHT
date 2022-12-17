@@ -14,15 +14,25 @@ export class CardHelper{
     isHorizontal:boolean;
     constructor(){ 
         this.isHorizontal = (window.innerWidth >= window.innerHeight)
-        this.targetHeight= (window.innerHeight * CardHelper.windowScale)
+        this.targetHeight= this.getTargetHeight()
         this.targetHeightUnits = this.targetHeight/CardHelper.pixelsPerUnit
         this.targetWidth = (window.innerWidth * CardHelper.windowScale)
         this.targetWidthUnits = this.targetWidth/CardHelper.pixelsPerUnit
-        console.log('ppu', CardHelper.pixelsPerUnit)
+        console.log('this.isHorizontal', this.isHorizontal)
+/*         console.log('ppu', CardHelper.pixelsPerUnit)
         console.log("window.innerWidth", window.innerWidth)
         console.log('window.innerHeight', window.innerHeight)
-        console.log("targetWidth", this.targetWidth)
+        console.log("targetWidth", this.targetWidth) */
         console.log('targetHeight', this.targetHeight)
+    }
+
+    getTargetHeight = () => {
+        const scaledHeight:number = window.innerHeight * CardHelper.windowScale
+        return (this.isHorizontal) ? scaledHeight : (0.5 * scaledHeight)
+    }
+    getTargetWidth = () => {
+        const scaledWidth:number = window.innerWidth * CardHelper.windowScale
+        return (this.isHorizontal) ? (0.5 * scaledWidth) : scaledWidth 
     }
     // is it horizontal or vertical
 
@@ -78,8 +88,8 @@ export class CardHelper{
         var axes = new THREE.AxesHelper(6);
         scene.add(axes);
     }
-    buildPanels = (scene:THREE.Scene, onLoadedCallback:Function) => {
-        console.log('buildPanels')
+    buildVerticalPanels = (scene:THREE.Scene, onLoadedCallback:Function) => {
+        console.log('buildHorizontalPanels')
         const panelWidth:number = (this.targetWidthUnits/4)
         const panelHeight:number = this.targetHeightUnits
         const geometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
@@ -105,7 +115,42 @@ export class CardHelper{
         leftPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
         leftPanel.position.set(-0.25 * this.targetWidthUnits, 0, 0)
         return [ leftPanel, rightPanel ]
-        // return [leftPanel, rightPanel]
+    }
+    buildHorizontalPanels = (scene:THREE.Scene, onLoadedCallback:Function) => {
+        console.log('buildHorizontalPanels')
+        const panelWidth:number = (this.targetWidthUnits/4)
+        const panelHeight:number = this.targetHeightUnits
+        const geometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
+        const matsRight = this.getPanelMats('right', onLoadedCallback)
+        let meshRight = new THREE.Mesh( geometry, matsRight);
+        meshRight.castShadow = true;
+        meshRight.receiveShadow = true;
+        let rightPanel = new THREE.Group();
+        rightPanel.add(meshRight)
+        scene.add(rightPanel)
+        meshRight.position.set(-.125 * this.targetWidthUnits, 0, 0)
+        rightPanel.rotation.set(0, 0, 0) // right goes from 0 to 3.14 to open
+        rightPanel.position.set(0.25 * this.targetWidthUnits, 0, 0)
+
+        const matsLeft = this.getPanelMats('left', onLoadedCallback)
+        let meshLeft = new THREE.Mesh( geometry, matsLeft);
+        meshLeft.castShadow = true;
+        meshLeft.receiveShadow = true;
+        let leftPanel = new THREE.Group();
+        leftPanel.add(meshLeft)
+        scene.add(leftPanel)
+        meshLeft.position.set(0.125 * this.targetWidthUnits, 0, 0)
+        leftPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
+        leftPanel.position.set(-0.25 * this.targetWidthUnits, 0, 0)
+        return [ leftPanel, rightPanel ]
+    }
+    buildPanels = (scene:THREE.Scene, onLoadedCallback:Function) => {
+        if(this.isHorizontal){
+            return this.buildHorizontalPanels(scene, onLoadedCallback)
+        }
+        else{
+            return this.buildVerticalPanels(scene, onLoadedCallback)
+        }
     }
     getPanelMats = (side:string, callback:Function) => {
         console.log('getPanelMats')
