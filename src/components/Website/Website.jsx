@@ -13,8 +13,8 @@ import NeedleField from '../NeedleField/NeedleField';
 
 class Website extends React.Component {
   showNav = () =>{
-    gsap.to("#top-nav-inner", {bottom:20, duration:1, delay:7, ease:'easeIn'})
-    gsap.to("#footer-inner", {top:10, duration:1, delay:7, ease:'easeIn'})
+    gsap.to("#top-nav-inner", {bottom:20, duration:1, delay:9, ease:'easeIn'})
+    gsap.to("#footer-inner", {top:10, duration:1, delay:9, ease:'easeIn'})
   }
   componentDidMount(){
     this.showNav()

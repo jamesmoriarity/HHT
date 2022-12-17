@@ -77,9 +77,13 @@ export default function Landscape(props:any){
     useEffect(handleLocationChange, [location]);
     return(
         <div id="landscape" ref={ref}>
-            <div className="background-panel pink"></div>
-            <div className="background-panel blue"></div>
+            
             <LandscapeSVG/>
         </div>
     )
 }
+
+/*
+<div className="background-panel pink"></div>
+            <div className="background-panel blue"></div>
+*/

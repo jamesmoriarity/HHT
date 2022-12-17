@@ -3,14 +3,11 @@
   overflow:hidden;
 }
 #top-nav{
-  display:none;
   position:relative;
   padding:5px;
   height:60px;
-  border-bottom:1px solid white;
   overflow:hidden;
   z-index:5;
-  background-color:rgb(252, 252, 252);
 }
 #top-nav-inner{
   position:absolute;

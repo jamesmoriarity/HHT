@@ -4,8 +4,8 @@ export class CardHelper{
     static horizontal:string = 'h'
     static vertical:string = 'v'
     static scale:number = 1
-    static windowScale:number = 0.7
-    static pixelsPerUnit:number = 312
+    static windowScale:number = 0.8
+    static pixelsPerUnit:number = -10 + (window.innerHeight * .43)
     static bgImage:string = 'jpg/sky.jpg'
     targetHeight:number;
     targetHeightUnits:number;
@@ -15,9 +15,10 @@ export class CardHelper{
     constructor(){ 
         this.isHorizontal = (window.innerWidth >= window.innerHeight)
         this.targetHeight= (window.innerHeight * CardHelper.windowScale)
-        this.targetHeightUnits = (this.targetHeight)/CardHelper.pixelsPerUnit
+        this.targetHeightUnits = this.targetHeight/CardHelper.pixelsPerUnit
         this.targetWidth = (window.innerWidth * CardHelper.windowScale)
         this.targetWidthUnits = this.targetWidth/CardHelper.pixelsPerUnit
+        console.log('ppu', CardHelper.pixelsPerUnit)
         console.log("window.innerWidth", window.innerWidth)
         console.log('window.innerHeight', window.innerHeight)
         console.log("targetWidth", this.targetWidth)
