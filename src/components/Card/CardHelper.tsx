@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { MeshStandardMaterial, TextureLoader, Vector2, Vector3 } from "three";
 export class CardHelper{
-    static windowScale:number = 0.8 
+    static windowScale:number = 0.9 
     static bgImage:string = 'jpg/sky.jpg'
     pixelsPerUnit:number
     targetHeight:number;
@@ -102,35 +102,35 @@ export class CardHelper{
         const panelWidth:number = this.targetWidthUnits
         const panelHeight:number = this.targetHeightUnits/4
         const geometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
-        const matsRight = this.getPanelMats('right', onLoadedCallback)
-        let meshRight = new THREE.Mesh( geometry, matsRight);
-        meshRight.castShadow = true;
-        meshRight.receiveShadow = true;
-        let rightPanel = new THREE.Group();
-        rightPanel.add(meshRight)
-        scene.add(rightPanel)
-        meshRight.position.set(0, -.125 * this.targetHeightUnits, 0)
-        rightPanel.rotation.set(0, 0, 0) // right goes from 0 to 3.14 to open
-        rightPanel.position.set(0, 0.25 * this.targetHeightUnits, 0)
+        const matsBottom = this.getPanelMatsVertical('bottom', onLoadedCallback)
+        let meshBottom = new THREE.Mesh( geometry, matsBottom);
+        meshBottom.castShadow = true;
+        meshBottom.receiveShadow = true;
+        let bottomPanel = new THREE.Group();
+        bottomPanel.add(meshBottom)
+        scene.add(bottomPanel)
+        meshBottom.position.set(0, .125 * this.targetHeightUnits, 0)
+        bottomPanel.rotation.set(0, 0, 0) // right goes from 0 to 3.14 to open
+        bottomPanel.position.set(0, -0.25 * this.targetHeightUnits, 0)
 
-        const matsLeft = this.getPanelMats('left', onLoadedCallback)
-        let meshLeft = new THREE.Mesh( geometry, matsLeft);
-        meshLeft.castShadow = true;
-        meshLeft.receiveShadow = true;
-        let leftPanel = new THREE.Group();
-        leftPanel.add(meshLeft)
-        scene.add(leftPanel)
-        meshLeft.position.set(0, 0.125 * this.targetHeightUnits, 0)
-        leftPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
-        leftPanel.position.set(0, -0.25 * this.targetHeightUnits, 0)
-        return [ leftPanel, rightPanel ]
+        const matsTop = this.getPanelMatsVertical('top', onLoadedCallback)
+        let meshTop = new THREE.Mesh( geometry, matsTop);
+        meshTop.castShadow = true;
+        meshTop.receiveShadow = true;
+        let topPanel = new THREE.Group();
+        topPanel.add(meshTop)
+        scene.add(topPanel)
+        meshTop.position.set(0, -0.125 * this.targetHeightUnits, 0)
+        topPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
+        topPanel.position.set(0, 0.25 * this.targetHeightUnits, 0)
+        return [ topPanel, bottomPanel ]
     }
     buildHorizontalPanels = (scene:THREE.Scene, onLoadedCallback:Function) => {
         console.log('buildHorizontalPanels')
         const panelWidth:number = (this.targetWidthUnits/4)
         const panelHeight:number = this.targetHeightUnits
         const geometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
-        const matsRight = this.getPanelMats('right', onLoadedCallback)
+        const matsRight = this.getPanelMatsHorizontal('right', onLoadedCallback)
         let meshRight = new THREE.Mesh( geometry, matsRight);
         meshRight.castShadow = true;
         meshRight.receiveShadow = true;
@@ -141,7 +141,7 @@ export class CardHelper{
         rightPanel.rotation.set(0, 0, 0) // right goes from 0 to 3.14 to open
         rightPanel.position.set(0.25 * this.targetWidthUnits, 0, 0)
 
-        const matsLeft = this.getPanelMats('left', onLoadedCallback)
+        const matsLeft = this.getPanelMatsHorizontal('left', onLoadedCallback)
         let meshLeft = new THREE.Mesh( geometry, matsLeft);
         meshLeft.castShadow = true;
         meshLeft.receiveShadow = true;
@@ -161,7 +161,8 @@ export class CardHelper{
             return this.buildVerticalPanels(scene, onLoadedCallback)
         }
     }
-    getPanelMats = (side:string, callback:Function) => {
+
+    getPanelMats = (insideCoverURL:string, outsideCoverURL:string, callback:Function) => {
         console.log('getPanelMats')
         const loader = new THREE.TextureLoader();
         const material = new THREE.MeshPhongMaterial({
@@ -170,10 +171,7 @@ export class CardHelper{
             shininess: 8,
             flatShading:true,
         });
-        const skyurl = (side === 'left') ? 'jpg/sky1.jpg' : 'jpg/sky3.jpg'
-        const sky = new THREE.MeshPhongMaterial({ flatShading:true, map: loader.load(skyurl)})
-        
-        const coverurl = (side === 'left') ? 'jpg/cover-left.jpg' : 'jpg/cover-right.jpg'
+        const sky = new THREE.MeshPhongMaterial({ flatShading:true, map: loader.load(insideCoverURL)})
         const onCoverLoaded = function(){
             callback()
         }
@@ -182,7 +180,7 @@ export class CardHelper{
             specular: 0xffffff,
             shininess: 8,
             flatShading:true,
-            map: loader.load(coverurl, onCoverLoaded)
+            map: loader.load(outsideCoverURL, onCoverLoaded)
         });    
         const cubeMaterials = [
             material, //right side
@@ -194,6 +192,18 @@ export class CardHelper{
         ];
         return cubeMaterials
     }
+
+    getPanelMatsVertical = (side:string, callback:Function) => {
+        const insideCoverURL:string = (side === 'top') ? 'jpg/panel_top.jpg' : 'jpg/panel_bottom.jpg'
+        const outisideCoverURL:string = (side === 'top') ? 'jpg/cover-left.jpg' : 'jpg/cover-right.jpg' // fix
+        return this.getPanelMats(insideCoverURL, outisideCoverURL, callback)
+
+    }
+    getPanelMatsHorizontal = (side:string, callback:Function) => {
+        const insideCoverURL = (side === 'left') ? 'jpg/sky1.jpg' : 'jpg/sky3.jpg'
+        const outisideCoverURL = (side === 'left') ? 'jpg/enso_left_h.jpg' : 'jpg/enso_right_h.jpg'
+        return this.getPanelMats(insideCoverURL, outisideCoverURL, callback) 
+    }
     buildCenter = (scene:THREE.Scene) => {
         return (this.isHorizontal) ? this.buildHorizontalCenter(scene):this.buildVerticalCenter(scene)
     }
@@ -203,7 +213,7 @@ export class CardHelper{
         console.log('centerWidth', centerWidth)
         var geometry = new THREE.PlaneGeometry( centerWidth, centerHeight, 10, 10 );
         const loader = new THREE.TextureLoader()
-        let texture = loader.load('jpg/sky2.jpg')
+        let texture = loader.load('jpg/panel_center.jpg')
         const materialInside = new THREE.MeshBasicMaterial({
             map: texture,
           });

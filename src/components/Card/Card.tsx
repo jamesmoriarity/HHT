@@ -28,8 +28,8 @@ export function Card(props:any){
         }
     }
 
-    let leftPanel:THREE.Group = new THREE.Group()
-    let rightPanel:THREE.Group = new THREE.Group()
+    let alphaPanel:THREE.Group = new THREE.Group()
+    let betaPanel:THREE.Group = new THREE.Group()
     const buildScene = function(){
         scene = new THREE.Scene();
         scene.background = new THREE.Color( 0xcccccc );
@@ -37,9 +37,9 @@ export function Card(props:any){
         cardHelper.buildLighting(scene)
         cardHelper.buildBackground(scene)
         cardHelper.buildCenter(scene)
-        const [lPanel, rPanel] = cardHelper.buildPanels(scene, onMaterialsLoaded)
-        leftPanel = lPanel
-        rightPanel = rPanel
+        const [aPanel, bPanel] = cardHelper.buildPanels(scene, onMaterialsLoaded)
+        alphaPanel = aPanel
+        betaPanel = bPanel
     }
     const renderScene = function(){
         while(mount && mount.childElementCount > 0){
@@ -118,12 +118,12 @@ export function Card(props:any){
             let delta:number = originalVals.rads - lastRads
             lastRads = originalVals.rads
             if(cardHelper.isHorizontal){
-                leftPanel.rotateY(delta * -1)
-                rightPanel?.rotateY(delta)
+                alphaPanel.rotateY(delta * -1)
+                betaPanel?.rotateY(delta)
             }
             else{
-                leftPanel.rotateX(delta)
-                rightPanel?.rotateX(delta * -1)
+                alphaPanel.rotateX(delta * -1)
+                betaPanel?.rotateX(delta)
             }
             renderScene()
         },
