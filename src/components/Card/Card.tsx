@@ -27,6 +27,9 @@ export function Card(props:any){
             setTimeout(()=>{fadeIn()}, 2000)
         }
     }
+
+    let leftPanel:THREE.Group = new THREE.Group()
+    let rightPanel:THREE.Group = new THREE.Group()
     const buildScene = function(){
         scene = new THREE.Scene();
         scene.background = new THREE.Color( 0xcccccc );
@@ -52,7 +55,7 @@ export function Card(props:any){
     const onFadeComplete = function(){
         console.log('onFadeComplete')
         renderScene()
-        setTimeout(openCard, 2000)
+        setTimeout(openCard, 1000)
     }
     const fadeIn = function(){
         let target = "#cardContainerInner"
@@ -100,8 +103,6 @@ export function Card(props:any){
     let containerRef = useRef(null)
     let renderer:THREE.WebGLRenderer = cardHelper.buildRenderer()
     let camera:THREE.PerspectiveCamera = cardHelper.buildCamera()
-    let leftPanel:THREE.Group = new THREE.Group()
-    let rightPanel:THREE.Group = new THREE.Group()
 
     let originalVals = {rads: -3.1415}
     let lastRads = originalVals.rads
@@ -116,36 +117,25 @@ export function Card(props:any){
         onUpdate:()=>{
             let delta:number = originalVals.rads - lastRads
             lastRads = originalVals.rads
-            leftPanel.rotateY(delta * -1)
-            rightPanel?.rotateY(delta)
+            if(cardHelper.isHorizontal){
+                leftPanel.rotateY(delta * -1)
+                rightPanel?.rotateY(delta)
+            }
+            else{
+                leftPanel.rotateX(delta)
+                rightPanel?.rotateX(delta * -1)
+            }
             renderScene()
         },
         ease:'sine.inOut',
         duration: 1.6
     }
     let angleTween = gsap.to(originalVals, targetVals)
-/*     let zoomTween = gsap.to(camera.position, {z:7.5, duration:1.5, ease:"sine.inOut", onUpdate:()=>{
-        renderScene()
-    }},) */
-    const xOffset = 0.0025
-    const xLeftStart = CardHelper.scale/-2
-    const xLeftEnd = xLeftStart + xOffset
-    const xRightStart = CardHelper.scale/2
-    const xRightEnd = xRightStart - xOffset
-    let beginPanelX = {leftX:xLeftStart, rightX:xRightStart}
-    let targetPanelX = {
-        leftX:xLeftEnd, 
-        rightX:xRightEnd,
-        duration:0.15,
-        onUpdate:()=>{
-            leftPanel.position.setX(beginPanelX.leftX)
-            rightPanel.position.setX(beginPanelX.rightX)
-            renderScene()
-        },}
-    /* let panelSqueeze = gsap.to(beginPanelX, targetPanelX) */
     animationTimeline.add(angleTween, 0)
-    // animationTimeline.add(panelSqueeze, 1.3)
-    // animationTimeline.add(zoomTween, 2)
+/*     let zoomTween = gsap.to(camera.position, {z:7.9, duration:1.5, ease:"sine.inOut", onUpdate:()=>{
+        renderScene()
+    }},)
+    animationTimeline.add(zoomTween, .75) */
 
     return (
         <div ref={containerRef} id="cardContainer" onClick={(e)=>{onClickHandler()}}>
