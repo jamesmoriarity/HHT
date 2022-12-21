@@ -21,7 +21,7 @@ export class CardHelper{
         console.log('targetWidth', this.targetWidth)
         console.log('targetHeight', this.targetHeight)
         console.log('targetWidthUnits', this.targetWidthUnits)
-        console.log('targetHeightUnits', this.targetWidthUnits)
+        console.log('targetHeightUnits', this.targetHeightUnits)
     }
     getPixelsPerUnit = () => {
         const dimension:number = (this.isHorizontal) ? window.innerHeight : window.innerWidth
@@ -123,7 +123,26 @@ export class CardHelper{
         meshTop.position.set(0, -0.125 * this.targetHeightUnits, 0)
         topPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
         topPanel.position.set(0, 0.25 * this.targetHeightUnits, 0)
+
+        let targetLogoDimension:number = (this.targetHeightUnits * 0.25)
+        const w:number = targetLogoDimension*2
+        const h:number = targetLogoDimension/2
+        const yOffset:number = (h * 1.5)
+        let logoGeo:THREE.PlaneGeometry = new THREE.PlaneGeometry(w, h)
+        //let logoLeftMat = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+        let logoTopMat = this.getLogoMaterial('jpg/enso_top_v.jpg', onLoadedCallback)
+        let logoTopMesh = new THREE.Mesh( logoGeo, logoTopMat);
+        logoTopMesh.position.set(0,-yOffset,0.001)
+        topPanel.add(logoTopMesh)
+        
+        let logoBottomMat = this.getLogoMaterial('jpg/enso_bottom_v.jpg', onLoadedCallback)
+        let logoBottomMesh = new THREE.Mesh( logoGeo, logoBottomMat);
+        logoBottomMesh.position.set(0,yOffset,0.001)
+        bottomPanel.add(logoBottomMesh)
+
         return [ topPanel, bottomPanel ]
+
+
     }
     buildHorizontalPanels = (scene:THREE.Scene, onLoadedCallback:Function) => {
         console.log('buildHorizontalPanels')
@@ -151,6 +170,24 @@ export class CardHelper{
         meshLeft.position.set(0.125 * this.targetWidthUnits, 0, 0)
         leftPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
         leftPanel.position.set(-0.25 * this.targetWidthUnits, 0, 0)
+
+        //  create a mesh 
+  
+let targetLogoDimension:number = (this.targetWidthUnits * 0.25)
+const xOffset:number = targetLogoDimension * .75
+let logoGeo:THREE.PlaneGeometry = new THREE.PlaneGeometry(targetLogoDimension/2, targetLogoDimension * 2)
+
+let logoLeftMat = this.getLogoMaterial('jpg/enso_left_h.jpg', onLoadedCallback)
+let logoLeftMesh = new THREE.Mesh( logoGeo, logoLeftMat);
+logoLeftMesh.position.set(xOffset,0,0.001)
+leftPanel.add(logoLeftMesh)
+
+let logoRightMat = this.getLogoMaterial('jpg/enso_right_h.jpg', onLoadedCallback)
+let logoRightMesh = new THREE.Mesh( logoGeo, logoRightMat);
+logoRightMesh.position.set(-xOffset,0,0.001)
+rightPanel.add(logoRightMesh)
+
+
         return [ leftPanel, rightPanel ]
     }
     buildPanels = (scene:THREE.Scene, onLoadedCallback:Function) => {
@@ -162,11 +199,22 @@ export class CardHelper{
         }
     }
 
+    getLogoMaterial = (logoURL:string, callback:Function) => {
+        console.log('getLogoMats') 
+        const onCoverLoaded = function(){
+            callback()
+        }
+        const loader = new THREE.TextureLoader();
+        const logoLeftMaterial = new THREE.MeshPhongMaterial({ flatShading:true, map: loader.load(logoURL, onCoverLoaded)})
+           
+        return logoLeftMaterial
+    }
+
     getPanelMats = (insideCoverURL:string, outsideCoverURL:string, callback:Function) => {
         console.log('getPanelMats')
         const loader = new THREE.TextureLoader();
         const material = new THREE.MeshPhongMaterial({
-            color: 0xffCC99,
+            color: 0xdddddd,
             specular: 0xffffff,
             shininess: 8,
             flatShading:true,
@@ -187,7 +235,7 @@ export class CardHelper{
             material, //left side
             material, //top side
             material, //bottom side
-            materialWhite, //front side
+            material, //front side
             sky, //back side
         ];
         return cubeMaterials
@@ -195,7 +243,7 @@ export class CardHelper{
 
     getPanelMatsVertical = (side:string, callback:Function) => {
         const insideCoverURL:string = (side === 'top') ? 'jpg/panel_top.jpg' : 'jpg/panel_bottom.jpg'
-        const outisideCoverURL:string = (side === 'top') ? 'jpg/cover-left.jpg' : 'jpg/cover-right.jpg' // fix
+        const outisideCoverURL:string = (side === 'top') ? 'jpg/enso_top_v.jpg' : 'jpg/enso_bottom_v.jpg' // fix
         return this.getPanelMats(insideCoverURL, outisideCoverURL, callback)
 
     }

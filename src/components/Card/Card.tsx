@@ -12,6 +12,7 @@ export function Card(props:any){
     }
     const openCard = function(){
         console.log('openCard')
+        return
         renderScene()
         animationTimeline?.restart()
     }
@@ -21,8 +22,9 @@ export function Card(props:any){
     let panelsLoaded:number = 0
     const onMaterialsLoaded = function(){
         panelsLoaded++
+        const targetLoads:number = (cardHelper.isHorizontal) ? 4 : 4
         console.log('onMaterialsLoaded')
-        if(panelsLoaded === 2){
+        if(panelsLoaded === targetLoads){
             renderScene()
             setTimeout(()=>{fadeIn()}, 2000)
         }
