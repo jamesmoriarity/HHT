@@ -4,33 +4,33 @@ import { CardDimensions } from "./CardDimensions"
 import { gsap } from "gsap"
 export class CardAnimator{
     cardBuilder:CardBuilder
-    elements:CardBuilderElements
-    animationTimeline:gsap.core.Timeline
-    onOpenCompleteCallback:Function
-
-    constructor(cardBuilder:CardBuilder, onOpenComplete:Function){
+    openTimeline:gsap.core.Timeline
+    onOpenCallback:Function
+    constructor(cardBuilder:CardBuilder, onOpenCallback:Function){
         this.cardBuilder = cardBuilder
-        this.elements = cardBuilder.elements
-        this.onOpenCompleteCallback = onOpenComplete
-        this.animationTimeline = this.buildTimeline()
+        this.onOpenCallback = onOpenCallback
+        this.openTimeline = this.buildOpenTimeline()
     }
-    buildTimeline(){
+    onOpenComplete = () =>{
+        this.onOpenCallback()
+    }
+    buildOpenTimeline(){
         let animationTimeline = gsap.timeline({
             autoRemoveChildren:false, 
             paused:true, 
             smoothChildTiming:true, 
-            onComplete: this.onOpenCompleteCallback()
+            onComplete: this.onOpenComplete
         })
         this.addOpenAnimation(animationTimeline)
+        this.addZoomAnimation(animationTimeline)
         return animationTimeline
     }
-    openCard(){ // moveto animator
-        this.animationTimeline.restart()
+    openCard = () => { // moveto animator
+        this.openTimeline.restart()
     }
-
-    onFadeComplete(){ // moveto animator
+    onFadeInComplete = () => { // moveto animator
         console.log('onFadeComplete')
-        this.cardBuilder.renderScene()
+        this.cardBuilder.renderMethod()
         setTimeout(this.openCard, 1000)
     }
     fadeIn(){ // moveto animator
@@ -42,12 +42,13 @@ export class CardAnimator{
             autoRemoveChildren:false, 
             paused:true, 
             smoothChildTiming:true, 
-            onComplete: this.onFadeComplete
+            onComplete: this.onFadeInComplete
         })
         fadeTimeline.add(fade)
         fadeTimeline.restart()
     }
     fadeOut(){ // moveto animator
+        return
         let target = "#cardContainer"
         let fadeTween = gsap.to(target, 
             {opacity:0, duration:3, delay:0, ease:"power2.out", onUpdate:()=>{
@@ -55,14 +56,12 @@ export class CardAnimator{
             }}
         )     
     }
-
-
-    addOpenAnimation(timeline:gsap.core.Timeline){
+    addOpenAnimation = (timeline:gsap.core.Timeline) => {
         let dims:CardDimensions = new CardDimensions()
         let originalVals = {rads: -3.1415}
         let lastRads = originalVals.rads
         let targetVals = {
-            rads: 0,
+            rads: -0.5,
             onUpdate:()=>{
                 let delta:number = originalVals.rads - lastRads
                 lastRads = originalVals.rads
@@ -74,18 +73,24 @@ export class CardAnimator{
                     this.cardBuilder.alphaPanel.rotateX(delta * -1)
                     this.cardBuilder.betaPanel?.rotateX(delta)
                 }
-                this.cardBuilder.renderScene()
+                this.cardBuilder.renderMethod()
             },
             ease:'sine.inOut',
             duration: 2.6
         }
         let angleTween = gsap.to(originalVals, targetVals)
         timeline.add(angleTween, 0)
-    }  
-    addZoomTween(timeline:gsap.core.Timeline){
-        let zoomTween = gsap.to(this.elements.camera.position, {z:7.9, duration:1.5, ease:"sine.inOut", onUpdate:()=>{
-            this.cardBuilder.renderScene()
-        }},)
+    } 
+    logCamera = () =>{
+        console.log('position:', this.cardBuilder.elements.camera.position)
+    } 
+    onZoomUpdate = () => {
+        this.logCamera()
+        this.cardBuilder.renderMethod()
+        console.log('onUpdate of zoom')
+    }
+    addZoomAnimation = (timeline:gsap.core.Timeline) => {
+        let zoomTween = gsap.to(this.cardBuilder.elements.camera.position, {z:7.9, duration:1.5, ease:"sine.inOut", onUpdate:this.onZoomUpdate},)
         timeline.add(zoomTween, .75)
     }
 }

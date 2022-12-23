@@ -8,16 +8,32 @@ import { CardAnimator } from "./CardAnimator";
 import { CardBuilder } from "./CardBuilder";
 
 export function Card(props:any){
-    const onCardBuilt = function(){}
-    const onOpenComplete = function(){}
-    let containerRef = useRef(null)
-    let cardBuilder:CardBuilder = new CardBuilder(onCardBuilt)
-    let cardAnimator:CardAnimator = new CardAnimator(cardBuilder, onOpenComplete)
+    let mount:any
+    const onCardBuilt = function(){
+        console.log('onCardBuilt')
+        renderScene()
+        cardAnimator.fadeIn()
+    }
+    const clearMount = function(){
+        while(mount && mount.childElementCount > 0){
+            mount.removeChild(mount.firstChild)
+        }
+    }
+    const renderScene = function(){
+        console.log('renderScene')
+        let r:THREE.WebGLRenderer = cardBuilder.elements.renderer
+        clearMount()
+        mount.appendChild(r.domElement );
+        r.render(cardBuilder.elements.scene,cardBuilder.elements.camera );
+    }
+    const onOpenComplete = function(){
+        cardAnimator.fadeOut()
+    }
     const buildAndRender = function(){
-        cardBuilder = new CardBuilder(onCardBuilt)
+        cardBuilder = new CardBuilder(onCardBuilt, renderScene)
         cardAnimator = new CardAnimator(cardBuilder, onOpenComplete)
         cardBuilder.buildFullScene()
-        cardBuilder.renderScene()
+        renderScene()
     }
     const handleResize = function(){
         console.log('handleResize')
@@ -29,11 +45,13 @@ export function Card(props:any){
         return () => window.removeEventListener("resize", handleResize);
         // setTimeout(()=>{openCard()}, 3000)
     }
-    
+    let containerRef = useRef(null)
+    let cardBuilder:CardBuilder = new CardBuilder(onCardBuilt, renderScene)
+    let cardAnimator:CardAnimator = new CardAnimator(cardBuilder, onOpenComplete)
     useEffect(onUseEffect)
     return (
         <div ref={containerRef} id="cardContainer">
-            <div id="cardContainerInner" ref={ref => (cardBuilder.elements.mount = ref)} />
+            <div id="cardContainerInner" ref={ref => (mount = ref)} />
         </div>
     )
 }

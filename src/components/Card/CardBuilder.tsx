@@ -9,35 +9,28 @@ export class CardBuilder{
     betaPanel:THREE.Group = new THREE.Group() // moveto builder
     panelsLoaded:number
     dimensions:CardDimensions
-    constructor(onCompleteCallback:Function){
+    renderMethod:Function
+    constructor(onCompleteCallback:Function, renderMethod:Function){
         this.onCompleteCallback = onCompleteCallback
+        this.renderMethod = renderMethod
+        this.panelsLoaded = 0
         this.dimensions = new CardDimensions()
         this.elements = this.getElements()
         this.buildRenderer()
         this.buildLighting()
-        this.panelsLoaded = 0
     }
-    clearMount(){
-        const mount = this.elements.mount
-        while(mount && mount.childElementCount > 0){
-            mount.removeChild(mount.firstChild)
-        }
-    }
-    renderScene(){
-        this.clearMount()
-        this.elements.mount.appendChild(this.elements.renderer.domElement );
-        this.elements.renderer.render(this.elements.scene,this.elements.camera );
-    }
+
+
     getElements(){
         let e:CardBuilderElements = new CardBuilderElements()
         return e
     }
-    onMaterialsLoaded (){
+    onMaterialsLoaded = () => {
         this.panelsLoaded++
         const targetLoads:number = (this.dimensions.isHorizontal) ? 4 : 4
         console.log('onMaterialsLoaded')
         if(this.panelsLoaded === targetLoads){
-            this.renderScene()
+            this.renderMethod()
             setTimeout(()=>{this.onCompleteCallback()}, 2000)
         }
     }

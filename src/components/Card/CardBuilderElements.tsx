@@ -4,7 +4,6 @@ export class CardBuilderElements{
     scene:THREE.Scene
     renderer:THREE.WebGLRenderer
     camera:THREE.PerspectiveCamera
-    mount:any;
     constructor(){
         this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer({alpha:true, antialias:true });

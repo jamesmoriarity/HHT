@@ -14,12 +14,6 @@ export class CardDimensions{
         this.targetHeightUnits = this.targetHeight/this.pixelsPerUnit
         this.targetWidth = this.getTargetWidth()
         this.targetWidthUnits = this.targetWidth/this.pixelsPerUnit
-        console.log('this.isHorizontal', this.isHorizontal)
-        console.log('pixelsPerUnit', this.pixelsPerUnit)
-        console.log('targetWidth', this.targetWidth)
-        console.log('targetHeight', this.targetHeight)
-        console.log('targetWidthUnits', this.targetWidthUnits)
-        console.log('targetHeightUnits', this.targetHeightUnits)
     }
     getPixelsPerUnit = () => {
         const dimension:number = (this.isHorizontal) ? window.innerHeight : window.innerWidth
@@ -29,7 +23,6 @@ export class CardDimensions{
         }
         return ppu
     }
-
     getTargetHeight = () => {
         const scaledHeight:number = window.innerHeight * CardDimensions.windowScale
         return (this.isHorizontal) ? scaledHeight : (0.5 * scaledHeight)
