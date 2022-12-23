@@ -2,7 +2,11 @@
   width:100%;
   overflow:hidden;
 }
+#home-page{
+  display:none;
+}
 #top-nav{
+  display:none;
   position:relative;
   padding:5px;
   height:60px;
@@ -46,5 +50,5 @@
 
 
 body{
-  background-color: #fff;
+  
 }

@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { MeshStandardMaterial, TextureLoader, Vector2, Vector3 } from "three";
 export class CardHelper{
-    static windowScale:number = 0.9 
+    static windowScale:number = 0.8 
     static bgImage:string = 'jpg/sky.jpg'
     pixelsPerUnit:number
     targetHeight:number;
@@ -44,10 +44,11 @@ export class CardHelper{
     // is it horizontal or vertical
 
     buildRenderer = () => {
-        let renderer = new THREE.WebGLRenderer({antialias:true});
-        renderer.outputEncoding = THREE.sRGBEncoding;
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        let renderer = new THREE.WebGLRenderer({alpha:true, antialias:true });
+        renderer.setClearColor( 0x000000, 0 );
+        //renderer.outputEncoding = THREE.sRGBEncoding;
+        //renderer.shadowMap.enabled = true;
+        //renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.setSize( window.innerWidth, window.innerHeight );
         return renderer
     }
@@ -214,7 +215,7 @@ rightPanel.add(logoRightMesh)
         console.log('getPanelMats')
         const loader = new THREE.TextureLoader();
         const material = new THREE.MeshPhongMaterial({
-            color: 0xdddddd,
+            color: 0xffffff,
             specular: 0xffffff,
             shininess: 8,
             flatShading:true,
@@ -245,7 +246,6 @@ rightPanel.add(logoRightMesh)
         const insideCoverURL:string = (side === 'top') ? 'jpg/panel_top.jpg' : 'jpg/panel_bottom.jpg'
         const outisideCoverURL:string = (side === 'top') ? 'jpg/enso_top_v.jpg' : 'jpg/enso_bottom_v.jpg' // fix
         return this.getPanelMats(insideCoverURL, outisideCoverURL, callback)
-
     }
     getPanelMatsHorizontal = (side:string, callback:Function) => {
         const insideCoverURL = (side === 'left') ? 'jpg/sky1.jpg' : 'jpg/sky3.jpg'
@@ -327,7 +327,7 @@ rightPanel.add(logoRightMesh)
         const cardHeight:number = window.innerHeight
         var geometry = new THREE.PlaneGeometry( cardWidth, cardHeight, 100, 100 );
         var material = new THREE.MeshPhongMaterial({
-            color: 0xdddddd,
+            color: 0xdedede,
             specular: 0xffffff,
             shininess: 8,
             flatShading:true

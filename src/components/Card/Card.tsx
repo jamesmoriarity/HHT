@@ -12,7 +12,6 @@ export function Card(props:any){
     }
     const openCard = function(){
         console.log('openCard')
-        return
         renderScene()
         animationTimeline?.restart()
     }
@@ -33,11 +32,12 @@ export function Card(props:any){
     let alphaPanel:THREE.Group = new THREE.Group()
     let betaPanel:THREE.Group = new THREE.Group()
     const buildScene = function(){
+        cardHelper = new CardHelper()
         scene = new THREE.Scene();
-        scene.background = new THREE.Color( 0xcccccc );
+        scene.background = new THREE.Color( 0xdedede );
         scene.add(camera)
         cardHelper.buildLighting(scene)
-        cardHelper.buildBackground(scene)
+        // cardHelper.buildBackground(scene)
         cardHelper.buildCenter(scene)
         const [aPanel, bPanel] = cardHelper.buildPanels(scene, onMaterialsLoaded)
         alphaPanel = aPanel
@@ -52,7 +52,6 @@ export function Card(props:any){
     }
     const buildAndRender = function(){
         buildScene()
-        renderScene()
     }
     const onFadeComplete = function(){
         console.log('onFadeComplete')
@@ -81,9 +80,15 @@ export function Card(props:any){
             }}
         )     
     }
+    const handleResize = function(){
+        console.log('handleResize')
+        buildAndRender()
+    }
     const onUseEffect = function(){
+        window.addEventListener("resize", handleResize);
         buildScene()
         renderScene()
+        return () => window.removeEventListener("resize", handleResize);
         // setTimeout(()=>{openCard()}, 3000)
     }
     useEffect(onUseEffect)
@@ -130,14 +135,14 @@ export function Card(props:any){
             renderScene()
         },
         ease:'sine.inOut',
-        duration: 1.6
+        duration: 2.6
     }
     let angleTween = gsap.to(originalVals, targetVals)
     animationTimeline.add(angleTween, 0)
-/*     let zoomTween = gsap.to(camera.position, {z:7.9, duration:1.5, ease:"sine.inOut", onUpdate:()=>{
+    let zoomTween = gsap.to(camera.position, {z:7.9, duration:1.5, ease:"sine.inOut", onUpdate:()=>{
         renderScene()
     }},)
-    animationTimeline.add(zoomTween, .75) */
+    animationTimeline.add(zoomTween, .75)
 
     return (
         <div ref={containerRef} id="cardContainer" onClick={(e)=>{onClickHandler()}}>
