@@ -27,7 +27,8 @@ export class CardBuilder{
     }
     onMaterialsLoaded = () => {
         this.panelsLoaded++
-        const targetLoads:number = (this.dimensions.isHorizontal) ? 4 : 4
+        console.log('panelsLoaded', this.panelsLoaded)
+        const targetLoads:number = 2
         console.log('onMaterialsLoaded')
         if(this.panelsLoaded === targetLoads){
             this.renderMethod()
@@ -35,9 +36,8 @@ export class CardBuilder{
         }
     }
     buildCamera = () => {
-        //const fov:number = 14
-        const fov:number = this.dimensions.targetHeight * this.dimensions.pixelsPerUnit * .05
-        this.elements.camera = new THREE.PerspectiveCamera(14, this.dimensions.targetWidth/this.dimensions.targetHeight, 1, 1000 );
+        const fov:number = 14
+        this.elements.camera = new THREE.PerspectiveCamera(fov, this.dimensions.targetWidth/this.dimensions.targetHeight, 1, 1000 );
         //new THREE.OrthographicCamera
         this.elements.camera.position.set(0, 0, 10)
         this.elements.camera.lookAt(0,0,0)
@@ -147,19 +147,19 @@ export class CardBuilder{
 
         //  create a mesh 
   
-let targetLogoDimension:number = (this.dimensions.targetWidthUnits * 0.25)
-const xOffset:number = targetLogoDimension * .75
-let logoGeo:THREE.PlaneGeometry = new THREE.PlaneGeometry(targetLogoDimension/2, targetLogoDimension * 2)
+        let targetLogoDimension:number = (this.dimensions.targetWidthUnits * 0.25)
+        const xOffset:number = targetLogoDimension * .75
+        let logoGeo:THREE.PlaneGeometry = new THREE.PlaneGeometry(targetLogoDimension/2, targetLogoDimension * 2)
 
-let logoLeftMat = this.getLogoMaterial('jpg/enso_left_h.jpg', this.onMaterialsLoaded)
-let logoLeftMesh = new THREE.Mesh( logoGeo, logoLeftMat);
-logoLeftMesh.position.set(xOffset,0,0.001)
-leftPanel.add(logoLeftMesh)
+        let logoLeftMat = this.getLogoMaterial('jpg/enso_left_h.jpg', this.onMaterialsLoaded)
+        let logoLeftMesh = new THREE.Mesh( logoGeo, logoLeftMat);
+        logoLeftMesh.position.set(xOffset,0,0.001)
+        leftPanel.add(logoLeftMesh)
 
-let logoRightMat = this.getLogoMaterial('jpg/enso_right_h.jpg', this.onMaterialsLoaded)
-let logoRightMesh = new THREE.Mesh( logoGeo, logoRightMat);
-logoRightMesh.position.set(-xOffset,0,0.001)
-rightPanel.add(logoRightMesh)
+        let logoRightMat = this.getLogoMaterial('jpg/enso_right_h.jpg', this.onMaterialsLoaded)
+        let logoRightMesh = new THREE.Mesh( logoGeo, logoRightMat);
+        logoRightMesh.position.set(-xOffset,0,0.001)
+        rightPanel.add(logoRightMesh)
 
 
         return [ leftPanel, rightPanel ]
@@ -192,16 +192,16 @@ rightPanel.add(logoRightMesh)
             flatShading:true,
         });
         const sky = new THREE.MeshPhongMaterial({ flatShading:true, map: loader.load(insideCoverURL)})
-        const onCoverLoaded = function(){
+/*         const onCoverLoaded = function(){
             callback()
-        }
-        const materialWhite = new THREE.MeshPhongMaterial({
+        } */
+/*         const materialWhite = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa,
             specular: 0xffffff,
             shininess: 8,
             flatShading:true,
             map: loader.load(outsideCoverURL, onCoverLoaded)
-        });    
+        });  */   
         const cubeMaterials = [
             material, //right side
             material, //left side

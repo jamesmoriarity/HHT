@@ -1,7 +1,5 @@
 import Page from "../Page/Page"
-import { createBrowserHistory } from "history";
 import "./Home.css"
-import { useEffect } from "react";
 export default function Home(){
     return  <Page id="home-page">
                 <div className="home">

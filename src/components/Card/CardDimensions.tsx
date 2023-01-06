@@ -1,4 +1,3 @@
-import * as THREE from "three";
 export class CardDimensions{
     static windowScale:number = 0.8 
     pixelsPerUnit:number

@@ -8,7 +8,6 @@ import { Card } from '../Card/Card';
 import { gsap } from 'gsap'
 import './Website.css'
 import About from '../About/About';
-import NeedleField from '../NeedleField/NeedleField';
 
 
 class Website extends React.Component {

@@ -1,5 +1,4 @@
 import { CardBuilder } from "./CardBuilder"
-import { CardBuilderElements } from "./CardBuilderElements"
 import { CardDimensions } from "./CardDimensions"
 import { gsap } from "gsap"
 export class CardAnimator{
@@ -47,14 +46,19 @@ export class CardAnimator{
         fadeTimeline.add(fade)
         fadeTimeline.restart()
     }
-    fadeOut(){ // moveto animator
-        return
+    fadeOut(){
         let target = "#cardContainer"
         let fadeTween = gsap.to(target, 
-            {opacity:0, duration:3, delay:0, ease:"power2.out", onUpdate:()=>{
-                
-            }}
-        )     
+            {opacity:0, duration:3, delay:0, ease:"power2.out", onUpdate:()=>{}}
+        ) 
+        let fadeTimeline = gsap.timeline({
+            autoRemoveChildren:false, 
+            paused:true, 
+            smoothChildTiming:true, 
+            onComplete: this.onFadeInComplete
+        })
+        fadeTimeline.add(fadeTween)
+        fadeTimeline.restart()    
     }
     addOpenAnimation = (timeline:gsap.core.Timeline) => {
         let dims:CardDimensions = new CardDimensions()

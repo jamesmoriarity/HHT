@@ -1,5 +1,4 @@
-import { Component, useEffect, useState } from "react"
-import { gsap } from "gsap"
+import { useState } from "react"
 import "../NeedleField/NeedleField.css"
 import { Needle } from "./Needle"
 export interface NeedleFieldProps{
@@ -13,16 +12,11 @@ export interface NeedleFieldProps{
     magneticRange:number
 }
 export function NeedleField( props:NeedleFieldProps ){
-    const [magneticRange, setMagneticRange] = useState(props.magneticRange)
-    const [length, setLength] = useState(props.length)
-    const [width, setWidth] = useState(props.width)
+    const [magneticRange] = useState(props.magneticRange)
+    const [length] = useState(props.length)
+    const [width] = useState(props.width)
     let w:number = (props.columns * props.hspace) + props.length
     let h:number = (props.rows * props.vspace) + props.length
-    const restart = function(){
-        setMagneticRange(props.magneticRange)
-        setLength(props.length)
-        setWidth(props.width)
-    }
     const Needles = function(){
         let needles:JSX.Element[] = []
         for(let i = 0; i < props.rows; i++){

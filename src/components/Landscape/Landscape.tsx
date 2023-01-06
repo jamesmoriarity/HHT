@@ -11,7 +11,7 @@ export default function Landscape(props:any){
     const [hasMoved, setHasMoved] = useState(false)
     const [bgToggle, setBGToggle] = useState(true)
     const handleLocationChange = function(){
-        if(pathName == location.pathname && hasMoved){
+        if(pathName === location.pathname && hasMoved){
             return
         }
         setPathName(location.pathname)
@@ -26,10 +26,6 @@ export default function Landscape(props:any){
                 moveTo('home')
         }
     } 
-    const getLocationName = function(pathName:string){
-        let name:string = pathName.substring(1)
-        return (name === '') ? 'home' : name
-    }
     const getX = function(locationName:string){
         let locations:Map<string, number> = new Map()
         locations.set('home', -125)
@@ -74,7 +70,7 @@ export default function Landscape(props:any){
         setHasMoved(true)
         setBGToggle(!bgToggle)
     }
-    useEffect(handleLocationChange, [location]);
+    useEffect(handleLocationChange);
     return(
         <div id="landscape" ref={ref}>
             

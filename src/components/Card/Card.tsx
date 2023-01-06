@@ -1,9 +1,6 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import "./Card.css"
-import { CardHelper } from "./CardHelper";
-import { gsap } from "gsap"
-import { flattenDiagnosticMessageText } from "typescript";
 import { CardAnimator } from "./CardAnimator";
 import { CardBuilder } from "./CardBuilder";
 

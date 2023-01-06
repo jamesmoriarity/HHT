@@ -20,7 +20,7 @@ export default function Page({ children, id }: PageProps){
         ()=>{
             animateIn();
             return animateOut
-        },[] 
+        } 
     )
     return <div id={id} className="page" ref={ref}>{children}</div>
 }
