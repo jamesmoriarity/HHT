@@ -4,23 +4,21 @@ import { CardDimensions } from "./CardDimensions";
 
 export class CardBuilder{
     elements:CardBuilderElements
-    onCompleteCallback:Function
+    onBuildCompleteCallback:Function
     alphaPanel:THREE.Group = new THREE.Group() // moveto builder
     betaPanel:THREE.Group = new THREE.Group() // moveto builder
     panelsLoaded:number
     dimensions:CardDimensions
     renderMethod:Function
-    constructor(onCompleteCallback:Function, renderMethod:Function){
-        this.onCompleteCallback = onCompleteCallback
+    constructor(onBuildCompleteCallback:Function, renderMethod:Function){
+        this.onBuildCompleteCallback = onBuildCompleteCallback
         this.renderMethod = renderMethod
-        this.panelsLoaded = 0
+        this.panelsLoaded = 0.0
         this.dimensions = new CardDimensions()
         this.elements = this.getElements()
         this.buildRenderer()
         this.buildLighting()
     }
-
-
     getElements(){
         let e:CardBuilderElements = new CardBuilderElements()
         return e
@@ -32,7 +30,7 @@ export class CardBuilder{
         console.log('onMaterialsLoaded')
         if(this.panelsLoaded === targetLoads){
             this.renderMethod()
-            setTimeout(()=>{this.onCompleteCallback()}, 2000)
+            setTimeout(()=>{this.onBuildCompleteCallback()}, 2000)
         }
     }
     buildCamera = () => {
