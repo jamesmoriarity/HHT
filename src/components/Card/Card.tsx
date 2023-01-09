@@ -24,11 +24,11 @@ export function Card(props:any){
         r.render(cardBuilder.elements.scene,cardBuilder.elements.camera );
     }
     const onOpenComplete = function(){
-        cardAnimator.fadeOut()
+        props.openCallback()
+        // cardAnimator.fadeOut()
+        // call a callback at a higher level
     }
     const buildAndRender = function(){
-        cardBuilder = new CardBuilder(onCardBuilt, renderScene)
-        cardAnimator = new CardAnimator(cardBuilder, onOpenComplete)
         cardBuilder.buildFullScene()
         renderScene()
     }

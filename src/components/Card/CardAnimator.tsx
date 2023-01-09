@@ -46,20 +46,7 @@ export class CardAnimator{
         fadeTimeline.add(fade)
         fadeTimeline.restart()
     }
-    fadeOut(){
-        let target = "#cardContainer"
-        let fadeTween = gsap.to(target, 
-            {opacity:0, duration:3, delay:0, ease:"power2.out", onUpdate:()=>{}}
-        ) 
-        let fadeTimeline = gsap.timeline({
-            autoRemoveChildren:false, 
-            paused:true, 
-            smoothChildTiming:true, 
-            onComplete: this.onFadeInComplete
-        })
-        fadeTimeline.add(fadeTween)
-        fadeTimeline.restart()    
-    }
+
     addOpenAnimation = (timeline:gsap.core.Timeline) => {
         let dims:CardDimensions = new CardDimensions()
         let originalVals = {rads: -3.1415}

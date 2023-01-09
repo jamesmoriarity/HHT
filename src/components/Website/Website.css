@@ -2,11 +2,14 @@
   width:100%;
   overflow:hidden;
 }
-#home-page{
-  display:none;
+#pages{
+  opacity:0;
+  background-image: url("./jpg/sky-2.jpg"), url("./jpg/sky.jpg");
+  background-size: cover;
+  background-blend-mode: color;
 }
+
 #top-nav{
-  display:none;
   position:relative;
   padding:5px;
   height:60px;
@@ -28,17 +31,11 @@
 }
 
 #footer{
-  display:none;
-  position: relative;
-  padding: 5px;
-  height: 180px;
-  border-bottom: 1px solid white;
-  overflow: hidden;
-  background-color: #fff;
+  position:fixed;
+  left: 0;
+  bottom: 0;
 }
 #footer-inner{
-  position:absolute;
-  top:-50px;
   width:100%;
   text-align:center;
 }

@@ -18,15 +18,37 @@ class Website extends React.Component {
   componentDidMount(){
     this.showNav()
   }
+  onCardOpened = () => {
+    // "#cardContainer"
+    let card = "#cardContainer"
+    let cardFadeTween = gsap.to(card, 
+        {opacity:0, duration:3, delay:0, ease:"power2.out", onUpdate:()=>{}}
+    ) 
+    let pages = "#pages"
+    let pagesFadeTween = gsap.to(pages, 
+      {opacity:1, duration:3, delay:0, ease:"power2.out", onUpdate:()=>{}}
+  ) 
+    let fadeTimeline = gsap.timeline({
+        autoRemoveChildren:false, 
+        paused:true, 
+        smoothChildTiming:true, 
+        onComplete: this.onFadeInComplete
+    })
+    fadeTimeline.add(cardFadeTween, 0)
+    fadeTimeline.add(pagesFadeTween, 0)
+    fadeTimeline.restart()    
+    console.log('card has opened')
+  }
   render() {
     return (<>
+            <Card openCallback={this.onCardOpened} />
              <BrowserRouter>
+                  <div id="pages">
                     <div id="top-nav">
                       <div id="top-nav-inner">
                         <Link to="/">Home</Link>   <Link to="/hawaii">Hawaii</Link>  <Link to="/washington">Washington</Link>  <Link to="/about">About Dori</Link>  
                       </div>
                     </div>
-                    <Landscape />
                     
                    <Routes>
                         <Route path="/" element={<Home />} />
@@ -35,8 +57,8 @@ class Website extends React.Component {
                         <Route path="/about" element={<About />} />
                         <Route path="*" element={<Home />} />
                     </Routes>
-                    <Card/>
                     <div id="footer">
+                      <Landscape/>
                       <div id="footer-inner">
                         <p>
                           <Link to="/">footer</Link>
@@ -50,6 +72,7 @@ class Website extends React.Component {
                         </p>
                       </div>
                     </div>
+                  </div>
                 </BrowserRouter>
             </>
     );
