@@ -1,9 +1,12 @@
 export default function LandscapeSVG(){
+    const ratio:number = 12
+    const width:number = window.innerWidth * 2
+    const height:number = width/ratio
     const attElms = {
         "id" : "LandscapeSVG",
         "xmlns" : "http://www.w3.org/2000/svg",
-        "width" : "2400",
-        "height" : "200",
+        "width" : String(width),
+        "height" : String(height),
         "viewBox" : "0 0 600 50"
     }
 return(

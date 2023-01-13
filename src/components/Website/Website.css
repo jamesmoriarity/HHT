@@ -4,9 +4,11 @@
 }
 #pages{
   opacity:0;
-  background-image: url("./jpg/sky-2.jpg"), url("./jpg/sky.jpg");
-  background-size: cover;
-  background-blend-mode: color;
+  display:none;
+}
+#page-container{
+  opacity:0;
+  display:none;
 }
 
 #top-nav{
@@ -17,8 +19,8 @@
   z-index:5;
 }
 #top-nav-inner{
-  position:absolute;
-  bottom:-40px;
+  position:relative;
+  top:-200px;
   width:100%;
   text-align:center;
 }
@@ -30,13 +32,26 @@
   font-weight:bold;
 }
 
-#footer{
+#footer-container{
   position:fixed;
   left: 0;
   bottom: 0;
+  width:100%;
+  height:300px;
+  overflow:hidden
+}
+#footer{
+  width:100%;
+  top: 200px;
+  position: relative;
+  opacity:0;
 }
 #footer-inner{
+  position: relative;
+  top: -24px;
+  background-color:#000;
   width:100%;
+  height:100px;
   text-align:center;
 }
 #footer a{
@@ -44,8 +59,17 @@
   text-decoration: none;
   margin-right:15px;
 }
-
-
+#footer p{
+  margin:0;
+  padding:10px 0px 10px 0px;
+}
 body{
-  
+  background-color:rgb(202, 202, 202);
+}
+body.post-card { 
+  /* background: url(./jpg/sky.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; */
 }

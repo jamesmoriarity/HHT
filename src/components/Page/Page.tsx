@@ -8,13 +8,12 @@ export interface PageProps{
 export default function Page({ children, id }: PageProps){
     let ref = useRef(null)
     const onDone = function(){
-        console.log('onDone')
     }
     const animateIn = function(){
         gsap.to('#' + id, {opacity:1, duration:1, ease:'circ', onComplete:onDone, delay:1})
     }
     const animateOut = function(){
-        gsap.to('#' + id, {opacity:0, duration:1, ease:'circ', onComplete:onDone})
+        gsap.to('#' + id, {opacity:0, duration:0, ease:'circ', onComplete:onDone})
     }
     useEffect(
         ()=>{

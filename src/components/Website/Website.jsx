@@ -12,22 +12,36 @@ import About from '../About/About';
 
 class Website extends React.Component {
   showNav = () =>{
-    gsap.to("#top-nav-inner", {bottom:20, duration:1, delay:9, ease:'easeIn'})
-    gsap.to("#footer-inner", {top:10, duration:1, delay:9, ease:'easeIn'})
+
   }
   componentDidMount(){
     this.showNav()
   }
   onCardOpened = () => {
     // "#cardContainer"
+    document.querySelector("body").className = 'post-card'
     let card = "#cardContainer"
     let cardFadeTween = gsap.to(card, 
         {opacity:0, duration:3, delay:0, ease:"power2.out", onUpdate:()=>{}}
     ) 
     let pages = "#pages"
     let pagesFadeTween = gsap.to(pages, 
-      {opacity:1, duration:3, delay:0, ease:"power2.out", onUpdate:()=>{}}
-  ) 
+      {opacity:1, display:'block', duration:3, delay:0, ease:"power2.out", onUpdate:()=>{}}
+    ) 
+    let footer = "#footer"
+    let footerRiseTween = gsap.to(footer, 
+      {top:0, opacity:1, duration:1, delay:0, ease:"power2.out", onUpdate:()=>{}}
+    )
+    let topNavInner = '#top-nav-inner'
+    let navDropTween = gsap.to(topNavInner, 
+      {top:0, duration:1, delay:0, ease:"power2.out", onUpdate:()=>{}}
+    )
+    let page = '#page-container'
+    let pageTween = gsap.to(page, 
+      {opacity:1, display:'block', duration:2, delay:0, ease:"power2.out", onUpdate:()=>{}}
+    )
+    let cardRemovalTween = gsap.to(card, {display:'none'})
+
     let fadeTimeline = gsap.timeline({
         autoRemoveChildren:false, 
         paused:true, 
@@ -36,8 +50,14 @@ class Website extends React.Component {
     })
     fadeTimeline.add(cardFadeTween, 0)
     fadeTimeline.add(pagesFadeTween, 0)
+    fadeTimeline.add(footerRiseTween, 2)
+    fadeTimeline.add(navDropTween, 2.5)
+    fadeTimeline.add(pageTween, 3)
+    fadeTimeline.add(cardRemovalTween, 5)
     fadeTimeline.restart()    
-    console.log('card has opened')
+  }
+  onFadeInComplete = () => {
+    console.log('onFadeInComplete')
   }
   render() {
     return (<>
@@ -49,31 +69,34 @@ class Website extends React.Component {
                         <Link to="/">Home</Link>   <Link to="/hawaii">Hawaii</Link>  <Link to="/washington">Washington</Link>  <Link to="/about">About Dori</Link>  
                       </div>
                     </div>
-                    
-                   <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/hawaii" element={<Hawaii />} />
-                        <Route path="/washington" element={<Washington />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="*" element={<Home />} />
-                    </Routes>
-                    <div id="footer">
-                      <Landscape/>
-                      <div id="footer-inner">
-                        <p>
-                          <Link to="/">footer</Link>
-                          <Link to="/washington">ipsum</Link>
-                          <Link to="/hawaii">dolor</Link>
-                          <Link to="/">consequet</Link>
-                          <Link to="/washington">lorem</Link>
-                          <Link to="/hawaii">ipsum</Link>
-                          <Link to="/">dolor</Link>
-                          <Link to="/washington">footer</Link>
-                        </p>
+                    <div id="page-container">
+                      <Routes>
+                          <Route path="/" element={<Home />} />
+                          <Route path="/hawaii" element={<Hawaii />} />
+                          <Route path="/washington" element={<Washington />} />
+                          <Route path="/about" element={<About />} />
+                          <Route path="*" element={<Home />} />
+                      </Routes>
+                    </div>
+                    <div id="footer-container">
+                      <div id="footer">
+                        <Landscape/>
+                        <div id="footer-inner">
+                          <p>
+                            <Link to="/">footer</Link>
+                            <Link to="/washington">ipsum</Link>
+                            <Link to="/hawaii">dolor</Link>
+                            <Link to="/">consequet</Link>
+                            <Link to="/washington">lorem</Link>
+                            <Link to="/hawaii">ipsum</Link>
+                            <Link to="/">dolor</Link>
+                            <Link to="/washington">footer</Link>
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </BrowserRouter>
+              </BrowserRouter>
             </>
     );
   }

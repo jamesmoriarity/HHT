@@ -7,7 +7,6 @@ import { CardBuilder } from "./CardBuilder";
 export function Card(props:any){
     let mount:any
     const onCardBuilt = function(){
-        console.log('onCardBuilt')
         renderScene()
         cardAnimator.fadeIn()
     }
@@ -17,7 +16,6 @@ export function Card(props:any){
         }
     }
     const renderScene = function(){
-        console.log('renderScene')
         let r:THREE.WebGLRenderer = cardBuilder.elements.renderer
         clearMount()
         mount.appendChild(r.domElement );
@@ -33,7 +31,6 @@ export function Card(props:any){
         renderScene()
     }
     const handleResize = function(){
-        console.log('handleResize')
         buildAndRender()
     }
     const onUseEffect = function(){

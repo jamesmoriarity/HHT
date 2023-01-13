@@ -25,9 +25,7 @@ export class CardBuilder{
     }
     onMaterialsLoaded = () => {
         this.panelsLoaded++
-        console.log('panelsLoaded', this.panelsLoaded)
         const targetLoads:number = 2
-        console.log('onMaterialsLoaded')
         if(this.panelsLoaded === targetLoads){
             this.renderMethod()
             setTimeout(()=>{this.onBuildCompleteCallback()}, 2000)
@@ -70,7 +68,6 @@ export class CardBuilder{
         this.elements.scene.add(this.elements.camera)
     }
     buildVerticalPanels = (scene:THREE.Scene) => {
-        console.log('buildVerticalPanels')
         const panelWidth:number = this.dimensions.targetWidthUnits
         const panelHeight:number = this.dimensions.targetHeightUnits/4
         const geometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
@@ -117,7 +114,6 @@ export class CardBuilder{
 
     }
     buildHorizontalPanels = (scene:THREE.Scene) => {
-        console.log('buildHorizontalPanels')
         const panelWidth:number = (this.dimensions.targetWidthUnits/4)
         const panelHeight:number = this.dimensions.targetHeightUnits
         const geometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
@@ -171,7 +167,6 @@ export class CardBuilder{
         }
     }
     getLogoMaterial = (logoURL:string, callback:Function) => {
-        console.log('getLogoMats') 
         const onCoverLoaded = function(){
             callback()
         }
@@ -181,7 +176,6 @@ export class CardBuilder{
         return logoLeftMaterial
     }
     getPanelMats = (insideCoverURL:string, outsideCoverURL:string, callback:Function) => {
-        console.log('getPanelMats')
         const loader = new THREE.TextureLoader();
         const material = new THREE.MeshPhongMaterial({
             color: 0xffffff,
@@ -226,7 +220,6 @@ export class CardBuilder{
     buildVerticalCenter = (scene:THREE.Scene) => {
         const centerWidth:number = this.dimensions.targetWidthUnits
         const centerHeight:number = this.dimensions.targetHeightUnits/2
-        console.log('centerWidth', centerWidth)
         var geometry = new THREE.PlaneGeometry( centerWidth, centerHeight, 10, 10 );
         const loader = new THREE.TextureLoader()
         let texture = loader.load('jpg/panel_center.jpg')

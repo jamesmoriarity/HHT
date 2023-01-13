@@ -13,7 +13,8 @@ export default function Home(){
                         </p>
                         <p>
                             Veniam officia culpa nulla exercitation duis minim nisi qui. Laborum elit officia commodo elit. Ut qui veniam commodo anim reprehenderit consequat minim nostrud. Exercitation fugiat nulla est quis ad. Culpa irure laboris commodo anim irure esse magna cupidatat amet ut enim adipisicing proident laboris.
-                        </p>          
+                        </p> 
+                            
                     </div>
                 </div>
             </Page>

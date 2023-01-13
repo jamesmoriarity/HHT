@@ -24,15 +24,14 @@ export class CardAnimator{
         this.addZoomAnimation(animationTimeline)
         return animationTimeline
     }
-    openCard = () => { // moveto animator
+    openCard = () => {
         this.openTimeline.restart()
     }
-    onFadeInComplete = () => { // moveto animator
-        console.log('onFadeComplete')
+    onFadeInComplete = () => {
         this.cardBuilder.renderMethod()
         setTimeout(this.openCard, 1000)
     }
-    fadeIn(){ // moveto animator
+    fadeIn(){ 
         let target = "#cardContainerInner"
         let fade = gsap.to(target, 
             {opacity:1, duration:1, delay:0, ease:"power2.out"}

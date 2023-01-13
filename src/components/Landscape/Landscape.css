@@ -1,9 +1,9 @@
 #landscape{
-    position:relative;
     margin:0px;
-    height:600px;
-    overflow: hidden;
     width:100%;
+    position:relative;
+    height:250px;
+    overflow:hidden;
 }
 .background-panel{
     position:relative;
@@ -28,7 +28,7 @@
     position:absolute;
     bottom: -25px;
     opacity:0;
-    transform:scale(0.25);
+    transform:scale(0.15);
 }
 #LandscapeSVG path{
 }
