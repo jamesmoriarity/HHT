@@ -83,6 +83,6 @@ export class CardAnimator{
             }
         }
         let zoomTween = gsap.to(originalVals, targetVals)
-        timeline.add(zoomTween, 2.6)
+        timeline.add(zoomTween, 2)
     }
 }

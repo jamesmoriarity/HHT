@@ -26,18 +26,19 @@
 }
 #LandscapeSVG{
     position:absolute;
-    bottom: -25px;
-    opacity:0;
-    transform:scale(0.15);
+    bottom: 24px;
+    opacity:1;
+    transform:scale(1);
+    background-color: rgb(202, 202, 202);
 }
 #LandscapeSVG path{
 }
-#back>path{
-    fill: hsl(0 0% 23%);
+.back path{
+    fill: rgb(120, 120, 120);
 }
-#middle>path{
-    fill: hsl(0 0% 13%);
+.middle path{
+    fill: rgb(82, 82, 82);
 }
-#front>path{
-    fill: hsl(0 0% 3%);
+.front path{
+    fill: rgb(0, 0, 0);
 }

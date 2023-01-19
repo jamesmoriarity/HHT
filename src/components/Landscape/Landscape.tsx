@@ -12,8 +12,11 @@ export default function Landscape(props:any){
     const [bgToggle, setBGToggle] = useState(true)
     const handleLocationChange = function(){
         if(pathName === location.pathname && hasMoved){
+            console.log('same path and hasMoved')
             return
         }
+
+        console.log('not same path and hasnt moved')
         setPathName(location.pathname)
         switch(location.pathname){
             case '/hawaii':
@@ -28,9 +31,9 @@ export default function Landscape(props:any){
     } 
     const getX = function(locationName:string){
         let locations:Map<string, number> = new Map()
-        locations.set('home', -125)
-        locations.set('hawaii', -340)
-        locations.set('washington', 0)
+        locations.set('home', 0)
+        locations.set('hawaii', -320)
+        locations.set('washington', 240)
         let x:number | undefined = locations.get(locationName)
         if(x === undefined){
             return 0
@@ -56,24 +59,16 @@ export default function Landscape(props:any){
         if(!hasMoved){
             gsap.to("#LandscapeSVG", {opacity:1, duration:3})
         }
-        gsap.to("#front", {x:x * 1.3, duration:duration, ease:'easeInOut'})
-        gsap.to("#middle", {x:x * .7, duration:duration, ease:'easeInOut'})
-        gsap.to("#back", {x:x * .6, duration:duration, ease:'easeInOut'})
+        gsap.to(".front", {x:x * .9, duration:duration, ease:'easeInOut'})
+        gsap.to(".middle", {x:x * .7, duration:duration, ease:'easeInOut'})
+        gsap.to(".back", {x:x * .6, duration:duration, ease:'easeInOut'})
         gsap.to(".background-panel", {x:x  * 1, duration:duration, ease:'easeInOut'})
- 
-        const opacityBlue:number = (locationName === 'home') ? .5 : (locationName === 'hawaii') ? .25 : .75;
-        gsap.to(".background-panel.blue", {opacity:opacityBlue, delay: 0.75, duration:duration * 2, ease:'easeInOut'})
-        const opacityPink:number = (locationName === 'home') ? .45 : (locationName === 'hawaii') ? .7 : 0.35;
-        gsap.to(".background-panel.pink", {opacity:opacityPink, delay: 0.75, duration:duration * 2, ease:'easeInOut'})
-
-        gsap.to("#LandscapeSVG", {scale:scale, bottom:bottom, duration:duration, ease:'easeInOut'})
         setHasMoved(true)
         setBGToggle(!bgToggle)
     }
     useEffect(handleLocationChange);
     return(
         <div id="landscape" ref={ref}>
-            
             <LandscapeSVG/>
         </div>
     )
