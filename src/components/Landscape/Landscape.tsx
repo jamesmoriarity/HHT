@@ -12,11 +12,8 @@ export default function Landscape(props:any){
     const [bgToggle, setBGToggle] = useState(true)
     const handleLocationChange = function(){
         if(pathName === location.pathname && hasMoved){
-            console.log('same path and hasMoved')
             return
         }
-
-        console.log('not same path and hasnt moved')
         setPathName(location.pathname)
         switch(location.pathname){
             case '/hawaii':
@@ -32,8 +29,8 @@ export default function Landscape(props:any){
     const getX = function(locationName:string){
         let locations:Map<string, number> = new Map()
         locations.set('home', 0)
-        locations.set('hawaii', -320)
-        locations.set('washington', 240)
+        locations.set('hawaii', -340)
+        locations.set('washington', 280)
         let x:number | undefined = locations.get(locationName)
         if(x === undefined){
             return 0

@@ -31,6 +31,7 @@ export function Card(props:any){
         renderScene()
     }
     const handleResize = function(){
+        console.log('handleResize')
         buildAndRender()
     }
     const onUseEffect = function(){

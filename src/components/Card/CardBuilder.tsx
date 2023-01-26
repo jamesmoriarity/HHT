@@ -5,19 +5,23 @@ import { CardDimensions } from "./CardDimensions";
 export class CardBuilder{
     elements:CardBuilderElements
     onBuildCompleteCallback:Function
-    alphaPanel:THREE.Group = new THREE.Group() // moveto builder
-    betaPanel:THREE.Group = new THREE.Group() // moveto builder
+    alphaPanel:THREE.Group = new THREE.Group()
+    betaPanel:THREE.Group = new THREE.Group()
     panelsLoaded:number
     dimensions:CardDimensions
     renderMethod:Function
     constructor(onBuildCompleteCallback:Function, renderMethod:Function){
         this.onBuildCompleteCallback = onBuildCompleteCallback
         this.renderMethod = renderMethod
-        this.panelsLoaded = 0.0
+        this.panelsLoaded = 0
         this.dimensions = new CardDimensions()
         this.elements = this.getElements()
         this.buildRenderer()
         this.buildLighting()
+    }
+    reset = () => {
+        this.panelsLoaded = 0
+        this.dimensions = new CardDimensions()
     }
     getElements(){
         let e:CardBuilderElements = new CardBuilderElements()
@@ -25,7 +29,8 @@ export class CardBuilder{
     }
     onMaterialsLoaded = () => {
         this.panelsLoaded++
-        const targetLoads:number = 2
+        console.log('onMaterialsLoaded', this.panelsLoaded)
+        const targetLoads:number = 4
         if(this.panelsLoaded === targetLoads){
             this.renderMethod()
             setTimeout(()=>{this.onBuildCompleteCallback()}, 2000)
@@ -38,7 +43,6 @@ export class CardBuilder{
         this.elements.camera.position.set(0, 0, 10)
         this.elements.camera.lookAt(0,0,0)
         this.elements.camera.updateProjectionMatrix()
-
     }
     buildLighting = () => {
         const lightIntensity:number = 0.15
@@ -81,7 +85,6 @@ export class CardBuilder{
         meshBottom.position.set(0, .125 * this.dimensions.targetHeightUnits, 0)
         bottomPanel.rotation.set(0, 0, 0) // right goes from 0 to 3.14 to open
         bottomPanel.position.set(0, -0.25 * this.dimensions.targetHeightUnits, 0)
-
         const matsTop = this.getPanelMatsVertical('top', this.onMaterialsLoaded)
         let meshTop = new THREE.Mesh( geometry, matsTop);
         meshTop.castShadow = true;
@@ -92,7 +95,6 @@ export class CardBuilder{
         meshTop.position.set(0, -0.125 * this.dimensions.targetHeightUnits, 0)
         topPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
         topPanel.position.set(0, 0.25 * this.dimensions.targetHeightUnits, 0)
-
         let targetLogoDimension:number = (this.dimensions.targetHeightUnits * 0.25)
         const w:number = targetLogoDimension*2
         const h:number = targetLogoDimension/2
@@ -103,25 +105,29 @@ export class CardBuilder{
         let logoTopMesh = new THREE.Mesh( logoGeo, logoTopMat);
         logoTopMesh.position.set(0,-yOffset,0.001)
         topPanel.add(logoTopMesh)
-        
         let logoBottomMat = this.getLogoMaterial('jpg/enso_bottom_v.jpg', this.onMaterialsLoaded)
         let logoBottomMesh = new THREE.Mesh( logoGeo, logoBottomMat);
         logoBottomMesh.position.set(0,yOffset,0.001)
         bottomPanel.add(logoBottomMesh)
-
         return [ topPanel, bottomPanel ]
-
-
     }
     buildHorizontalPanels = (scene:THREE.Scene) => {
+        const lineParams:any = { color: 0x888888 }
         const panelWidth:number = (this.dimensions.targetWidthUnits/4)
         const panelHeight:number = this.dimensions.targetHeightUnits
-        const geometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
+        const panelGeometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
         const matsRight = this.getPanelMatsHorizontal('right', this.onMaterialsLoaded)
-        let meshRight = new THREE.Mesh( geometry, matsRight);
+        let meshRight = new THREE.Mesh( panelGeometry, matsRight);
         meshRight.castShadow = true;
         meshRight.receiveShadow = true;
         let rightPanel = new THREE.Group();
+
+        const edges = new THREE.EdgesGeometry( panelGeometry );
+        const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( lineParams ) );
+        line.position.set(-.125 * this.dimensions.targetWidthUnits, 0, 0)
+        rightPanel.add( line );
+
+
         rightPanel.add(meshRight)
         scene.add(rightPanel)
         meshRight.position.set(-.125 * this.dimensions.targetWidthUnits, 0, 0)
@@ -129,12 +135,18 @@ export class CardBuilder{
         rightPanel.position.set(0.25 * this.dimensions.targetWidthUnits, 0, 0)
 
         const matsLeft = this.getPanelMatsHorizontal('left', this.onMaterialsLoaded)
-        let meshLeft = new THREE.Mesh( geometry, matsLeft);
+        let meshLeft = new THREE.Mesh( panelGeometry, matsLeft);
         meshLeft.castShadow = true;
         meshLeft.receiveShadow = true;
         let leftPanel = new THREE.Group();
         leftPanel.add(meshLeft)
         scene.add(leftPanel)
+
+        const edgesLeft = new THREE.EdgesGeometry( panelGeometry );
+        const lineLeft = new THREE.LineSegments( edgesLeft, new THREE.LineBasicMaterial( lineParams ) );
+        lineLeft.position.set(.125 * this.dimensions.targetWidthUnits, 0, 0)
+        leftPanel.add( lineLeft );
+
         meshLeft.position.set(0.125 * this.dimensions.targetWidthUnits, 0, 0)
         leftPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
         leftPanel.position.set(-0.25 * this.dimensions.targetWidthUnits, 0, 0)
@@ -142,17 +154,19 @@ export class CardBuilder{
         //  create a mesh 
   
         let targetLogoDimension:number = (this.dimensions.targetWidthUnits * 0.25)
-        const xOffset:number = targetLogoDimension * .75
-        let logoGeo:THREE.PlaneGeometry = new THREE.PlaneGeometry(targetLogoDimension/2, targetLogoDimension * 2)
-
-        let logoLeftMat = this.getLogoMaterial('jpg/enso_left_h.jpg', this.onMaterialsLoaded)
+        const width:number = targetLogoDimension/1
+        const height:number = width * 2.6
+        const xOffset:number = (targetLogoDimension * .75)/1.5
+        const yOffset:number = targetLogoDimension * 0.4
+        let logoGeo:THREE.PlaneGeometry = new THREE.PlaneGeometry(width, height)
+        let logoLeftMat = this.getLogoMaterial('jpg/enso_title_left.jpg', this.onMaterialsLoaded)
         let logoLeftMesh = new THREE.Mesh( logoGeo, logoLeftMat);
-        logoLeftMesh.position.set(xOffset,0,0.001)
+        logoLeftMesh.position.set(xOffset,yOffset,0.001)
         leftPanel.add(logoLeftMesh)
 
-        let logoRightMat = this.getLogoMaterial('jpg/enso_right_h.jpg', this.onMaterialsLoaded)
+        let logoRightMat = this.getLogoMaterial('jpg/enso_title_right.jpg', this.onMaterialsLoaded)
         let logoRightMesh = new THREE.Mesh( logoGeo, logoRightMat);
-        logoRightMesh.position.set(-xOffset,0,0.001)
+        logoRightMesh.position.set(-xOffset,yOffset,0.001)
         rightPanel.add(logoRightMesh)
 
 
@@ -171,8 +185,7 @@ export class CardBuilder{
             callback()
         }
         const loader = new THREE.TextureLoader();
-        const logoLeftMaterial = new THREE.MeshPhongMaterial({ flatShading:true, map: loader.load(logoURL, onCoverLoaded)})
-           
+        const logoLeftMaterial = new THREE.MeshPhongMaterial({ flatShading:true, map:loader.load(logoURL, onCoverLoaded)})
         return logoLeftMaterial
     }
     getPanelMats = (insideCoverURL:string, outsideCoverURL:string, callback:Function) => {
@@ -183,7 +196,10 @@ export class CardBuilder{
             shininess: 8,
             flatShading:true,
         });
-        const sky = new THREE.MeshPhongMaterial({ flatShading:true, map: loader.load(insideCoverURL)})
+        const onMaterialLoaded = function(){
+            callback()
+        }
+        const sky = new THREE.MeshPhongMaterial({ flatShading:true, map: loader.load(insideCoverURL, onMaterialLoaded)})
 /*         const onCoverLoaded = function(){
             callback()
         } */
@@ -255,10 +271,7 @@ export class CardBuilder{
         var geometry = new THREE.PlaneGeometry( centerWidth, centerHeight, 100, 100 );
         const loader = new THREE.TextureLoader()
         let texture = loader.load('jpg/sky2.jpg')
-        const materialInside = new THREE.MeshBasicMaterial({
-            map: texture,
-          });
-        
+        const materialInside = new THREE.MeshBasicMaterial({map: texture});
         let inside = new THREE.Mesh( geometry, materialInside );
         inside.castShadow = true;
         inside.receiveShadow = true;
@@ -283,6 +296,7 @@ export class CardBuilder{
     }
 
     buildFullScene(){
+        this.reset()
         this.buildCamera()
         this.setScene()
         this.buildRenderer()

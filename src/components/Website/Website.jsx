@@ -8,6 +8,7 @@ import { Card } from '../Card/Card';
 import { gsap } from 'gsap'
 import './Website.css'
 import About from '../About/About';
+import TestBed from '../TestBed/TestBed';
 
 
 class Website extends React.Component {
@@ -57,7 +58,6 @@ class Website extends React.Component {
     fadeTimeline.restart()    
   }
   onFadeInComplete = () => {
-    console.log('onFadeInComplete')
   }
   render() {
     return (<>
@@ -75,6 +75,7 @@ class Website extends React.Component {
                           <Route path="/hawaii" element={<Hawaii />} />
                           <Route path="/washington" element={<Washington />} />
                           <Route path="/about" element={<About />} />
+                          <Route path="/test" element={<TestBed />} />
                           <Route path="*" element={<Home />} />
                       </Routes>
                     </div>

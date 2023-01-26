@@ -2,7 +2,6 @@ import { useEffect, useState} from "react";
 export default function LandscapeSVG(){
     let [width, setWidth] = useState(window.innerWidth)
     const getAttributes = function(){
-        console.log('getAttributes')
         const ratio:number = 12
         let height:number = width/ratio
         let attributes = {
