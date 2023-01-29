@@ -27,8 +27,9 @@ export function Card(props:any){
         // call a callback at a higher level
     }
     const buildAndRender = function(){
-        cardBuilder.buildFullScene()
-        renderScene()
+        cardBuilder.startBuild()
+        // cardBuilder.buildFullScene()
+        //renderScene()
     }
     const handleResize = function(){
         console.log('handleResize')

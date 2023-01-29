@@ -32,6 +32,7 @@ export class CardAnimator{
         setTimeout(this.openCard, 1000)
     }
     fadeIn(){ 
+        console.log('fadeIn')
         let target = "#cardContainerInner"
         let fade = gsap.to(target, 
             {opacity:1, duration:1, delay:0, ease:"power2.out"}
