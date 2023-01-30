@@ -4,6 +4,7 @@ import { CardDimensions } from "./CardDimensions";
 import { CardMaterialsLoader } from "./CardMaterialsLoader";
 import { CardMaterials } from "./CardMaterials";
 import { Texture } from "three";
+import { SVGUtils } from "./SVGUtils";
 
 export class CardBuilder{
     elements:CardBuilderElements
@@ -142,15 +143,14 @@ export class CardBuilder{
         leftPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
         leftPanel.position.set(-0.25 * this.dimensions.targetWidthUnits, 0, 0)
   
-        
-        let targetLogoDimension:number = panelWidth/2 // (this.dimensions.targetWidthUnits * 0.25)
-        const width:number = targetLogoDimension
-        const height:number = width * 4
-        console.log('targetLogoDimension', targetLogoDimension)
+        const logoAspectRatio:number = 2
+        const logoWidthToPanelWidthRatio:number = .7
+        const width:number = panelWidth * logoWidthToPanelWidthRatio
+        const height:number = width * logoAspectRatio * 2
         console.log('width', width)
         console.log('height', height)
-        const xOffset:number = ((targetLogoDimension * .75)/1.5)/2
-        const yOffset:number = (targetLogoDimension * 0.4)/2
+        const xOffset:number = (width * 0.5) + (panelWidth - width)
+        const yOffset:number = (panelHeight - height)/4
         let logoGeo:THREE.PlaneGeometry = new THREE.PlaneGeometry(width, height)
 
         let logoLeftTexture = this.materials.alphaLogo
@@ -167,6 +167,9 @@ export class CardBuilder{
         logoRightMesh.position.set(-xOffset,yOffset,0.001)
         rightPanel.add(logoRightMesh)
 
+        let taglineGroup:THREE.Group = SVGUtils.svgToGroup(this.materials.centerTagline)
+        console.log('taglineGroup', taglineGroup)
+        this.elements.scene.add(taglineGroup)
 
         return [ leftPanel, rightPanel ]
     }

@@ -25,7 +25,7 @@ export class CardAnimator{
         return animationTimeline
     }
     openCard = () => {
-        // this.openTimeline.restart()
+        this.openTimeline.restart()
     }
     onFadeInComplete = () => {
         this.cardBuilder.renderMethod()
