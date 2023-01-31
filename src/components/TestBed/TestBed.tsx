@@ -9,10 +9,20 @@ export default function TestBed(){
     scene.background = new THREE.Color( 0xCCFF00 );
     const ambientLight = new THREE.AmbientLight("#888888");
     scene.add(ambientLight)
-    const camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
-    camera.position.set(0, 0, -200);
+    const camera = new THREE.PerspectiveCamera( 14, window.innerWidth / window.innerHeight, 1, 1000 );
+    camera.position.set(0, 0, -10);
+    const scale:number = .0325
     camera.lookAt(0, 0, 0);
     scene.add(camera)
+    const clipPlane = new THREE.Plane( new THREE.Vector3( 0.75, 0, 0 ), 0.2 );
+    const point = new THREE.Vector3(0, 0, 0);
+    // const clipPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(new THREE.Vector3( 0.75, 0, 0 ), point);
+    const helper = new THREE.PlaneHelper( clipPlane, 2, 0xffff00 );
+    let clipGroup = new THREE.Group()
+    clipGroup.add(helper)
+    clipGroup.position.set(0.5, 0, 0)
+    scene.add( clipGroup );
+
     const onLoad = function(data:any){
         console.log('loaded', data)
 		const paths = data.paths;
@@ -24,7 +34,8 @@ export default function TestBed(){
 			const material = new THREE.MeshBasicMaterial( {
 				color: path.color,
 				side: THREE.DoubleSide,
-				depthWrite: false
+				depthWrite: false,
+                clippingPlanes:[clipPlane],
 			} );
 
 			const shapes = SVGLoader.createShapes( path );
@@ -43,6 +54,7 @@ export default function TestBed(){
 		}
         console.log('group', group)
         group.rotation.z = Math.PI;
+        group.scale.set(scale,scale,scale)
 		scene.add( group );
 
         scene.background = new THREE.Color( 0x000000 );
@@ -57,6 +69,7 @@ export default function TestBed(){
         console.log('error')
     }
     const renderer = new THREE.WebGLRenderer();
+    renderer.localClippingEnabled = true
     renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
     const loader = new SVGLoader();
     useEffect(

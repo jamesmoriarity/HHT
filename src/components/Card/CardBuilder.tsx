@@ -147,8 +147,6 @@ export class CardBuilder{
         const logoWidthToPanelWidthRatio:number = .7
         const width:number = panelWidth * logoWidthToPanelWidthRatio
         const height:number = width * logoAspectRatio * 2
-        console.log('width', width)
-        console.log('height', height)
         const xOffset:number = (width * 0.5) + (panelWidth - width)
         const yOffset:number = (panelHeight - height)/4
         let logoGeo:THREE.PlaneGeometry = new THREE.PlaneGeometry(width, height)
@@ -156,20 +154,14 @@ export class CardBuilder{
         let logoLeftTexture = this.materials.alphaLogo
         let logoLeftMaterial = new THREE.MeshLambertMaterial({ map : logoLeftTexture });
         let logoLeftMesh = new THREE.Mesh(logoGeo, logoLeftMaterial);
-        console.log('logoLeftMesh', logoLeftMesh)
         logoLeftMesh.position.set(xOffset,yOffset,0.001)
         leftPanel.add(logoLeftMesh)
 
         let logoRightTexture = this.materials.betaLogo
         let logoRightMaterial = new THREE.MeshLambertMaterial({ map : logoRightTexture });
         let logoRightMesh = new THREE.Mesh( logoGeo, logoRightMaterial);
-        console.log('logoRightMesh', logoRightMesh)
         logoRightMesh.position.set(-xOffset,yOffset,0.001)
         rightPanel.add(logoRightMesh)
-
-        let taglineGroup:THREE.Group = SVGUtils.svgToGroup(this.materials.centerTagline)
-        console.log('taglineGroup', taglineGroup)
-        this.elements.scene.add(taglineGroup)
 
         return [ leftPanel, rightPanel ]
     }
@@ -252,31 +244,42 @@ export class CardBuilder{
         const centerWidth:number = this.dimensions.targetWidthUnits/2
         const centerHeight:number = this.dimensions.targetHeightUnits
         var geometry = new THREE.PlaneGeometry( centerWidth, centerHeight, 100, 100 );
-        const loader = new THREE.TextureLoader()
         let texture = this.materials.centerFront
-        console.log('center texture', texture)
-        const materialInside = new THREE.MeshBasicMaterial({map: texture});
-        let inside = new THREE.Mesh( geometry, materialInside );
-        inside.castShadow = true;
-        inside.receiveShadow = true;
-        let parent = new THREE.Group();
-        parent.castShadow = true
-        parent.receiveShadow = true;
-        var material = new THREE.MeshPhongMaterial({
+        const materialFront = new THREE.MeshBasicMaterial({map: texture});
+        let front = new THREE.Mesh( geometry, materialFront );
+        front.castShadow = true;
+        front.receiveShadow = true;
+        let panelParent = new THREE.Group();
+        panelParent.castShadow = true
+        panelParent.receiveShadow = true;
+        let material = new THREE.MeshPhongMaterial({
             color: 0x330000,
             specular: 0xffffff,
             shininess: 8,
             flatShading:true,
             side:THREE.DoubleSide
         });
-        let underneath = new THREE.Mesh( geometry, material );
+/*         let underneath = new THREE.Mesh( geometry, material );
         underneath.castShadow = true
         underneath.receiveShadow = true
-        underneath.position.set(0,0,-0.11)
-        parent.add(underneath);
-        parent.add(inside);
-        scene.add(parent)
-        parent.position.set(0,0,-0.01)
+        underneath.position.set(0,0,-0.11) */
+
+        let taglineGroup:THREE.Group = SVGUtils.svgToGroup(this.materials.centerTagline)
+        const scale:number = .0021
+        let ogbbox = new THREE.Box3().setFromObject(taglineGroup);
+        let ogWidth:number = ogbbox.max.x - ogbbox.min.x
+        let newScale:number = (centerWidth/ogWidth) * 0.75
+        taglineGroup.scale.set(newScale, newScale * 2, newScale)
+        taglineGroup.rotation.x = Math.PI;
+        panelParent.add(taglineGroup);
+        let bbox = new THREE.Box3().setFromObject(taglineGroup);
+        let gWidth:number = bbox.max.x - bbox.min.x
+        let gHeight:number = bbox.max.y - bbox.min.y
+        taglineGroup.position.set(gWidth/-2,gHeight/2,0.02)
+        console.log(bbox)
+        panelParent.add(front);
+        scene.add(panelParent)
+        panelParent.position.set(0,0,-0.01)
     }
 
     startBuild = () => {
