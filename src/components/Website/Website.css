@@ -12,8 +12,8 @@
 }
 
 #top-nav{
+  margin-top:15px;
   position:relative;
-  padding:5px;
   height:60px;
   overflow:hidden;
   z-index:5;
@@ -28,8 +28,8 @@
   color:black;
   text-decoration: none;
   margin-right:15px;
-  font-size:20px;
-  font-weight:bold;
+  font-size:18px;
+  font-weight:500;
 }
 
 #footer-container{

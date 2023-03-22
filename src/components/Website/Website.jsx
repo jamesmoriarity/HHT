@@ -1,14 +1,18 @@
 import * as React from 'react'
 import { HashRouter as Router, Route, Link, Routes, BrowserRouter } from 'react-router-dom'
-import Hawaii from '../Hawaii/Hawaii';
-import Home from '../Home/Home';
-import Washington from '../Washington/Washington';
-import Landscape from '../Landscape/Landscape';
+
+import Hawaii from '../Pages/Hawaii/Hawaii';
+import Home from '../Pages/Home/Home';
+import Washington from '../Pages/Washington/Washington';
+import About from '../Pages/About/About';
+import Testimonials from '../Pages/Testimonials/Testimonials';
+import Contact from '../Pages/Contact/Contact';
+
+import TestBed from '../TestBed/TestBed';
 import { Card } from '../Card/Card';
+import Landscape from '../Landscape/Landscape';
 import { gsap } from 'gsap'
 import './Website.css'
-import About from '../About/About';
-import TestBed from '../TestBed/TestBed';
 
 
 class Website extends React.Component {
@@ -66,7 +70,7 @@ class Website extends React.Component {
                   <div id="pages">
                     <div id="top-nav">
                       <div id="top-nav-inner">
-                        <Link to="/">Home</Link>   <Link to="/hawaii">Hawaii</Link>  <Link to="/washington">Washington</Link>  <Link to="/about">About Dori</Link>  
+                        <Link to="/">Home</Link>   <Link to="/hawaii">Hawaii</Link>  <Link to="/washington">Washington</Link>  <Link to="/about">About Dori</Link>   <Link to="/testimonials">Testimonials</Link> <Link to="/contact">Contact</Link> 
                       </div>
                     </div>
                     <div id="page-container">
@@ -75,6 +79,8 @@ class Website extends React.Component {
                           <Route path="/hawaii" element={<Hawaii />} />
                           <Route path="/washington" element={<Washington />} />
                           <Route path="/about" element={<About />} />
+                          <Route path="/testimonials" element={<Testimonials />} />
+                          <Route path="/contact" element={<Contact />} />
                           <Route path="/test" element={<TestBed />} />
                           <Route path="*" element={<Home />} />
                       </Routes>

@@ -1,4 +1,4 @@
-import Page from "../Page/Page";
+import Page from "../Page";
 
 export default function About(){
     return <Page id="home-page">
