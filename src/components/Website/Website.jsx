@@ -90,14 +90,12 @@ class Website extends React.Component {
                         <Landscape/>
                         <div id="footer-inner">
                           <p>
-                            <Link to="/">footer</Link>
-                            <Link to="/washington">ipsum</Link>
-                            <Link to="/hawaii">dolor</Link>
-                            <Link to="/">consequet</Link>
-                            <Link to="/washington">lorem</Link>
-                            <Link to="/hawaii">ipsum</Link>
-                            <Link to="/">dolor</Link>
-                            <Link to="/washington">footer</Link>
+                            <Link to="/">Home</Link>   
+                            <Link to="/hawaii">Hawaii</Link>  
+                            <Link to="/washington">Washington</Link>  
+                            <Link to="/about">About Dori</Link>   
+                            <Link to="/testimonials">Testimonials</Link> 
+                            <Link to="/contact">Contact</Link>
                           </p>
                         </div>
                       </div>

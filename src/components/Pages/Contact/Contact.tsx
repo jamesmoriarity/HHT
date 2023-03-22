@@ -2,7 +2,7 @@ import Page from "../Page";
 
 export default function Contact(){
     return <Page id="home-page">
-            <div className="about">
+            <div className="contact">
                 <div className="page-content">
                     <h1>Contact Dori</h1>
                     <div className="row">
@@ -10,7 +10,8 @@ export default function Contact(){
                             Contact
                         </div>
                         <div className="column right-small side-bar">
-                            right column
+                            <a href="mailto:dori.hanson@compass.com">dori.hanson@compass.com</a>
+                            <p>206-713-0621</p>
                         </div> 
                     </div>
                 </div>
