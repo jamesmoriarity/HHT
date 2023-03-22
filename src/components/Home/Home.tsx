@@ -6,6 +6,7 @@ export default function Home(){
                     <h1 id="home">Home</h1>
                     <div className="page-content">
                         <p>
+                            [service philosphy - harmony relationship]
                             Lorem do qui nostrud culpa aute in. Commodo id exercitation minim aute eiusmod non et labore enim commodo minim officia. Est aliqua sit sint Lorem. Anim voluptate aliquip reprehenderit voluptate et.
                         </p>
                         <p>

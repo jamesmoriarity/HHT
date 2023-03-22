@@ -3,18 +3,19 @@ import Page from "../Page/Page";
 export default function Washington(){
     return <Page id="home-page">
                     <div className="washington">
-                        <h1>Washington</h1>
-                        <div className="page-content">
-                                <p>
-                                    Aliquip enim laborum eiusmod dolor amet nulla ullamco commodo dolor nulla proident non sint. Do nulla non sit proident. Dolor ut est dolore qui qui dolore eiusmod in excepteur voluptate cupidatat esse minim. Commodo laborum irure amet in commodo dolore duis excepteur. Nostrud nulla aliqua laborum eiusmod magna. Magna nostrud Lorem commodo id in officia ex occaecat.
-                                </p>
-                                <p>
-                                    Veniam officia culpa nulla exercitation duis minim nisi qui. Laborum elit officia commodo elit. Ut qui veniam commodo anim reprehenderit consequat minim nostrud. Exercitation fugiat nulla est quis ad. Culpa irure laboris commodo anim irure esse magna cupidatat amet ut enim adipisicing proident laboris.
-                                </p>
-                                <p>
-                                    Anim esse ad minim tempor aute consectetur. Duis nulla mollit mollit adipisicing veniam incididunt ea et duis excepteur est minim exercitation. Aliquip in duis sunt reprehenderit elit eiusmod id qui anim reprehenderit consectetur elit sit qui. Occaecat in dolore minim ex elit in ullamco voluptate anim qui consequat aute nisi.
-                                </p>          
+                        <div className="page-content"> 
+                            <h1>Washington Market</h1>
+                            <div className="row">
+                                <div className="column left">
+                                     In the Seattle/King County market Dori has developed close relationships with C-suite executives  within the tech community, serving top clients affiliated with Microsoft, Amazon, Google and Facebook. 
+
+                                    <p>For more than two decades Dori has collaborated with top builders in land acquisition. Through strategic marketing, Dori has represented dozens of off-market premium land plats, bringing the land to builders such as Steve Burnstead Construction and MN Homes, LLC then exclusively represents the builders’ finished new luxury homes in Bellevue, Kirkland and Redmond.</p> 
+                                </div>
+                                <div className="column right">
+                                    <div className="image-holder"><img className="side-image" src="./jpg/burnstead.jpg"/></div>
+                                </div>
+                            </div>          
                         </div>
                     </div>
-    </Page>
+            </Page>
 }

@@ -65,8 +65,9 @@
   padding:10px 0px 10px 0px;
 }
 body{
-  background-color:rgb(202, 202, 202);
+  background-color:#ffffff;
   overflow-x: hidden;
+  font-size:18px;
 }
 body.post-card { 
   /* background: url(./jpg/sky.jpg) no-repeat center center fixed; 

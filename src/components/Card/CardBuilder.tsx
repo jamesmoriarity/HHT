@@ -65,7 +65,7 @@ export class CardBuilder{
     }
     setScene(){
         this.elements.scene = new THREE.Scene();
-        this.elements.scene.background = new THREE.Color( 0xdedede );
+        // this.elements.scene.background = new THREE.Color( 0xdedede );
         this.elements.scene.add(this.elements.camera)
     }
     buildVerticalPanels = (scene:THREE.Scene) => {
@@ -92,21 +92,16 @@ export class CardBuilder{
         topPanel.rotation.set(0, 0, 0) // left goes from 0 to -3.14 to open
         topPanel.position.set(0, 0.25 * this.dimensions.targetHeightUnits, 0)
         
-        let targetLogoDimension:number = (this.dimensions.targetHeightUnits * 0.25)
-        const w:number = targetLogoDimension*2
-        const h:number = targetLogoDimension/2
-        console.log('targetLogoDimension', targetLogoDimension)
-        console.log('w', w)
-        console.log('h', h)
-        const yOffset:number = (h * 1.5)
+        const logoAspectRatio:number = 2
+        const h:number = panelHeight * 0.9
+        const w:number = h * 2 * logoAspectRatio
+        const yOffset:number = ((panelHeight - h)/2) + panelHeight/2
         let logoGeo:THREE.PlaneGeometry = new THREE.PlaneGeometry(w, h)
-        //let logoLeftMat = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
         let logoTopTexture = this.materials.alphaLogo
         let logoTopMaterial = new THREE.MeshLambertMaterial({ map : logoTopTexture });
         let logoTopMesh = new THREE.Mesh( logoGeo, logoTopMaterial);
-        logoTopMesh.position.set(0,-yOffset,0.001)
         topPanel.add(logoTopMesh)
-
+        logoTopMesh.position.set(0,-yOffset, 0.001)
         let logoBottomTexture = this.materials.betaLogo
         let logoBottomMaterial = new THREE.MeshLambertMaterial({ map : logoBottomTexture });
         let logoBottomMesh = new THREE.Mesh( logoGeo, logoBottomMaterial);
@@ -120,7 +115,7 @@ export class CardBuilder{
         const lineParams:any = { color: 0x888888 }
         const panelWidth:number = (this.dimensions.targetWidthUnits/4)
         const panelHeight:number = this.dimensions.targetHeightUnits
-        const panelGeometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0001)
+        const panelGeometry = new THREE.BoxGeometry(panelWidth, panelHeight, 0.0019)
         const [matsAlpha, matsBeta] = this.buildPanelMaterials()
         let meshRight = new THREE.Mesh( panelGeometry, matsBeta);
         meshRight.castShadow = true;
@@ -147,8 +142,8 @@ export class CardBuilder{
         const logoWidthToPanelWidthRatio:number = .7
         const width:number = panelWidth * logoWidthToPanelWidthRatio
         const height:number = width * logoAspectRatio * 2
-        const xOffset:number = (width * 0.5) + (panelWidth - width)
-        const yOffset:number = (panelHeight - height)/4
+        const xOffset:number = (panelWidth - width) + (width * 0.5)
+        const yOffset:number = (panelHeight - height)/8
         let logoGeo:THREE.PlaneGeometry = new THREE.PlaneGeometry(width, height)
 
         let logoLeftTexture = this.materials.alphaLogo
@@ -182,20 +177,32 @@ export class CardBuilder{
         return logoLeftMaterial
     }
     buildPanelMaterial = (insideTexture:Texture) => {
-        const material = new THREE.MeshPhongMaterial({
+        const materialWhite = new THREE.MeshPhongMaterial({
             color: 0xffffff,
             specular: 0xffffff,
             shininess: 8,
             flatShading:true,
         });
+        const materialGrey = new THREE.MeshPhongMaterial({
+            color: 0xdddddd,
+            specular: 0xdddddd,
+            shininess: 8,
+            flatShading:true,
+        });
+        const materialDarkGrey = new THREE.MeshPhongMaterial({
+            color: 0x333333,
+            specular: 0x333333,
+            shininess: 8,
+            flatShading:true,
+        });
         const insideMaterial = new THREE.MeshPhongMaterial({ flatShading:true, map: insideTexture })  
         const cubeMaterials = [
-            material, //right side
-            material, //left side
-            material, //top side
-            material, //bottom side
-            material, //front side
-            insideMaterial, //back side
+            materialDarkGrey, //right side
+            materialDarkGrey, //left side
+            materialDarkGrey, //top side
+            materialDarkGrey, //bottom side
+            materialWhite, //front side
+            materialGrey, //back side
         ];
         return cubeMaterials
     }
@@ -243,29 +250,18 @@ export class CardBuilder{
     buildHorizontalCenter = (scene:THREE.Scene) => {
         const centerWidth:number = this.dimensions.targetWidthUnits/2
         const centerHeight:number = this.dimensions.targetHeightUnits
-        var geometry = new THREE.PlaneGeometry( centerWidth, centerHeight, 100, 100 );
-        let texture = this.materials.centerFront
-        const materialFront = new THREE.MeshBasicMaterial({map: texture});
-        let front = new THREE.Mesh( geometry, materialFront );
-        front.castShadow = true;
-        front.receiveShadow = true;
-        let panelParent = new THREE.Group();
-        panelParent.castShadow = true
-        panelParent.receiveShadow = true;
-        let material = new THREE.MeshPhongMaterial({
-            color: 0x330000,
-            specular: 0xffffff,
+        var geometry = new THREE.PlaneGeometry( centerWidth, centerHeight, 1, 1 );
+        const materialFront = new THREE.MeshPhongMaterial({
+            color: 0xdddddd,
+            specular: 0xdddddd,
             shininess: 8,
             flatShading:true,
             side:THREE.DoubleSide
         });
-/*         let underneath = new THREE.Mesh( geometry, material );
-        underneath.castShadow = true
-        underneath.receiveShadow = true
-        underneath.position.set(0,0,-0.11) */
+        let front = new THREE.Mesh( geometry, materialFront );
+        let panelParent = new THREE.Group();
 
         let taglineGroup:THREE.Group = SVGUtils.svgToGroup(this.materials.centerTagline)
-        const scale:number = .0021
         let ogbbox = new THREE.Box3().setFromObject(taglineGroup);
         let ogWidth:number = ogbbox.max.x - ogbbox.min.x
         let newScale:number = (centerWidth/ogWidth) * 0.75

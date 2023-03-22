@@ -29,7 +29,17 @@
     bottom: 24px;
     opacity:1;
     transform:scale(1);
-    background-color: rgb(202, 202, 202);
+    background-color: #eeeeee;
+    border-top: 30px solid #fafafa;
+}
+#sky-1{
+    fill:#e8e8e8;
+}
+#sky-2{
+    fill:#d3d3d3;
+}
+#sky-3{
+    fill:#cacaca;
 }
 #LandscapeSVG path{
 }

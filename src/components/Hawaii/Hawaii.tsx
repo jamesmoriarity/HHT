@@ -3,17 +3,17 @@ import Page from "../Page/Page";
 export default function Hawaii(){
     return <Page id="home-page">
             <div className="hawaii">
-                <h1>Hawaii</h1>
                 <div className="page-content">
-                        <p>
-                            Veniam officia culpa nulla exercitation duis minim nisi qui. Laborum elit officia commodo elit. Ut qui veniam commodo anim reprehenderit consequat minim nostrud. Exercitation fugiat nulla est quis ad. Culpa irure laboris commodo anim irure esse magna cupidatat amet ut enim adipisicing proident laboris.
-                        </p>
-                        <p>
-                            Anim esse ad minim tempor aute consectetur. Duis nulla mollit mollit adipisicing veniam incididunt ea et duis excepteur est minim exercitation. Aliquip in duis sunt reprehenderit elit eiusmod id qui anim reprehenderit consectetur elit sit qui. Occaecat in dolore minim ex elit in ullamco voluptate anim qui consequat aute nisi.
-                        </p>
-                        <p>
-                            Do cupidatat ad minim irure cillum commodo. Do ipsum ex cupidatat ut fugiat aliqua. Veniam sunt voluptate et Lorem consequat culpa ad in ut nostrud officia labore irure laborum. Consectetur ex commodo cupidatat anim non cillum id non. Non Lorem ea excepteur tempor nostrud et ullamco.
-                        </p>           
+                    <h1>Hawaii Market</h1>
+                    <div className="row">
+                        <div className="column left">
+                            In the Hawaii market, Dori obtained her Real Estate Salesperson License in 2015 and continued her higher education to obtain her Hawaii Broker's license in 2020.  
+                            <p>Merging the mainland to Hawaii, Dori has worked with many mainland clients, confidently referred from satisfied customers and peers alike, in buying and selling Hawaii vacation rental properties or second home purchases and sales.</p> 
+                        </div>
+                        <div className="column right">
+                            <div className="image-holder"><img className="side-image" src="./jpg/kohler2.jpg"/></div>
+                        </div>
+                    </div>         
                 </div>
             </div>
             </Page> 

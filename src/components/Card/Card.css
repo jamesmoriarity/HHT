@@ -4,6 +4,8 @@
     opacity:1;
     width:100%;
     height:100%;
+    background-image:url("jpg/water_2.jpg");
+    
 }
 #cardContainerInner{
    opacity:0;

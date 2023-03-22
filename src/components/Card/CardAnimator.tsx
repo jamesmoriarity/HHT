@@ -49,10 +49,10 @@ export class CardAnimator{
 
     addOpenAnimation = (timeline:gsap.core.Timeline) => {
         let dims:CardDimensions = new CardDimensions()
-        let originalVals = {rads: -3.1415}
+        let originalVals = {rads: -3.1}
         let lastRads = originalVals.rads
         let targetVals = {
-            rads: 0,
+            rads: -0.5,
             onUpdate:()=>{
                 let delta:number = originalVals.rads - lastRads
                 lastRads = originalVals.rads
