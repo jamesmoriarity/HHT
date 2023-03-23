@@ -13,9 +13,11 @@ import { Card } from '../Card/Card';
 import Landscape from '../Landscape/Landscape';
 import { gsap } from 'gsap'
 import './Website.css'
+import { Nav } from '../Nav/Nav';
 
 
 class Website extends React.Component {
+
   showNav = () =>{
 
   }
@@ -24,7 +26,8 @@ class Website extends React.Component {
   }
   onCardOpened = () => {
     // "#cardContainer"
-    document.querySelector("body").className = 'post-card'
+    let body:HTMLBodyElement | null = document.querySelector("body")
+    if(body){body.className = 'post-card'}
     let card = "#cardContainer"
     let cardFadeTween = gsap.to(card, 
         {opacity:0, duration:3, delay:0, ease:"power2.out", onUpdate:()=>{}}
@@ -34,9 +37,9 @@ class Website extends React.Component {
       {opacity:1, display:'block', duration:3, delay:0, ease:"power2.out", onUpdate:()=>{}}
     ) 
     let footer = "#footer"
-    let footerRiseTween = gsap.to(footer, 
+/*     let footerRiseTween = gsap.to(footer, 
       {top:0, opacity:1, duration:1, delay:0, ease:"power2.out", onUpdate:()=>{}}
-    )
+    ) */
     let topNavInner = '#top-nav-inner'
     let navDropTween = gsap.to(topNavInner, 
       {top:0, duration:1, delay:0, ease:"power2.out", onUpdate:()=>{}}
@@ -55,7 +58,7 @@ class Website extends React.Component {
     })
     fadeTimeline.add(cardFadeTween, 0)
     fadeTimeline.add(pagesFadeTween, 0)
-    fadeTimeline.add(footerRiseTween, 2)
+    // fadeTimeline.add(footerRiseTween, 2)
     fadeTimeline.add(navDropTween, 2.5)
     fadeTimeline.add(pageTween, 3)
     fadeTimeline.add(cardRemovalTween, 5)
@@ -63,16 +66,16 @@ class Website extends React.Component {
   }
   onFadeInComplete = () => {
   }
+  onBurgerToggle = (isOpen:boolean) => {
+    this.setState({navIsOpen:isOpen})
+  }
+
   render() {
     return (<>
             <Card openCallback={this.onCardOpened} />
              <BrowserRouter>
                   <div id="pages">
-                    <div id="top-nav">
-                      <div id="top-nav-inner">
-                        <Link to="/">Home</Link>   <Link to="/hawaii">Hawaii</Link>  <Link to="/washington">Washington</Link>  <Link to="/about">About Dori</Link>   <Link to="/testimonials">Testimonials</Link> <Link to="/contact">Contact</Link> 
-                      </div>
-                    </div>
+                    <Nav/>
                     <div id="page-container">
                       <Routes>
                           <Route path="/" element={<Home />} />
@@ -85,9 +88,10 @@ class Website extends React.Component {
                           <Route path="*" element={<Home />} />
                       </Routes>
                     </div>
+                    <Landscape/>
                     <div id="footer-container">
                       <div id="footer">
-                        <Landscape/>
+                        
                         <div id="footer-inner">
                           <p>
                             <Link to="/">Home</Link>   

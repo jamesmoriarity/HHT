@@ -1,9 +1,15 @@
 #landscape{
     margin:0px;
     width:100%;
-    position:relative;
-    height:250px;
+    position:fixed;
+    bottom:80px;
     overflow:hidden;
+    background-color: #000;
+}
+#LandscapeSVG{
+    opacity:1;
+    transform:scale(1);
+    background-color: #eeeeee;
 }
 .background-panel{
     position:relative;
@@ -24,14 +30,7 @@
     opacity:.5;
     background-image: url("./jpg/sky-2.jpg");
 }
-#LandscapeSVG{
-    position:absolute;
-    bottom: 24px;
-    opacity:1;
-    transform:scale(1);
-    background-color: #eeeeee;
-    border-top: 30px solid #fafafa;
-}
+
 #sky-1{
     fill:#e8e8e8;
 }

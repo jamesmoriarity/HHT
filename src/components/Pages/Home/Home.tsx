@@ -4,7 +4,6 @@ export default function Home(){
     return  <Page id="home-page">
                 <div className="home">
                     <div className="page-content">
-                        <h1 id="home">Home</h1>
                         <p>
                             [service philosphy - harmony relationship]
                             Lorem do qui nostrud culpa aute in. Commodo id exercitation minim aute eiusmod non et labore enim commodo minim officia. Est aliqua sit sint Lorem. Anim voluptate aliquip reprehenderit voluptate et.
