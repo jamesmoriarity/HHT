@@ -14,6 +14,7 @@ import Landscape from '../Landscape/Landscape';
 import { gsap } from 'gsap'
 import './Website.css'
 import { Nav } from '../Nav/Nav';
+import { LogoHeader } from '../LogoHeader/LogoHeader';
 
 
 class Website extends React.Component {
@@ -30,11 +31,11 @@ class Website extends React.Component {
     if(body){body.className = 'post-card'}
     let card = "#cardContainer"
     let cardFadeTween = gsap.to(card, 
-        {opacity:0, duration:3, delay:0, ease:"power2.out", onUpdate:()=>{}}
+        {opacity:0, duration:2, delay:0, ease:"power2.out", onUpdate:()=>{}}
     ) 
     let pages = "#pages"
     let pagesFadeTween = gsap.to(pages, 
-      {opacity:1, display:'block', duration:3, delay:0, ease:"power2.out", onUpdate:()=>{}}
+      {opacity:1, display:'block', duration:2, delay:0, ease:"power2.out", onUpdate:()=>{}}
     ) 
     let footer = "#footer"
 /*     let footerRiseTween = gsap.to(footer, 
@@ -46,7 +47,7 @@ class Website extends React.Component {
     )
     let page = '#page-container'
     let pageTween = gsap.to(page, 
-      {opacity:1, display:'block', duration:2, delay:0, ease:"power2.out", onUpdate:()=>{}}
+      {opacity:1, display:'block', duration:1, delay:0, ease:"power2.out", onUpdate:()=>{}}
     )
     let cardRemovalTween = gsap.to(card, {display:'none'})
 
@@ -60,8 +61,8 @@ class Website extends React.Component {
     fadeTimeline.add(pagesFadeTween, 0)
     // fadeTimeline.add(footerRiseTween, 2)
     fadeTimeline.add(navDropTween, 2.5)
-    fadeTimeline.add(pageTween, 3)
-    fadeTimeline.add(cardRemovalTween, 5)
+    fadeTimeline.add(pageTween, 2)
+    fadeTimeline.add(cardRemovalTween, 4)
     fadeTimeline.restart()    
   }
   onFadeInComplete = () => {
@@ -76,6 +77,7 @@ class Website extends React.Component {
              <BrowserRouter>
                   <div id="pages">
                     <Nav/>
+                    <LogoHeader/>
                     <div id="page-container">
                       <Routes>
                           <Route path="/" element={<Home />} />
@@ -91,16 +93,13 @@ class Website extends React.Component {
                     <Landscape/>
                     <div id="footer-container">
                       <div id="footer">
-                        
                         <div id="footer-inner">
-                          <p>
-                            <Link to="/">Home</Link>   
-                            <Link to="/hawaii">Hawaii</Link>  
-                            <Link to="/washington">Washington</Link>  
-                            <Link to="/about">About Dori</Link>   
-                            <Link to="/testimonials">Testimonials</Link> 
-                            <Link to="/contact">Contact</Link>
-                          </p>
+                            <div className="footer-link"><Link to="/">Home</Link></div>   
+                            <div className="footer-link"><Link to="/hawaii">Hawaii</Link></div>     
+                            <div className="footer-link"><Link to="/washington">Washington</Link></div>     
+                            <div className="footer-link"><Link to="/about">About Dori</Link></div>      
+                            <div className="footer-link"><Link to="/testimonials">Testimonials</Link></div>    
+                            <div className="footer-link"><Link to="/contact">Contact</Link></div>   
                         </div>
                       </div>
                     </div>
