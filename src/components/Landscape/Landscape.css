@@ -5,6 +5,7 @@
     bottom:80px;
     overflow:hidden;
     background-color: #000;
+    opacity:0.35;
 }
 #LandscapeSVG{
     opacity:1;

@@ -73,8 +73,12 @@ class Website extends React.Component {
 
   render() {
     return (<>
-            <Card openCallback={this.onCardOpened} />
+            
              <BrowserRouter>
+             <Routes>
+                <Route path="/test" element={<TestBed />} />
+                <Route path="*" element={<Card openCallback={this.onCardOpened} />} />
+             </Routes>
                   <div id="pages">
                     <Nav/>
                     <LogoHeader/>
@@ -86,7 +90,6 @@ class Website extends React.Component {
                           <Route path="/about" element={<About />} />
                           <Route path="/testimonials" element={<Testimonials />} />
                           <Route path="/contact" element={<Contact />} />
-                          <Route path="/test" element={<TestBed />} />
                           <Route path="*" element={<Home />} />
                       </Routes>
                     </div>
