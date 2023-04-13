@@ -153,32 +153,24 @@ export default function TestBed(){
         const forestTexture = textureLoader.load(ImageCodes.closeForest);
         const forestMaterial = new THREE.MeshPhongMaterial({map:forestTexture, transparent:true})
 
-
+        const ratio:number = 2
 
         const material = new THREE.SpriteMaterial( { map: forestTexture } );
 
         const sprite = new THREE.Sprite( material );
-        sprite.scale.set(1, .5, 1)
-        sprite.position.set(0, 0 , 0)
+        const xScale:number = 3
+        const yScale:number = xScale/ratio
+        const zScale:number = 1
+        sprite.scale.set(xScale, yScale, zScale)
+        sprite.position.set(-6, 0 , 0.2)
         hostScene.add( sprite );
-
-
-        let forestPlane:THREE.PlaneGeometry = new THREE.PlaneGeometry(8,4)
-        let forestMesh = new THREE.Mesh( forestPlane, forestMaterial);
-        let forestMeshProps = {scale:0.4}
-        forestMesh.position.set(-6, -0.1 , -1)
-        forestMesh.scale.x = forestMeshProps.scale
-        forestMesh.scale.y = forestMeshProps.scale
-        forestMesh.scale.z = forestMeshProps.scale
-        //hostScene.add(forestMesh)
-
-
-         const forestTwoFolder = gui.addFolder('forest two')
+        let forestMeshProps = {scale:1}
+        const forestTwoFolder = gui.addFolder('forest two')
         forestTwoFolder.add(sprite.position, 'x', -10, 10,1)
             .name('Move X')
             .listen()
             .onChange(onObjectChange)
-        /* 
+         
         forestTwoFolder.add(sprite.position, 'z', -10, 10,1)
             .name('Move Z')
             .listen()
@@ -187,21 +179,24 @@ export default function TestBed(){
             .name('Move Y')
             .listen()
             .onChange(onObjectChange)
-        forestTwoFolder.add(sprite, 'scale', 0.2, 3, 0.1)
+        forestTwoFolder.add(forestMeshProps, 'scale', 0.2, 3, 0.1)
             .name('Scale')
             .listen()
             .onChange((scaleValue)=>{
                 sprite.scale.x = scaleValue
-                sprite.scale.y = scaleValue
+                sprite.scale.y = scaleValue/ratio
                 sprite.scale.z = scaleValue
                 onObjectChange()
             })
-         */
+        
         forestTwoFolder.open()
 
 
         return sprite
     }
+
+
+
     const buildSeattleControls = (seattleMesh:THREE.Mesh, seattleMeshProps:any, onChangeHandler:Function) => {
         const seattleFolder = gui.addFolder('seattle')
         seattleFolder.add(seattleMesh.position, 'x', -10, 10,1)
