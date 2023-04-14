@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader";
 import { GUI, GUIController } from 'dat.gui'
 import { ImageCodes } from "./ImageCodes";
+import { Vector3 } from "three";
 export interface ValueRange{
     min:number
     max:number
@@ -28,8 +29,9 @@ export default function TestBed(){
         const camera = new THREE.PerspectiveCamera(fov, aspectRatio, 0.1, 1000 );
         camera.position.y = 0
         camera.position.z = 6
+        camera.rotateY(-2.09)
         const cameraFolder = gui.addFolder('Camera')
-        cameraFolder.add(camera, 'fov', 20, 75)
+        cameraFolder.add(camera, 'fov', 20, 200)
             .name('Camera FOV')
             .listen()
             .onChange(onCameraChange)
@@ -72,59 +74,128 @@ export default function TestBed(){
         renderScene()
     }
     const buildMountain = (hostScene:THREE.Scene) => {
-        const textureLoader = new THREE.TextureLoader();
-        const mVals = {width:18, height:1.5, x:0, y:0, z:-5}
-        const mountainTexture = textureLoader.load(ImageCodes.mountainCode);
-        const mountainMaterial = new THREE.MeshPhongMaterial({map:mountainTexture, transparent:true})
-        let mountainPlane:THREE.PlaneGeometry = new THREE.PlaneGeometry(mVals.width,mVals.height)
-        let mountainMesh = new THREE.Mesh( mountainPlane, mountainMaterial);
-        mountainMesh.position.z = mVals.z
-        mountainMesh.position.x = mVals.x
-        mountainMesh.position.y = mVals.y
-        hostScene.add(mountainMesh)
-
-        const mountainFolder = gui.addFolder('mountain')
-        mountainFolder.add(mountainMesh.position, 'x', -10, 10,1)
-            .name('Move X')
-            .listen()
-            .onChange(onObjectChange)
-        mountainFolder.add(mountainMesh.position, 'z', -10, 10,1)
-            .name('Move Z')
-            .listen()
-            .onChange(onObjectChange)
-        mountainFolder.add(mountainMesh.position, 'y', -2, 2,0.25)
-            .name('Move Y')
-            .listen()
-            .onChange(onObjectChange)
-        mountainFolder.open()
-
-        return mountainMesh
+        const imageCode:string = ImageCodes.mountainCode
+        const height:number = 1.5
+        const aspectRatio:number = 12
+        const position:Vector3 = new Vector3(0,0,-5)
+        const scale:number = .9
+        let mesh = buildMesh(hostScene, imageCode, height, aspectRatio, position, scale)
+        buildMeshControls('mountain', mesh, scale)
+        return mesh
     }
     const buildSeattle = (hostScene:THREE.Scene) => {
-        const textureLoader = new THREE.TextureLoader();
-        const seattleTexture = textureLoader.load(ImageCodes.seattleSkyline);
-        const seattleMaterial = new THREE.MeshPhongMaterial({map:seattleTexture, transparent:true})
-        let seattlePlane:THREE.PlaneGeometry = new THREE.PlaneGeometry(8,2)
-        let seattleMesh = new THREE.Mesh( seattlePlane, seattleMaterial);
-        let seattleMeshProps = {scale:0.4}
-        seattleMesh.position.z = -3
-        seattleMesh.position.x = -3
-        seattleMesh.position.y = -0.2
-        seattleMesh.scale.x = seattleMeshProps.scale
-        seattleMesh.scale.y = seattleMeshProps.scale
-        seattleMesh.scale.z = seattleMeshProps.scale
-        hostScene.add(seattleMesh)
-        buildSeattleControls(seattleMesh, seattleMeshProps, onObjectChange)
-        return seattleMesh
-    }
-    const buildSeattleSprite = (hostScene:THREE.Scene):THREE.Sprite => {
-        const position:THREE.Vector3 = new THREE.Vector3(-3,-3,-0.2)
         const imageCode:string = ImageCodes.seattleSkyline
+        const height:number = 2
         const aspectRatio:number = 4
-        const initialScale:number = 0.4
-        const sprite:THREE.Sprite = buildSprite(hostScene, position, imageCode, aspectRatio, initialScale)
-        buildSpriteControls('forest sprite', sprite, aspectRatio, initialScale)
-        return sprite
+        const position:Vector3 = new Vector3(-3,-0.2,-3)
+        const scale:number = 0.4
+        let mesh:THREE.Mesh = buildMesh(hostScene, imageCode, height, aspectRatio, position, scale)
+        buildMeshControls('seattle', mesh, scale)
+        return mesh
+    }
+    const buildHawaiiCoast = (hostScene:THREE.Scene) => {
+        const imageCode:string = ImageCodes.hawaiiCoastline
+        const height:number = 2
+        const aspectRatio:number = 7
+        const position:Vector3 = new Vector3(30,0,7.75)
+        const scale:number = 2.4
+        let mesh:THREE.Mesh = buildMesh(hostScene, imageCode, height, aspectRatio, position, scale)
+        mesh.rotateY(Math.PI/-4)
+        buildMeshControls('hawaii coast', mesh, scale)
+        mesh.lookAt(0,0,0)
+        return mesh
+    }
+    const buildPalmShore = (hostScene:THREE.Scene) => {
+        const imageCode:string = ImageCodes.palmShore
+        const height:number = 4
+        const aspectRatio:number = 1.5
+        const position:Vector3 = new Vector3(13.05,1.8,15.05)
+        const scale:number = 1.48
+        let mesh:THREE.Mesh = buildMesh(hostScene, imageCode, height, aspectRatio, position, scale)
+        mesh.rotateY(Math.PI/-4)
+        buildMeshControls('palm shore', mesh, scale)
+        mesh.lookAt(0,0,0)
+        return mesh
+    }
+    const buildPalmLine = (hostScene:THREE.Scene) => {
+        const imageCode:string = ImageCodes.palmLine
+        const height:number = 4
+        const aspectRatio:number = 4
+        const position:Vector3 = new Vector3(13.05,1.8,15.05)
+        const scale:number = 1.48
+        let mesh:THREE.Mesh = buildMesh(hostScene, imageCode, height, aspectRatio, position, scale)
+        mesh.rotateY(Math.PI/-4)
+        buildMeshControls('palm line', mesh, scale)
+        mesh.lookAt(0,0,0)
+        return mesh
+    }
+    const buildLongIsland = (hostScene:THREE.Scene) => {
+        const imageCode:string = ImageCodes.longIsland
+        const height:number = 2
+        const aspectRatio:number = 15
+        const position:Vector3 = new Vector3(30,3.5,27)
+        const scale:number = 3.16
+        let mesh:THREE.Mesh = buildMesh(hostScene, imageCode, height, aspectRatio, position, scale)
+        mesh.rotateY(Math.PI/-4)
+        buildMeshControls('long island', mesh, scale)
+        mesh.lookAt(0,0,0)
+        return mesh
+    }
+
+    const buildMeshControls = (folderName:string, mesh:THREE.Mesh, scale:number, ranges?:ControlRanges) => {
+
+        if(!ranges) ranges =   {
+            x:{min:-30, max:30, step:0.05},
+            y:{min:-30, max:30, step:0.05},
+            z:{min:-30, max:30, step:0.05},
+            scale:{min:0.2, max:5, step:0.051}
+        }
+
+        let meshProps = {scale:scale}
+        const folder = gui.addFolder(folderName)
+        folder.add(mesh.position, 'x', ranges.x.min, ranges.x.max, ranges.x.step)
+        .name('Move X')
+        .listen()
+        .onChange(onObjectChange)
+
+        folder.add(mesh.position, 'y', ranges.y.min, ranges.y.max, ranges.y.step)
+        .name('Move Y')
+        .listen()
+        .onChange(onObjectChange)
+        
+        folder.add(mesh.position, 'z', ranges.z.min, ranges.z.max, ranges.z.step)
+        .name('Move Z')
+        .listen()
+        .onChange(onObjectChange)
+
+        folder.add(meshProps, 'scale', ranges.scale.min, ranges.scale.max, ranges.scale.step)
+        .name('Scale')
+        .listen()
+        .onChange((scaleValue)=>{
+            mesh.scale.x = scaleValue
+            mesh.scale.y = scaleValue
+            mesh.scale.z = scaleValue
+            onObjectChange()
+        })
+
+        //folder.open()
+    }
+    const buildMesh = (hostScene:THREE.Scene, imageCode:string, height:number, aspectRatio:number, position:THREE.Vector3, scale:number):THREE.Mesh => {
+        const textureLoader = new THREE.TextureLoader();
+        const texture = textureLoader.load(imageCode);
+        const material = new THREE.MeshPhongMaterial({map:texture, transparent:true})
+        const width = height * aspectRatio
+        let plane:THREE.PlaneGeometry = new THREE.PlaneGeometry(width, height)
+        let mesh = new THREE.Mesh(plane, material);
+        let meshProps = {scale:scale}
+        mesh.position.z = position.z
+        mesh.position.x = position.x
+        mesh.position.y = position.y
+        mesh.scale.x = meshProps.scale
+        mesh.scale.y = meshProps.scale
+        mesh.scale.z = meshProps.scale
+        hostScene.add(mesh)
+        return mesh
     }
     const buildForestSprite = (hostScene:THREE.Scene):THREE.Sprite => {
         const position:THREE.Vector3 = new THREE.Vector3(-6,-0.1,-2.3)
@@ -136,23 +207,25 @@ export default function TestBed(){
         return sprite
     }
     const buildBird = (hostScene:THREE.Scene):THREE.Sprite => {
-        const position:THREE.Vector3 = new THREE.Vector3(-4,8,0)
+        const position:THREE.Vector3 = new THREE.Vector3(-3,8,0)
         const imageCode:string = ImageCodes.bird
         const aspectRatio:number = 1
-        const initialScale:number = 1
+        const initialScale:number = .7
         const sprite:THREE.Sprite = buildSprite(hostScene, position, imageCode, aspectRatio, initialScale)
         buildSpriteControls('bird', sprite, aspectRatio, initialScale)
         return sprite
     }
     
     const animateBird = () => {
-        bird.position.x = bird.position.x + .2
-        bird.position.y = bird.position.y - .015
-        bird.position.z = bird.position.z - .3
-        if (bird.position.x < 65) setTimeout(animateBird, 40)
+        bird.position.x = (bird.position.x * 1.03) + .01
+        bird.position.y = bird.position.y * .99
+        bird.position.z = bird.position.z - .4
+        if (bird.position.x < 65 && bird.position.x > -65) setTimeout(animateBird, 50)
         else{
-            const orginalBirdPosition = new THREE.Vector3(-4,8,0)
+            const xStart:number = Math.floor(Math.random() * 12) - 6
+            const orginalBirdPosition = new THREE.Vector3(xStart,8,0)
             bird.position.set(orginalBirdPosition.x, orginalBirdPosition.y, orginalBirdPosition.z)
+            setTimeout(animateBird, 1200)
         }
         onObjectChange()  
     }
@@ -194,7 +267,7 @@ export default function TestBed(){
                 onObjectChange()
             })
         
-        folder.open()
+        //folder.open()
     }
     const buildSprite = (   hostScene:THREE.Scene, 
                             position:THREE.Vector3, 
@@ -252,7 +325,7 @@ export default function TestBed(){
                 onObjectChange()
             })
         
-        forestTwoFolder.open()
+        //forestTwoFolder.open()
 
 
         return sprite
@@ -281,7 +354,7 @@ export default function TestBed(){
                     seattleMesh.scale.z = scaleValue
                     onChangeHandler()
                 })
-        seattleFolder.open()
+        // seattleFolder.open()
     }
 
     const animate = () => {
@@ -298,6 +371,10 @@ export default function TestBed(){
     const forestTwo:THREE.Sprite = buildForestTwo(scene)
     const bird:THREE.Sprite = buildBird(scene)
     const fsprite:THREE.Sprite = buildForestSprite(scene)
+    //const hawaiiCoast:THREE.Mesh = buildHawaiiCoast(scene)
+    //const palmShore:THREE.Mesh = buildPalmShore(scene)
+    const longIsland:THREE.Mesh = buildLongIsland(scene)
+    const palmLine:THREE.Mesh = buildPalmLine(scene)
 
     useEffect(()=>{
             console.log('useeffect')
