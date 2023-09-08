@@ -7,7 +7,6 @@ import Washington from '../Pages/Washington/Washington';
 import About from '../Pages/About/About';
 import Testimonials from '../Pages/Testimonials/Testimonials';
 import Contact from '../Pages/Contact/Contact';
-
 import TestBed from '../TestBed/TestBed';
 import { Card } from '../Card/Card';
 import Landscape from '../Landscape/Landscape';
@@ -15,10 +14,8 @@ import { gsap } from 'gsap'
 import './Website.css'
 import { Nav } from '../Nav/Nav';
 import { LogoHeader } from '../LogoHeader/LogoHeader';
-
-
 class Website extends React.Component {
-
+  showCard:boolean = false
   showNav = () =>{
 
   }
@@ -70,6 +67,13 @@ class Website extends React.Component {
   onBurgerToggle = (isOpen:boolean) => {
     this.setState({navIsOpen:isOpen})
   }
+  getCard = () => {
+    if(!this.showCard){
+      setTimeout(()=>{this.onCardOpened()}, 10)
+      return null
+    }
+    return <Card openCallback={this.onCardOpened} />
+  }
 
   render() {
     return (<>
@@ -77,7 +81,7 @@ class Website extends React.Component {
              <BrowserRouter>
              <Routes>
                 <Route path="/test" element={<TestBed />} />
-                <Route path="*" element={<Card openCallback={this.onCardOpened} />} />
+                <Route path="*" element={this.getCard()} />
              </Routes>
                   <div id="pages">
                     <Nav/>

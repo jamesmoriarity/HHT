@@ -136,7 +136,7 @@ export default function TestBed(){
         const position:Vector3 = new Vector3(30,3.5,27)
         const scale:number = 3.16
         let mesh:THREE.Mesh = buildMesh(hostScene, imageCode, height, aspectRatio, position, scale)
-        mesh.rotateY(Math.PI/-4)
+        //mesh.rotateY(Math.PI/-6)
         buildMeshControls('long island', mesh, scale)
         mesh.lookAt(0,0,0)
         return mesh
@@ -374,7 +374,7 @@ export default function TestBed(){
     //const hawaiiCoast:THREE.Mesh = buildHawaiiCoast(scene)
     //const palmShore:THREE.Mesh = buildPalmShore(scene)
     const longIsland:THREE.Mesh = buildLongIsland(scene)
-    const palmLine:THREE.Mesh = buildPalmLine(scene)
+    //const palmLine:THREE.Mesh = buildPalmLine(scene)
 
     useEffect(()=>{
             console.log('useeffect')

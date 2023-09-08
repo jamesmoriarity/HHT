@@ -4,16 +4,22 @@ export default function Home(){
     return  <Page id="home-page">
                 <div className="home">
                     <div className="page-content">
+                        <div className='headlines'>
+                            <h3 className="centered">
+                                Aligning business with your life goals 
+                            </h3>
+                            <h3 className="centered">Our mission is to care for you like family</h3>
+                        </div>
+
+                        <p>Thank you for taking the time to look into my business and let me know how I can help you to acheive your real estate goals</p>
                         <p>
-                            [service philosphy - harmony relationship]
-                            Lorem do qui nostrud culpa aute in. Commodo id exercitation minim aute eiusmod non et labore enim commodo minim officia. Est aliqua sit sint Lorem. Anim voluptate aliquip reprehenderit voluptate et.
+                            My team has over four decades of experience in all aspects of real estate. We take our business personally.
                         </p>
                         <p>
-                            Aliquip enim laborum eiusmod dolor amet nulla ullamco commodo dolor nulla proident non sint. Do nulla non sit proident. Dolor ut est dolore qui qui dolore eiusmod in excepteur voluptate cupidatat esse minim. Commodo laborum irure amet in commodo dolore duis excepteur. Nostrud nulla aliqua laborum eiusmod magna. Magna nostrud Lorem commodo id in officia ex occaecat.
+                        We have fostered a strong reputation amongst peers and clients with our real estate knowledge. We have created a solid foundation for repeat client representation and a referral business platform. 
                         </p>
-                        <p>
-                            Veniam officia culpa nulla exercitation duis minim nisi qui. Laborum elit officia commodo elit. Ut qui veniam commodo anim reprehenderit consequat minim nostrud. Exercitation fugiat nulla est quis ad. Culpa irure laboris commodo anim irure esse magna cupidatat amet ut enim adipisicing proident laboris.
-                        </p> 
+                        <p>We have been consistently ranked within the top ten percent of agents nationally for sales volume. Voted Seattle Magazines "Best Realtors in Client Satisfaction" consecutively since 2009 to present. 
+                        </p>
                             
                     </div>
                 </div>

@@ -1,11 +1,12 @@
 
 body{
-  background-color:#ffffff;
+  background-color:#efefef;
   overflow-x: hidden;
   font-size:18px;
 }
 
 #root{
+  background-color:#fff;
   width:100%;
   overflow:hidden;
 }

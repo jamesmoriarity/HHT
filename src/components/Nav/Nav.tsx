@@ -28,8 +28,8 @@ export function Nav(){
     }
     return(
         <div className={getClassName()}>
-            <Burger onToggle={onBurgerToggle} open={isOpen}/><div onClick={onBurgerToggle} className='menu'>Menu</div>
             {getTopNav()}
+            <Burger onToggle={onBurgerToggle} open={isOpen}/>
         </div>
 
     )

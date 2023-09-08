@@ -1,5 +1,5 @@
 export class CardDimensions{
-    static windowScale:number = 0.8 
+    static windowScale:number = 0.45 
     pixelsPerUnit:number
     targetHeight:number;
     targetHeightUnits:number;

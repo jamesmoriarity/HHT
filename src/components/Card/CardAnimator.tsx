@@ -52,7 +52,7 @@ export class CardAnimator{
         let originalVals = {rads: -3.1}
         let lastRads = originalVals.rads
         let targetVals = {
-            rads: -0.5,
+            rads: 0,
             onUpdate:()=>{
                 let delta:number = originalVals.rads - lastRads
                 lastRads = originalVals.rads
@@ -67,7 +67,7 @@ export class CardAnimator{
                 this.cardBuilder.renderMethod()
             },
             ease:'sine.inOut',
-            duration: 2.6
+            duration: 2.1
         }
         let angleTween = gsap.to(originalVals, targetVals)
         timeline.add(angleTween, 0)
@@ -77,8 +77,9 @@ export class CardAnimator{
         this.cardBuilder.renderMethod()
     }
     addZoomAnimation = (timeline:gsap.core.Timeline) => {
+        return
         let originalVals = {z: 10}
-        let targetVals = { z:7.7, duration:1.5, ease:"sine.inOut",
+        let targetVals = { z:8.7, duration:1.5, ease:"sine.inOut",
             onUpdate:()=>{
                 this.onZoomUpdate(originalVals)
             }

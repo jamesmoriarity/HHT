@@ -2,10 +2,10 @@
     margin:0px;
     width:100%;
     position:fixed;
-    bottom:80px;
+    top:0px;
     overflow:hidden;
     background-color: #000;
-    opacity:0.35;
+    opacity:0.25;
 }
 #LandscapeSVG{
     opacity:1;
