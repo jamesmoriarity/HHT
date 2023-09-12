@@ -15,6 +15,7 @@ import './Website.css'
 import { Nav } from '../Nav/Nav';
 import { LogoHeader } from '../LogoHeader/LogoHeader';
 import { TopBar } from '../TopBar/TopBar';
+import { PageRoutes } from './PageRoutes';
 class Website extends React.Component {
   showCard:boolean = false
   showNav = () =>{
@@ -82,33 +83,25 @@ class Website extends React.Component {
                   <Route path="/test" element={<TestBed />} />
                   <Route path="*" element={this.getCard()} />
               </Routes>
-                  <div id="pages">
-                    <TopBar/>
-                    <Nav/>
-                    <div id="page-container">
-                      <Routes>
-                          <Route path="/" element={<Home />} />
-                          <Route path="/hawaii" element={<Hawaii />} />
-                          <Route path="/washington" element={<Washington />} />
-                          <Route path="/about" element={<About />} />
-                          <Route path="/testimonials" element={<Testimonials />} />
-                          <Route path="/contact" element={<Contact />} />
-                          <Route path="*" element={<Home />} />
-                      </Routes>
-                    </div>
-                    <div id="footer-container">
-                      <div id="footer">
-                        <div id="footer-inner">
-                            <div className="footer-link"><Link to="/">Home</Link></div>   
-                            <div className="footer-link"><Link to="/hawaii">Hawaii</Link></div>     
-                            <div className="footer-link"><Link to="/washington">Washington</Link></div>     
-                            <div className="footer-link"><Link to="/about">About Dori</Link></div>      
-                            <div className="footer-link"><Link to="/testimonials">Testimonials</Link></div>    
-                            <div className="footer-link"><Link to="/contact">Contact</Link></div>   
-                        </div>
-                      </div>
+              <div id="pages">
+                <TopBar/>
+                <Nav/>
+                <div id="page-container">
+                  <PageRoutes/>
+                </div>
+                <div id="footer-container">
+                  <div id="footer">
+                    <div id="footer-inner">
+                        <div className="footer-link"><Link to="/">Home</Link></div>   
+                        <div className="footer-link"><Link to="/hawaii">Hawaii</Link></div>     
+                        <div className="footer-link"><Link to="/washington">Washington</Link></div>     
+                        <div className="footer-link"><Link to="/about">About Dori</Link></div>      
+                        <div className="footer-link"><Link to="/testimonials">Testimonials</Link></div>    
+                        <div className="footer-link"><Link to="/contact">Contact</Link></div>   
                     </div>
                   </div>
+                </div>
+              </div>
               </BrowserRouter>
             </>
     );

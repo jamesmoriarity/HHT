@@ -1,18 +1,10 @@
 import { useState, useEffect } from "react";
 import Page from "../Page";
 import *  as content from './WashingtonContent'
+import { PageRouteProps } from "../../Website/PageRoutes";
 
-export default function Washington(){
-    let [width, setWidth] = useState(window.innerWidth)
-    const onResize = function(){
-        setWidth(window.innerWidth)
-     }
-     const listenForResize = function(){
-        window.addEventListener("resize", onResize);
-        return () => window.removeEventListener("resize", onResize);
-     }
-     useEffect(listenForResize)
-     const getMobileLayout = () => {
+export default function Washington(props:PageRouteProps){
+    const getMobileLayout = () => {
         return  <Page id="washington-page">
                     <div className="washington">
                         <div className="page-content">
@@ -54,8 +46,5 @@ export default function Washington(){
                     </div>
                 </Page>
     }
-    const getLayout = () => {
-        return ((width < 700) ? getMobileLayout() : getDesktopLayout())
-    }
-    return(getLayout())
+    return((props.width < 700) ? getMobileLayout() : getDesktopLayout())
 }

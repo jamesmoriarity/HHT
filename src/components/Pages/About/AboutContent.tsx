@@ -43,3 +43,6 @@ export function Specialties(){
                 </ul>
             </div>
 }
+export function Title(){
+    return <h1>About Dori</h1>
+}

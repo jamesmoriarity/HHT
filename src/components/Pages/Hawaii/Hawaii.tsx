@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import Page from "../Page";
 import *  as content from './HawaiiContent'
+import { PageRouteProps } from "../../Website/PageRoutes";
 
-export default function Hawaii(){
-    let [width, setWidth] = useState(window.innerWidth)
+export default function Hawaii(props:PageRouteProps){
     const getMobileLayout = () => {
         return  <Page id="hawaii-page">
                     <div className="hawaii">
@@ -42,17 +42,5 @@ export default function Hawaii(){
                     </div>
                 </Page>
     }
-    const getLayout = () => {
-        return ((width < 700) ? getMobileLayout() : getDesktopLayout())
-    }
-    const onResize = function(){
-       setWidth(window.innerWidth)
-    }
-    const listenForResize = function(){
-       window.addEventListener("resize", onResize);
-       return () => window.removeEventListener("resize", onResize);
-    }
-    useEffect(listenForResize)
-
-    return(getLayout()) 
+    return((props.width < 700) ? getMobileLayout() : getDesktopLayout()) 
 }
