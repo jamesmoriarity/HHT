@@ -1,25 +1,21 @@
 .nav{
-    position:absolute;
+    position:fixed;
     top:0;
     left:0px;
-    z-index:10;
-    
+    z-index:25;
 }
 .nav.open .links{
     left:-2px;
 }
+.nav-link.active a{
+}
 .nav .links{
     left:-300px;
-}
-.burger{
-    position:absolute;
-    left:20px;
-    top:10px;
 }
 .links{
     transition: left 1s;
     position:relative;
-    top:0px;
+    top:127px;
     border:1px solid rgb(88, 88, 88);
     background-color:#2c2b2b;
     padding:10px;
@@ -59,6 +55,10 @@
     transform: scaleX(1);
   }
 
+  .links .nav-link.active a::before{
+    transform: scaleX(1);
+  }
+
 div.footer-link{
     display:inline;
     position:relative;
@@ -78,7 +78,6 @@ div.footer-link:last-child{
 .links ul{
     list-style-type: none;
     padding:0px;
-    margin-top:40px;
 }
 .links li{
     margin:10px 0px 10px 0px;

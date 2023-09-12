@@ -1,0 +1,24 @@
+.social-block{
+    margin-bottom:20px;
+}
+.social-block img{
+    margin:auto;
+}
+.social-block-label{
+    text-align: center;
+}
+.contact a{
+    text-decoration: none;
+    color:rgb(41, 127, 169);
+}
+.contact a:visited{
+    text-decoration: none;
+    color:rgb(41, 127, 169);
+}
+.contact .side-bar h3{
+    text-decoration: none;
+}
+
+.row.contact-bar{
+    margin-top:60px;
+}

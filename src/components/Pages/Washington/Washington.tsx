@@ -1,21 +1,61 @@
+import { useState, useEffect } from "react";
 import Page from "../Page";
+import *  as content from './WashingtonContent'
 
 export default function Washington(){
-    return <Page id="home-page">
+    let [width, setWidth] = useState(window.innerWidth)
+    const onResize = function(){
+        setWidth(window.innerWidth)
+     }
+     const listenForResize = function(){
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+     }
+     useEffect(listenForResize)
+     const getMobileLayout = () => {
+        return  <Page id="washington-page">
                     <div className="washington">
-                        <div className="page-content"> 
+                        <div className="page-content">
+                            <h1>Washington Market</h1>
+                            <div className='row'>
+                                {content.Primary()}
+                            </div>
+                            <div className='row'>
+                                <div className='column left'>{content.Img()}</div>
+                                <div className='column right'>{content.Img()}</div>
+                            </div>
+                            <div className='row'>
+                                {content.Secondary()}
+                            </div>
+                        </div>
+                    </div>
+                </Page>
+    }
+    const getDesktopLayout = () => {
+        return  <Page id="washington-page">
+                    <div className="washington">
+                        <div className="page-content">
                             <h1>Washington Market</h1>
                             <div className="row">
                                 <div className="column left">
-                                     In the Seattle/King County market Dori has developed close relationships with C-suite executives  within the tech community, serving top clients affiliated with Microsoft, Amazon, Google and Facebook. 
-
-                                    <p>For more than two decades Dori has collaborated with top builders in land acquisition. Through strategic marketing, Dori has represented dozens of off-market premium land plats, bringing the land to builders such as Steve Burnstead Construction and MN Homes, LLC then exclusively represents the builders’ finished new luxury homes in Bellevue, Kirkland and Redmond.</p> 
+                                {content.Primary()}  
+                                {content.Secondary()}
                                 </div>
                                 <div className="column right">
-                                    <div className="image-holder"><img className="side-image" src="./jpg/burnstead.jpg"/></div>
+                                    <div className="image-holder">
+                                        {content.Img()}
+                                    </div>
+                                    <div className="image-holder">
+                                        {content.Img()}
+                                    </div>
                                 </div>
-                            </div>          
+                            </div>         
                         </div>
                     </div>
-            </Page>
+                </Page>
+    }
+    const getLayout = () => {
+        return ((width < 700) ? getMobileLayout() : getDesktopLayout())
+    }
+    return(getLayout())
 }

@@ -1,7 +1,7 @@
 #landscape{
+    position:relative;
     margin:0px;
     width:100%;
-    position:fixed;
     top:0px;
     overflow:hidden;
     background-color: #000;

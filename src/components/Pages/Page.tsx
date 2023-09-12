@@ -6,7 +6,8 @@ export interface PageProps{
     id:string
 }
 export default function Page({ children, id }: PageProps){
-    let ref = useRef(null)
+
+    let ref = useRef(null)   
     const onDone = function(){
     }
     const animateIn = function(){

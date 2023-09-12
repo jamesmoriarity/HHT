@@ -1,0 +1,21 @@
+.top-bar{
+    height:125px;
+    width:100%;
+    position:fixed;
+    z-index:20;
+    top:0px;
+    left:0px;
+    text-align:center;
+    background-color: #fff;
+}
+.top-bar-logo-header{
+    width:100%;
+    position:absolute;
+    top:15%;
+    left:0px;
+    text-align:center;
+}
+.top-bar-landscape{
+    position:absolute;
+    bottom:0;
+}

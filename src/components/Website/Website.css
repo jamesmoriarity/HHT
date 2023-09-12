@@ -8,7 +8,6 @@ body{
 #root{
   background-color:#fff;
   width:100%;
-  overflow:hidden;
 }
 #pages{
   opacity:0;
@@ -17,6 +16,9 @@ body{
 #page-container{
   opacity:0;
   display:none;
+  position:relative;
+  top:140px;
+  background-color: #fff;
 }
 
 #top-nav{
@@ -71,5 +73,6 @@ body{
 
 .stars{
   margin-bottom:10px;
+  color:darkorange;
 }
 

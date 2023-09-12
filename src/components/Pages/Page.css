@@ -1,12 +1,11 @@
 .page{
     width:100%;
-    top: 150px;
+    min-height:500px;
     left: 0;
     text-align:center;
     padding:15px;
     padding-bottom:250px; 
-    opacity:0; 
-    margin-top:35px; 
+    opacity:0;  
 }
 h1{
     border-bottom:1px solid #666;

@@ -8,7 +8,11 @@ export default function Home(){
                             <h3 className="centered">
                                 Aligning business with your life goals 
                             </h3>
-                            <h3 className="centered">Our mission is to care for you like family</h3>
+
+                           {/* <h3 className="centered">
+                                Our mission is to care for you like family
+                                </h3> */}
+
                         </div>
 
                         <p>Thank you for taking the time to look into my business and let me know how I can help you to acheive your real estate goals</p>

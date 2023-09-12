@@ -14,10 +14,10 @@ import { gsap } from 'gsap'
 import './Website.css'
 import { Nav } from '../Nav/Nav';
 import { LogoHeader } from '../LogoHeader/LogoHeader';
+import { TopBar } from '../TopBar/TopBar';
 class Website extends React.Component {
   showCard:boolean = false
   showNav = () =>{
-
   }
   componentDidMount(){
     this.showNav()
@@ -44,7 +44,7 @@ class Website extends React.Component {
     )
     let page = '#page-container'
     let pageTween = gsap.to(page, 
-      {opacity:1, display:'block', duration:1, delay:0, ease:"power2.out", onUpdate:()=>{}}
+      {opacity:1, display:'block', duration:1, delay:0, ease:"power2.in", onUpdate:()=>{}}
     )
     let cardRemovalTween = gsap.to(card, {display:'none'})
 
@@ -77,15 +77,14 @@ class Website extends React.Component {
 
   render() {
     return (<>
-            
              <BrowserRouter>
-             <Routes>
-                <Route path="/test" element={<TestBed />} />
-                <Route path="*" element={this.getCard()} />
-             </Routes>
+              <Routes>
+                  <Route path="/test" element={<TestBed />} />
+                  <Route path="*" element={this.getCard()} />
+              </Routes>
                   <div id="pages">
+                    <TopBar/>
                     <Nav/>
-                    <LogoHeader/>
                     <div id="page-container">
                       <Routes>
                           <Route path="/" element={<Home />} />
@@ -97,7 +96,6 @@ class Website extends React.Component {
                           <Route path="*" element={<Home />} />
                       </Routes>
                     </div>
-                    <Landscape/>
                     <div id="footer-container">
                       <div id="footer">
                         <div id="footer-inner">
