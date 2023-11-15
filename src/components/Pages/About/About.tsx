@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import Page from "../Page";
 import * as content from './AboutContent'
-import { PageRouteProps } from "../../Website/PageRoutes";
+import * as webstore from "../../Website/WebsiteStore";
 
-export default function About(props:PageRouteProps){
+export default function About(){
     const getMobileLayout = () => {
         return  <Page id="about-page">
                     <div className="about">
@@ -26,7 +26,7 @@ export default function About(props:PageRouteProps){
                 </Page>
     }
     const getDesktopLayout = () => {
-        return  <Page id="home-page">
+        return  <Page id="about-page">
                     <div className="about">
                         <div className="page-content">
                             {content.Title()}
@@ -46,5 +46,5 @@ export default function About(props:PageRouteProps){
                     </div>
                 </Page> 
     }
-    return((props.width < 700) ? getMobileLayout() : getDesktopLayout())
+    return((webstore.IsMobile()) ? getMobileLayout() : getDesktopLayout())
 }

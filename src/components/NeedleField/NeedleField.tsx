@@ -12,11 +12,10 @@ export interface NeedleFieldProps{
     magneticRange:number
 }
 export function NeedleField( props:NeedleFieldProps ){
-    const [magneticRange] = useState(props.magneticRange)
     const [length] = useState(props.length)
     const [width] = useState(props.width)
     let w:number = (props.columns * props.hspace) + props.length
-    let h:number = (props.rows * props.vspace) + props.length
+    let h:number = 80; //(props.rows * props.vspace) + props.length
     const Needles = function(){
         let needles:JSX.Element[] = []
         for(let i = 0; i < props.rows; i++){
@@ -25,7 +24,7 @@ export function NeedleField( props:NeedleFieldProps ){
                 const y:number = (i * props.vspace) + props.length/2;
                 const translate:string = 'translate(' + x + ' ' + y + ')'
                 const key:string = i + '-' + j
-                let elm:JSX.Element = <Needle   magneticRange={magneticRange} 
+                let elm:JSX.Element = <Needle   magneticRange={props.magneticRange} 
                                                 initAngle={-30} 
                                                 length={length} 
                                                 width={width} 

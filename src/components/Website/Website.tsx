@@ -16,15 +16,13 @@ import { Nav } from '../Nav/Nav';
 import { LogoHeader } from '../LogoHeader/LogoHeader';
 import { TopBar } from '../TopBar/TopBar';
 import { PageRoutes } from './PageRoutes';
-class Website extends React.Component {
-  showCard:boolean = false
-  showNav = () =>{
-  }
-  componentDidMount(){
-    this.showNav()
-  }
-  onCardOpened = () => {
-    // "#cardContainer"
+import NeedleFieldContainer from '../ComponentLibrary/containers/NeedleFieldContainer';
+import * as webstore from './WebsiteStore';
+
+export function Website(){
+  const isMobile:boolean = webstore.IsMobile()
+  const showCard:boolean = false
+  const buildAndFireFadeTimeline = () => {
     let body:HTMLBodyElement | null = document.querySelector("body")
     if(body){body.className = 'post-card'}
     let card = "#cardContainer"
@@ -48,12 +46,13 @@ class Website extends React.Component {
       {opacity:1, display:'block', duration:1, delay:0, ease:"power2.in", onUpdate:()=>{}}
     )
     let cardRemovalTween = gsap.to(card, {display:'none'})
+    
 
     let fadeTimeline = gsap.timeline({
         autoRemoveChildren:false, 
         paused:true, 
         smoothChildTiming:true, 
-        onComplete: this.onFadeInComplete
+        onComplete: onFadeInComplete
     })
     fadeTimeline.add(cardFadeTween, 0)
     fadeTimeline.add(pagesFadeTween, 0)
@@ -61,28 +60,32 @@ class Website extends React.Component {
     fadeTimeline.add(navDropTween, 2.5)
     fadeTimeline.add(pageTween, 2)
     fadeTimeline.add(cardRemovalTween, 4)
-    fadeTimeline.restart()    
+    fadeTimeline.restart()
   }
-  onFadeInComplete = () => {
-  }
-  onBurgerToggle = (isOpen:boolean) => {
-    this.setState({navIsOpen:isOpen})
-  }
-  getCard = () => {
-    if(!this.showCard){
-      setTimeout(()=>{this.onCardOpened()}, 10)
-      return null
-    }
-    return <Card openCallback={this.onCardOpened} />
+  const onCardOpened = () => {
+    buildAndFireFadeTimeline()
   }
 
-  render() {
+  const onFadeInComplete = () => {
+  }
+  const GetCard = () => {
+    if(!showCard){
+      setTimeout(()=>{onCardOpened()}, 1)
+      return null
+    }
+    return <Card openCallback={onCardOpened} />
+  }
+  const GetNeedleField = () => {
+    return (isMobile) ? null : <NeedleFieldContainer/>
+  }
     return (<>
              <BrowserRouter>
+              <div id='tag-line'><h2>Aligning Goals</h2></div>
               <Routes>
                   <Route path="/test" element={<TestBed />} />
-                  <Route path="*" element={this.getCard()} />
+                  <Route path="*" element={<GetCard/>} />
               </Routes>
+              
               <div id="pages">
                 <TopBar/>
                 <Nav/>
@@ -91,7 +94,12 @@ class Website extends React.Component {
                 </div>
                 <div id="footer-container">
                   <div id="footer">
+                    <div className='needle-field-container'>
+                      
+                    </div>
                     <div id="footer-inner">
+                      <div className="footer-compass"><img src='./jpg/compass_logo.png' width="85"/></div>
+                      <div className="footer-divider">|</div>
                         <div className="footer-link"><Link to="/">Home</Link></div>   
                         <div className="footer-link"><Link to="/hawaii">Hawaii</Link></div>     
                         <div className="footer-link"><Link to="/washington">Washington</Link></div>     
@@ -99,13 +107,12 @@ class Website extends React.Component {
                         <div className="footer-link"><Link to="/testimonials">Testimonials</Link></div>    
                         <div className="footer-link"><Link to="/contact">Contact</Link></div>   
                     </div>
+                    <div className='sub-footer'>Hawaii Real Estate Broker RB-23210 | Washington State Broker - License #7348</div>
                   </div>
+                  
                 </div>
               </div>
               </BrowserRouter>
             </>
-    );
-  }
-}
-
-export default Website
+    )
+    }

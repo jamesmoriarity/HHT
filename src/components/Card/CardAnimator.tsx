@@ -20,11 +20,14 @@ export class CardAnimator{
             smoothChildTiming:true, 
             onComplete: this.onOpenComplete
         })
+
         this.addOpenAnimation(animationTimeline)
         this.addZoomAnimation(animationTimeline)
         return animationTimeline
     }
     openCard = () => {
+        let tagLineTween = gsap.to('#tag-line', {display:'block'})
+        tagLineTween.restart()
         this.openTimeline.restart()
     }
     onFadeInComplete = () => {
@@ -32,6 +35,8 @@ export class CardAnimator{
         setTimeout(this.openCard, 1000)
     }
     fadeIn(){ 
+        this.onFadeInComplete()
+        return
         console.log('fadeIn')
         let target = "#cardContainerInner"
         let fade = gsap.to(target, 
@@ -70,6 +75,7 @@ export class CardAnimator{
             duration: 2.1
         }
         let angleTween = gsap.to(originalVals, targetVals)
+  
         timeline.add(angleTween, 0)
     }  
     onZoomUpdate = (originalVals:any) => {

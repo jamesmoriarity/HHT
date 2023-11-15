@@ -2,7 +2,7 @@
     position:relative;
   }
   .needles rect{
-    fill:hsl(0, 0%, 0%);
+    fill:hsl(0, 0%, 63%);
     opacity:0;
   }
   .needleField-input{

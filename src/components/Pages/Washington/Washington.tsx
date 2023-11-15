@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import Page from "../Page";
 import *  as content from './WashingtonContent'
-import { PageRouteProps } from "../../Website/PageRoutes";
+import * as webstore from "../../Website/WebsiteStore";
 
-export default function Washington(props:PageRouteProps){
+export default function Washington(){
     const getMobileLayout = () => {
         return  <Page id="washington-page">
                     <div className="washington">
@@ -13,8 +13,8 @@ export default function Washington(props:PageRouteProps){
                                 {content.Primary()}
                             </div>
                             <div className='row'>
-                                <div className='column left'>{content.Img()}</div>
-                                <div className='column right'>{content.Img()}</div>
+                                <div className='column left'>{content.ImgOne()}</div>
+                                <div className='column right'>{content.ImgTwo()}</div>
                             </div>
                             <div className='row'>
                                 {content.Secondary()}
@@ -35,10 +35,10 @@ export default function Washington(props:PageRouteProps){
                                 </div>
                                 <div className="column right">
                                     <div className="image-holder">
-                                        {content.Img()}
+                                        {content.ImgOne()}
                                     </div>
                                     <div className="image-holder">
-                                        {content.Img()}
+                                        {content.ImgTwo()}
                                     </div>
                                 </div>
                             </div>         
@@ -46,5 +46,5 @@ export default function Washington(props:PageRouteProps){
                     </div>
                 </Page>
     }
-    return((props.width < 700) ? getMobileLayout() : getDesktopLayout())
+    return((webstore.IsMobile()) ? getMobileLayout() : getDesktopLayout())
 }

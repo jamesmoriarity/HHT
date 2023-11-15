@@ -1,9 +1,10 @@
 import { useEffect, useState} from "react";
+import * as webstore from "../Website/WebsiteStore";
 export default function LandscapeSVG(){
-   let [width, setWidth] = useState(window.innerWidth)
    const getAttributes = function(){
-      const ratio:number = 10.91
-      let height:number = width/ratio
+      const width:number = webstore.ScreenWidth()
+      const ratio:number = 0.09166
+      let height:number = width * ratio
       return {
          "id" : "LandscapeSVG",
          "xmlns" : "http://www.w3.org/2000/svg",
@@ -12,14 +13,6 @@ export default function LandscapeSVG(){
          "viewBox" : "0 0 600 55"
       }
    }
-   const onResize = function(){
-      setWidth(window.innerWidth)
-   }
-   const listenForResize = function(){
-      window.addEventListener("resize", onResize);
-      return () => window.removeEventListener("resize", onResize);
-   }
-   useEffect(listenForResize)
    return(
       <svg {...getAttributes()}>
          <defs

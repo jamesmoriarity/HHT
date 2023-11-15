@@ -4,6 +4,13 @@ body{
   overflow-x: hidden;
   font-size:18px;
 }
+#tag-line{
+  position:absolute;
+  width:100%;
+  text-align:center;
+  top:50%;
+  display:none;
+}
 
 #root{
   background-color:#fff;
@@ -41,7 +48,31 @@ body{
   font-size:18px;
   font-weight:500;
 }
-
+div.footer-divider {
+  display: inline;
+  position: relative;
+  margin-right: 10px;
+  margin-left: 5px;
+}
+div.footer-compass{
+  display:inline;
+  position:relative;
+  margin-right:5px;
+}
+div.footer-link{
+  display:inline;
+  position:relative;
+  margin-right:15px;
+}
+div.footer-link:last-child{
+  margin-right:0px;
+}
+.sub-footer{
+  margin-top:10px;
+  text-align:center;
+  color:#eee;
+  font-size:10px;
+}
 #footer-container{
   position:fixed;
   left: 0;
@@ -57,11 +88,11 @@ body{
 }
 #footer-inner{
   position: relative;
-  padding-top:15px;
+  padding-top:20px;
   width:100%;
   text-align:center;
 }
-#footer a{
+#footer a, #footer{
   color:rgb(195, 195, 195);
   text-decoration: none;
   font-size:16px;
@@ -74,5 +105,10 @@ body{
 .stars{
   margin-bottom:10px;
   color:darkorange;
+}
+
+.needle-field-container{
+  position: absolute;
+  top: 0px;
 }
 

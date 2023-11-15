@@ -9,9 +9,8 @@ export default function Home(){
                                 Aligning business with your life goals 
                             </h3>
 
-                           {/* <h3 className="centered">
-                                Our mission is to care for you like family
-                                </h3> */}
+                            <img className="side-image-home" src="./jpg/Home_Washington.jpg"/>
+                            <img className="side-image-home" src="./jpg/Home_Hawaii.jpg"/>
 
                         </div>
 

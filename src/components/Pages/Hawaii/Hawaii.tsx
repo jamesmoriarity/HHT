@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import Page from "../Page";
 import *  as content from './HawaiiContent'
-import { PageRouteProps } from "../../Website/PageRoutes";
+import * as webstore from "../../Website/WebsiteStore";
 
-export default function Hawaii(props:PageRouteProps){
+export default function Hawaii(){
     const getMobileLayout = () => {
         return  <Page id="hawaii-page">
                     <div className="hawaii">
@@ -13,8 +13,8 @@ export default function Hawaii(props:PageRouteProps){
                                 {content.Primary()}
                             </div>
                             <div className='row'>
-                                <div className='column left'>{content.Img()}</div>
-                                <div className='column right'>{content.Img()}</div>
+                                <div className='column left'>{content.ImgOne()}</div>
+                                <div className='column right'>{content.ImgTwo()}</div>
                             </div>
                             <div className='row'>
                                 {content.Secondary()}
@@ -34,13 +34,13 @@ export default function Hawaii(props:PageRouteProps){
                                 {content.Secondary()}
                                 </div>
                                 <div className="column right">
-                                    <div className="image-holder"><img className="side-image" src="./jpg/kohler2.jpg"/></div>
-                                    <div className="image-holder"><img className="side-image" src="./jpg/kohler2.jpg"/></div>
+                                    <div className="image-holder">{content.ImgOne()}</div>
+                                    <div className="image-holder">{content.ImgTwo()}</div>
                                 </div>
                             </div>         
                         </div>
                     </div>
                 </Page>
-    }
-    return((props.width < 700) ? getMobileLayout() : getDesktopLayout()) 
+    } 
+    return((webstore.IsMobile()) ? getMobileLayout() : getDesktopLayout()) 
 }

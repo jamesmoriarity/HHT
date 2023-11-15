@@ -197,12 +197,12 @@ export class CardBuilder{
         });
         const insideMaterial = new THREE.MeshPhongMaterial({ flatShading:true, map: insideTexture })  
         const cubeMaterials = [
-            materialDarkGrey, //right side
-            materialDarkGrey, //left side
-            materialDarkGrey, //top side
-            materialDarkGrey, //bottom side
+            materialWhite, //right side
+            materialWhite, //left side
+            materialWhite, //top side
+            materialWhite, //bottom side
             materialWhite, //front side
-            materialGrey, //back side
+            materialWhite, //back side
         ];
         return cubeMaterials
     }
@@ -213,6 +213,7 @@ export class CardBuilder{
         return [alphaMaterial, betaMaterial]
     }
     buildCenter = () => {
+        return
         return (this.dimensions.isHorizontal) ? this.buildHorizontalCenter(this.elements.scene):this.buildVerticalCenter(this.elements.scene)
     }
     buildVerticalCenter = (scene:THREE.Scene) => {
@@ -277,7 +278,6 @@ export class CardBuilder{
         scene.add(panelParent)
         panelParent.position.set(0,0,-0.01)
     }
-
     startBuild = () => {
         console.log('CardBuilder.startBuild')
         let materialsLoader:CardMaterialsLoader = new CardMaterialsLoader(this.dimensions.isHorizontal, this.onMaterialsLoaded)
@@ -293,7 +293,6 @@ export class CardBuilder{
         this.renderMethod()
         setTimeout(()=>{this.onBuildCompleteCallback()}, 2000)
     }
-
     buildFullScene(){
         console.log('CardBuilder.buildFullScene')
         this.reset()
